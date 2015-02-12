@@ -9,7 +9,7 @@ main: main.c $(SOURCE)
 	$(GCC) main.c $(SOURCE) -o $(OUTPUT) $(FLAG)
 
 test: test.c $(SOURCE)
-	$(GCC) test.c $(SOURCE) -o test $(FLAG)
+	$(GCC) test.c $(SOURCE) -o test $(FLAG) && ./test
 
 clean:
 	rm test $(OUTPUT)

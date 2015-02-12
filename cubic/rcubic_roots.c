@@ -5,9 +5,22 @@
 int rcubic_roots(double a2, double a1, double a0, double* r1, double* r2, double* r3)
 {
 
+  int THREE_DISTINCT_ROOTS = 3;
+  int TWO_REPEATING_ROOTS = 2;
+  int ONE_ROOT = 1;
+  int COMPLEX_ROOT = 0;
+
   int result;
   double a, b, p;
   double y_n, y_n1;
+
+  
+  if (a2 == 0 && a1 == 0)
+  {
+    *r1 = *r2 = *r3 = cbrt(-a0);
+    return ONE_ROOT;
+  }
+
 
   a = -cbrt(2*a2*a2*a2-9*a1*a2+27*a0)/3.;
   if (a == 0)
@@ -37,11 +50,11 @@ int rcubic_roots(double a2, double a1, double a0, double* r1, double* r2, double
   }
 
   /* Compute the status which should be returned to main function */
-  if (result != 0)
+  if (result != COMPLEX_ROOT)
   /* Solutions do not contains complex roots */
   {
-    result = (*r1 == *r2 || *r2 == *r3 || *r1 == *r3) ? 2 : 3;
-    result = (*r1 == *r2 && *r2 == *r3) ? 1 : result;
+    result = (*r1 == *r2 || *r2 == *r3 || *r1 == *r3) ? TWO_REPEATING_ROOTS : THREE_DISTINCT_ROOTS;
+    result = (*r1 == *r2 && *r2 == *r3) ? ONE_ROOT : result;
   }
   return result;
 }
