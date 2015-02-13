@@ -27,6 +27,11 @@ int rcubic_roots(double a2, double a1, double a0, double* r1, double* r2, double
     result = quad_roots(1., a2, a1, r2, r3);
   }
 
+  else if (3*a1 == a2*a2 && 27*a0 == a2*a2*a2)
+  {
+    *r1 = *r2 = *r3 = -a2/3.;
+  }
+
   else
   {
     a = -cbrt(2*a2*a2*a2-9*a1*a2+27*a0)/3.;
@@ -43,17 +48,42 @@ int rcubic_roots(double a2, double a1, double a0, double* r1, double* r2, double
       p = (a1 - a2*a2/3.)/(a*a);
       //printf("%10.5g, %10.5g, %10.5g\n", a, b, p);
 
-      y_n  = fabs(p) < 2. ? 1-p/3. : 1/p;
-      y_n1 = y_n - (y_n*y_n*y_n + p*y_n - 1)/(3*y_n*y_n + p);
-      //printf("%10.5g, %10.5g\n", y_n, y_n1);
-      while (fabs(y_n-y_n1)>1e-15)
+      if (p == 0)
       {
-        y_n = y_n1;
-        y_n1 = y_n - (y_n*y_n*y_n + p*y_n - 1)/(3*y_n*y_n + p);
-        //printf("%10.5g, %10.5g\n", a*y_n+b, a*y_n1+b);
+        *r1 = 1.;
+        *r2 = -1./2.;
+        *r3 = sqrt(3.)/2.;
+        result = COMPLEX_ROOT;
       }
-      *r1 = a*y_n1+b;
-      result = quad_roots(1., a2+(*r1), -a0/(*r1), r2, r3) + 1;
+      else
+      {
+
+        int count = 1;  /* Counter for number of iterations */
+        double difference; /* Difference between y_n and y_(n+1) */
+
+        y_n  = fabs(p) < 2. ? 1-p/3. : 1/p;
+        y_n1 = y_n - (y_n*y_n*y_n + p*y_n - 1)/(3*y_n*y_n + p);
+        difference = fabs(y_n1-y_n);
+        //printf("%10.5g, %10.5g\n", y_n, y_n1);
+
+        /* Iteration only stops when both of the following conditions are fulfilled
+         * 1) y_(n+1) = y_n OR |y_(n+1) - y_n| starts diverging
+         * 2) Performed at least 3 iterations
+         */
+        while ( (fabs(y_n-y_n1)>1e-15 || difference > fabs(y_n1-y_n)) && 
+                count < 3)
+        {
+          count++;
+          difference = fabs(y_n1-y_n); /* Update difference before next iteration */
+
+          y_n = y_n1;
+          y_n1 = y_n - (y_n*y_n*y_n + p*y_n - 1)/(3*y_n*y_n + p);
+          //printf("%10.5g, %10.5g\n", a*y_n+b, a*y_n1+b);
+        }
+        *r1 = a*y_n1+b;
+        result = quad_roots(1., a2+(*r1), -a0/(*r1), r2, r3) + 1;
+      }
+
     }
   }
 

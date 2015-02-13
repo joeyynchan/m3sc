@@ -11,5 +11,8 @@ main: main.c $(SOURCE)
 test: test.c $(SOURCE)
 	$(GCC) test.c $(SOURCE) -o test $(FLAG) && ./test
 
+main2: main2.c
+	$(GCC) main2.c -o main2
+
 clean:
-	rm test $(OUTPUT)
+	rm test main main2
