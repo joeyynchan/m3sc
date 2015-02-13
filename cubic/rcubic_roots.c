@@ -2,6 +2,9 @@
 #include <math.h>
 #include <float.h>
 
+void sort(double*, double*, double*);
+void swap(double*, double*);
+
 int rcubic_roots(double a2, double a1, double a0, double* r1, double* r2, double* r3)
 {
 
@@ -9,6 +12,8 @@ int rcubic_roots(double a2, double a1, double a0, double* r1, double* r2, double
   int TWO_REPEATING_ROOTS = 2;
   int ONE_ROOT = 1;
   int COMPLEX_ROOT = 0;
+
+	double ALLOWED_ERROR = 1e-15;
 
   int result;
   double a, b, p;
@@ -26,6 +31,22 @@ int rcubic_roots(double a2, double a1, double a0, double* r1, double* r2, double
     *r1 = 0;
     result = quad_roots(1., a2, a1, r2, r3);
   }
+
+	else if (fabs(a0 - a1*a2) < ALLOWED_ERROR)
+	{
+		*r1 = -a2;
+		if (a1 > 0)
+		{
+			*r3 = sqrt(a1);
+			*r2 = 0;
+		}
+		else
+		{
+			*r2 = sqrt(-a1);
+			*r3 = -sqrt(-a1);
+		}
+		result = (a1 > 0) ? COMPLEX_ROOT : THREE_DISTINCT_ROOTS ;
+	}
 
   else if (3*a1 == a2*a2 && 27*a0 == a2*a2*a2)
   {
@@ -70,7 +91,7 @@ int rcubic_roots(double a2, double a1, double a0, double* r1, double* r2, double
          * 1) y_(n+1) = y_n OR |y_(n+1) - y_n| starts diverging
          * 2) Performed at least 3 iterations
          */
-        while ( (fabs(y_n-y_n1)>1e-15 || difference > fabs(y_n1-y_n)) && 
+        while ( (fabs(y_n-y_n1) > ALLOWED_ERROR || difference > fabs(y_n1-y_n)) && 
                 count < 3)
         {
           count++;
@@ -95,5 +116,25 @@ int rcubic_roots(double a2, double a1, double a0, double* r1, double* r2, double
     result = (*r1 == *r2 || *r2 == *r3 || *r1 == *r3) ? TWO_REPEATING_ROOTS : THREE_DISTINCT_ROOTS;
     result = (*r1 == *r2 && *r2 == *r3) ? ONE_ROOT : result;
   }
+	if (result == THREE_DISTINCT_ROOTS ||
+			result == TWO_REPEATING_ROOTS)
+		sort(r1, r2, r3);
   return result;
+}
+
+void sort(double* r1, double* r2, double* r3)
+{
+	if (*r1 > *r2)
+		swap(r1, r2);
+	if (*r2 > *r3)
+		swap(r2, r3);
+	if (*r1 > *r2)
+		swap(r1, r2);
+}
+
+void swap(double* r1, double* r2)
+{
+	double temp = *r1;
+	*r1 = *r2;
+	*r2 = temp;
 }
