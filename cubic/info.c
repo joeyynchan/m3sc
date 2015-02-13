@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include "info.h"
+
 
 void printInfo()
 {

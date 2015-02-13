@@ -2,10 +2,8 @@
 #include <stdlib.h>
 #include <math.h>
 #include <float.h>
-
-int assertEqualRoot(double, double);
-int assertEqualResult(int, int);
-void test(int, double, double, double, double, double, double, int);
+#include "test.h"
+#include "rcubic_roots.h"
 
 int main()
 {

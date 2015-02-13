@@ -1,9 +1,8 @@
 #include <stdio.h>
 #include <math.h>
 #include <float.h>
-
-void sort(double*, double*, double*);
-void swap(double*, double*);
+#include "rcubic_roots.h"
+#include "quad_roots.h"
 
 int rcubic_roots(double a2, double a1, double a0, double* r1, double* r2, double* r3)
 {
@@ -172,4 +171,9 @@ void swap(double* r1, double* r2)
 	double temp = *r1;
 	*r1 = *r2;
 	*r2 = temp;
+}
+
+double _cbrt(double x)
+{
+  return pow(x,1./3.);
 }

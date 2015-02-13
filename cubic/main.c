@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "rcubic_roots.h"
+#include "info.h"
 
 void printResult(int, double, double, double);
 
