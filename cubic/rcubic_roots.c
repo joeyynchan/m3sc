@@ -7,6 +7,8 @@
 int rcubic_roots(double a2, double a1, double a0, double* r1, double* r2, double* r3)
 {
 
+  /* Chan, Joey, JMC */
+
   /* ALLOWED_ERROR is use to determine if two doubles are the "same"
    * If two double, a and b, are the "same", then fabs(a-b) < ALLOWED_ERROR
    * I choose to use a customizable standard so later if I want to improve the acurracy,
@@ -158,6 +160,7 @@ int rcubic_roots(double a2, double a1, double a0, double* r1, double* r2, double
 
 void sort(double* r1, double* r2, double* r3)
 {
+  /* Chan, Joey, JMC */
 	if (*r1 > *r2)
 		swap(r1, r2);
 	if (*r2 > *r3)
@@ -168,12 +171,8 @@ void sort(double* r1, double* r2, double* r3)
 
 void swap(double* r1, double* r2)
 {
+  /* Chan, Joey, JMC */
 	double temp = *r1;
 	*r1 = *r2;
 	*r2 = temp;
-}
-
-double _cbrt(double x)
-{
-  return pow(x,1./3.);
 }

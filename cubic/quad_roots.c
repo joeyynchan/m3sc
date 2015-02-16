@@ -6,6 +6,8 @@
 
 int quad_roots(double a2, double a1, double a0, double* r1, double* r2)
 {
+  /* Chan, Joey, JMC */
+
   /* Handle Linear Equation */
   if (a2 == 0)
     return lin_root(a1, a0, r1) - 2;
@@ -42,6 +44,8 @@ int quad_roots(double a2, double a1, double a0, double* r1, double* r2)
  */
 int calculateSqrt(double a2, double a1, double a0, double* sqroot)
 {
+  /* Chan, Joey, JMC */
+
   double result;
   
   if (a1 > 1e153)
