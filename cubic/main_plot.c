@@ -6,6 +6,7 @@ int main()
 {
 	double T;
 	double r1, r2, r3;
+	
 	printf("\n%5s %10s %10s %10s %10s %10s\n", "T", "Fst", "Re(Snd)", "Im(Snd)", "Re(Trd)", "Im(Trd)");
 	for (T = 0.; T <= 75000.; T += 1000.)
 	{

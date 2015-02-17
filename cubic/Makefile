@@ -1,5 +1,5 @@
 SOURCE=info.c rcubic_roots.c quad_roots.c lin_root.c
-SOURCE_C=main_complex.c complex_rcubic_roots.c complex_quad_roots.c complex_lin_root.c
+SOURCE_C=complex_rcubic_roots.c complex_quad_roots.c complex_lin_root.c
 FLAG=-lm
 GCC=gcc
 
@@ -20,8 +20,11 @@ main_search: main_search.c $(SOURCE)
 main_time: main_time.c
 	$(GCC) main_time.c -o main_time.out $(FLAG)
 
-main_complex: $(SOURCE_C)
-	$(GCC) $(SOURCE_C) -o main_complex.out $(FLAG)
+main_complex: main_complex.c $(SOURCE_C)
+	$(GCC) main_complex.c $(SOURCE_C) -o main_complex.out $(FLAG)
+
+main_complex_plot: main_complex_plot.c $(SOURCE_C)
+	$(GCC) main_complex_plot.c $(SOURCE_C) -o main_complex_plot.out $(FLAG)
 
 .PHONY: clean
 

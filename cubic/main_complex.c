@@ -14,7 +14,7 @@ int main()
 
   /* Extract information about the equation */
   printf("###################\n");
-  printf("# JMC | JOEY CHAN　#\n");
+  printf("# JMC | JOEY CHAN #\n");
   printf("###################\n");
   printf("To solve x^3 + (a2 + b2*i) * x^2 + (a1 +b2*i) * x + (a0 + b0*i) = 0\n");
   printf("Please enter the 3 coefficient in the order a2, a1, a0\n");
