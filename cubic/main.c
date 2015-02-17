@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "rcubic_roots.h"
-#include "info.h"
+//#include "rcubic_roots.h"
+//#include "info.h"
 
 void printResult(int, double, double, double);
 
@@ -12,6 +12,8 @@ int main()
   double a0, a1, a2; /* Coefficients to the equation */
   double r1, r2, r3; /* Roots */
 
+  int numberOfRoots;
+
   /* Extract information about the equation */
   printf("###################\n");
   printf("# JMC | JOEY CHAN　#\n");
@@ -21,7 +23,7 @@ int main()
   printf("separated with spaces: ");
   scanf("%lf %lf %lf", &a2, &a1, &a0);
 
-  int numberOfRoots = rcubic_roots(a2, a1, a0, &r1, &r2, &r3);
+  numberOfRoots = rcubic_roots(a2, a1, a0, &r1, &r2, &r3);
   printResult(numberOfRoots, r1, r2, r3);
 
 }

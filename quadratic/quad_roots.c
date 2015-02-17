@@ -4,12 +4,14 @@
 
 int quad_roots(double a2, double a1, double a0, double* r1, double* r2)
 {
+
+  double sqroot;
+  int d;
   /* Handle Linear Equation */
   if (a2 == 0)
     return lin_root(a1, a0, r1) - 2;
   
-  double sqroot;
-  int d = calculateSqrt(a2, a1, a0, &sqroot);
+  d = calculateSqrt(a2, a1, a0, &sqroot);
   printf("HI");
   /* Complex Root */
   if (d < 0)

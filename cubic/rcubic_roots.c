@@ -1,8 +1,11 @@
 #include <stdio.h>
 #include <math.h>
 #include <float.h>
-#include "rcubic_roots.h"
-#include "quad_roots.h"
+//#include "rcubic_roots.h"
+//#include "quad_roots.h"
+
+void sort(double* r1, double* r2, double* r3);
+void swap(double* r1, double* r2);
 
 int rcubic_roots(double a2, double a1, double a0, double* r1, double* r2, double* r3)
 {

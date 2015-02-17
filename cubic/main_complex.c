@@ -12,6 +12,8 @@ int main()
   double complex r1, r2, r3; /* Roots */
   double complex c0, c1, c2;
 
+  int numberOfRoots;
+
   /* Extract information about the equation */
   printf("###################\n");
   printf("# JMC | JOEY CHAN #\n");
@@ -25,9 +27,8 @@ int main()
   c1 = a1 + b1*I;
   c0 = a0 + b0*I;
 
-  int numberOfRoots = rcubic_roots(c2, c1, c0, &r1, &r2, &r3);
+  numberOfRoots = rcubic_roots(c2, c1, c0, &r1, &r2, &r3);
   printResult(numberOfRoots, r1, r2, r3);
-
 
 }
 
@@ -36,7 +37,6 @@ void printResult(int numberOfRoots, double complex r1, double complex r2, double
   /* Chan, Joey, JMC */
   switch (numberOfRoots)
   {
-    /*
     case 3:
       printf("There are 3 distinct real roots\n");
       printf("--------------------------------------------------\n");
@@ -52,14 +52,7 @@ void printResult(int numberOfRoots, double complex r1, double complex r2, double
       printf("--------------------------------------------------\n");
       printf("x = %10.5g\n", r1);
       break;
-    case 0:
-      printf("There are 1 real root and a complex conjugate pair\n");
-      printf("--------------------------------------------------\n");
-      printf("x1 = %10.5g\nx2 = %10.5g+%10.5gi\nx3 = %10.5g-%10.5gi\n", r1, r2, r3, r2, r3);
-      break;
-    */
     default:
-      printf("%10.5g %10.5g %10.5g %10.5g %10.5g %10.5g\n", creal(r1), cimag(r1), creal(r2), cimag(r2), creal(r3), cimag(r3));
       break;
   }
 }

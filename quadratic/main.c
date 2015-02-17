@@ -5,6 +5,7 @@ int main()
 {
   double a2, a1, a0;
   double r1 = 0, r2 = 0;
+  int num_root;
 
   printf("*******************\n");
   printf("* JMC | Joey Chan *\n");
@@ -12,7 +13,7 @@ int main()
   printf("Enter coefficients of Quadratic Equation a2*x^2 + a1*x + a0 = 0 \n");
   printf("in the order a2, a1, a0, separated by spaces: ");
   scanf("%lf %lf %lf", &a2, &a1, &a0);
-  int num_root = quad_roots(a2, a1, a0, &r1, &r2);
+  num_root = quad_roots(a2, a1, a0, &r1, &r2);
   switch (num_root)
   {
     case 2:

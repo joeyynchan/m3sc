@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <math.h>
-#include "rcubic_roots.h"
+//#include "rcubic_roots.h"
 
 int main()
 {

@@ -1,8 +1,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
-#include "quad_roots.h"
-#include "lin_root.h"
+//#include "quad_roots.h"
+//#include "lin_root.h"
 
 int quad_roots(double a2, double a1, double a0, double* r1, double* r2)
 {
