@@ -36,9 +36,9 @@ int rcubic_roots(double* args, double* roots)
   double  a2 = *args,
           a1 = *(args+1),
           a0 = *(args+2);
-  double* r1 = &roots[0];
-  double* r2 = &roots[1];
-  double* r3 = &roots[2];
+  double* r1 = &roots[1];
+  double* r2 = &roots[2];
+  double* r3 = &roots[3];
 
   /* Case i: a2 == a1 == 0
    * Roots are unity times -sign(a0)|a0)^(1/3)
@@ -60,7 +60,7 @@ int rcubic_roots(double* args, double* roots)
   {
     double a[3] = {1., a2, a1};
     *r1 = 0;
-    result = quad_roots(&a, roots);
+    result = quad_roots(&a, r2);
   }
 
   /* Case iii: a0 = a1*a2

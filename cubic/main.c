@@ -12,7 +12,7 @@ int main()
   int NUMBER_OF_ROOTS = 3;
 
   double a[NUMBER_OF_ARGUMENTS]; /* Coefficients to the equation */
-  double roots[NUMBER_OF_ROOTS]; /* Roots */
+  double roots[NUMBER_OF_ROOTS+1]; /* Roots */
 
   int numberOfRoots;
 
@@ -32,9 +32,9 @@ int main()
 
 void printResult(int numberOfRoots, double* roots)
 {
-  double  r1 = *roots,
-          r2 = *(roots+1),
-          r3 = *(roots+2);
+  double  r1 = *(roots+1),
+          r2 = *(roots+2),
+          r3 = *(roots+3);
 
   /* Chan, Joey, JMC */
   switch (numberOfRoots)
@@ -42,22 +42,22 @@ void printResult(int numberOfRoots, double* roots)
     case 3:
       printf("There are 3 distinct real roots\n");
       printf("--------------------------------------------------\n");
-      printf("x1 = %10.5g\nx2 = %10.5g\nx3 = %10.5g\n", *roots, *(roots+1), *(roots+2));
+      printf("x1 = %10.5g\nx2 = %10.5g\nx3 = %10.5g\n", r1, r2, r3);
       break;
     case 2:
       printf("There are 2 distinct real roots\n");
       printf("--------------------------------------------------\n");
-      printf("x1 = %10.5g\nx2 = %10.5g\nx3 = %10.5g\n", *roots, *(roots+1), *(roots+2));
+      printf("x1 = %10.5g\nx2 = %10.5g\nx3 = %10.5g\n", r1, r2, r3);
       break;
     case 1:
       printf("There is 1 distinct real root\n");
       printf("--------------------------------------------------\n");
-      printf("x = %10.5g\n", *roots);
+      printf("x = %10.5g\n", r1);
       break;
     case 0:
       printf("There are 1 real root and a complex conjugate pair\n");
       printf("--------------------------------------------------\n");
-      printf("x1 = %10.5g\nx2 = %10.5g+%10.5gi\nx3 = %10.5g-%10.5gi\n", *roots, *(roots+1), *(roots+2), *(roots+1), *(roots+2));
+      printf("x1 = %10.5g\nx2 = %10.5g+%10.5gi\nx3 = %10.5g-%10.5gi\n", r1, r2, r3, r2, r3);
       break;
     default:
       break;
