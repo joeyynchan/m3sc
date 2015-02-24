@@ -1,14 +1,19 @@
-int lin_root(double* a, double* r)
+int lin_root(double* args, double* root)
 {
   /* Chan, Joey, JMC */
-  double a1 = a[0];
-  double a0 = a[1];
+
+  int ONE_ROOT  = 1;
+  int INF_ROOTS = 0;
+  int NO_ROOT   = -1;
+
+  double a1 = args[0];
+  double a0 = args[1];
 
   /* No roots or every number is a root */
   if (a1 == 0)
-    return a0 == 0 ? 0 : -1 ;
+    return a0 == 0 ? INF_ROOTS : NO_ROOT ;
   /* Else find the root */
-  *r = a0 == 0 ? 0 : -a0/a1;
-  return 1;
+  *(root+1) = a0 == 0 ? 0 : -a0/a1;
+  return ONE_ROOT;
 }
 
