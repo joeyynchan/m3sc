@@ -3,6 +3,10 @@
 #include <math.h>
 #include <float.h>
 
+int test(double* args, double* roots, int* n);
+int assertEqualRoot(double actual, double expected);
+int assertEqualResult(int actual, int expected);
+
 int main()
 {
   double data[13][6] = {{    4.,    -8.,     7.,   -5.6389,   0.81944,  0.75492},
@@ -34,7 +38,7 @@ int main()
 
 int test(double* args, double* roots, int* n)
 {
-  double _roots[3];
+  double _roots[4];
   int _n = rcubic_roots(args, &_roots);
   if (assertEqualRoot(_roots[1], *(roots)) &&
       assertEqualRoot(_roots[2], *(roots+1)) &&
