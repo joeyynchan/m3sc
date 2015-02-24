@@ -2,6 +2,7 @@
 #include <stdlib.h>
 
 void printResult(int, double*);
+int rcubic_roots(double*, double*);
 
 int main()
 {

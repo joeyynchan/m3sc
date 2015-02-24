@@ -2,6 +2,9 @@
 #include <stdio.h>
 #include <math.h>
 
+int lin_root(double*, double*);
+int calculateSqrt(double*, double*);
+
 int quad_roots(double* a, double* roots)
 {
 
@@ -49,9 +52,6 @@ int quad_roots(double* a, double* roots)
   }
   return d+1;
 }
-
-
-
 
 /* This function returns -1 if there is no real root 
  * or else, calculate the sqrt 

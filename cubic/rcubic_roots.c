@@ -2,8 +2,9 @@
 #include <math.h>
 #include <float.h>
 
-void sort(double* r1, double* r2, double* r3);
-void swap(double* r1, double* r2);
+void sort(double*, double*, double*);
+void swap(double*, double*);
+int quad_roots(double*, double*);
 
 int rcubic_roots(double* args, double* roots)
 {
@@ -27,14 +28,12 @@ int rcubic_roots(double* args, double* roots)
   double  a2 = *args,
           a1 = *(args+1),
           a0 = *(args+2);
-    
+
   double* r1 = roots+1,
         * r2 = roots+2,
         * r3 = roots+3;
 
-  /* Case i: a2 == a1 == 0
-   * Roots are unity times -sign(a0)|a0)^(1/3)
-   */
+  /* Case i: a2 == a1 == 0 */
   if (a2 == 0 && a1 == 0)
   {
     *r1 = *r2 = *r3 = (a0 < 0) ? cbrt(-a0) : -cbrt(a0);
@@ -43,10 +42,7 @@ int rcubic_roots(double* args, double* roots)
     return COMPLEX_ROOT;
   }
 
-  /* Case ii: a0 == 0
-   * One root = 0
-   * Call quad_roots() to find the other two roots
-   */
+  /* Case ii: a0 == 0 */
   else if (a0 == 0)
   {
     double a[3] = {1., a2, a1};
@@ -54,9 +50,7 @@ int rcubic_roots(double* args, double* roots)
     result = quad_roots(&a, r1);
   }
 
-  /* Case iii: a0 = a1*a2
-   * x = +-(-a1)^(1/2), -a2
-   */
+  /* Case iii: a0 = a1*a2 */
 	else if (a0 == a1*a2)
 	{
 		*r1 = -a2;
@@ -73,9 +67,7 @@ int rcubic_roots(double* args, double* roots)
 		result = (a1 > 0) ? COMPLEX_ROOT : THREE_DISTINCT_ROOTS ;
 	}
 
-  /* Case iv: 3*a1 == (a2)^2 && 27*a0 = (a2)^3
-   * # identical roots: -(a2)/3
-   */
+  /* Case iv: 3*a1 == (a2)^2 && 27*a0 = (a2)^3 */
   else if (3*a1 == a2*a2 && 27*a0 == a2*a2*a2)
   {
     *r1 = *r2 = *r3 = -a2/3.;
@@ -100,9 +92,7 @@ int rcubic_roots(double* args, double* roots)
       b = -a2/3.;
       p = (a1 - a2*a2/3.)/(a*a);
 
-      /* Case v: p = 0
-       * y is the three cubic roots
-       */
+      /* Case v: p = 0 */
       if (p == 0)
       {
         *r1 = UNITY_1  * a + b;
@@ -113,9 +103,9 @@ int rcubic_roots(double* args, double* roots)
 
       else
       {
-
         int count = 1;     /* Counter for number of iterations */
         double difference; /* Difference between y_n and y_(n+1) */
+        double args[3];
         double p2;
 
         y_n  = fabs(p) < 2. ? 1-p/3. : 1/p;
@@ -144,8 +134,9 @@ int rcubic_roots(double* args, double* roots)
           *r2 = *r1;
           *r3 = 1./((*r1)*(*r1));
         }
-        
-        double args[3] = {1., a2+(*r1), -a0/(*r1)};
+        args[0] = 1.;
+        args[1] = a2+(*r1);
+        args[2] = -a0/(*r1);
         result = quad_roots(&args, r1);
       }
 
