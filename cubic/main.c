@@ -8,11 +8,8 @@ int main()
 {
   /* Chan, Joey, JMC */
 
-  int NUMBER_OF_ARGUMENTS = 3;
-  int NUMBER_OF_ROOTS = 3;
-
-  double a[NUMBER_OF_ARGUMENTS]; /* Coefficients to the equation */
-  double roots[NUMBER_OF_ROOTS+1]; /* Roots */
+  double a[3]; /* Coefficients to the equation */
+  double roots[4]; /* Roots */
 
   int numberOfRoots;
 
@@ -25,18 +22,20 @@ int main()
   printf("separated with spaces: ");
   scanf("%lf %lf %lf", &a[0], &a[1], &a[2]);
 
-  numberOfRoots = rcubic_roots(a, roots);
-  printResult(numberOfRoots, &roots);
+  numberOfRoots = rcubic_roots(&a[0], &roots[0]);
+  printResult(numberOfRoots, &roots[0]);
 
+  return 0;
 }
 
 void printResult(int numberOfRoots, double* roots)
 {
+  /* Chan, Joey, JMC */
+
   double  r1 = *(roots+1),
           r2 = *(roots+2),
           r3 = *(roots+3);
 
-  /* Chan, Joey, JMC */
   switch (numberOfRoots)
   {
     case 3:

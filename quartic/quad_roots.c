@@ -8,29 +8,24 @@ int calculateSqrt(double*, double*);
 int quad_roots(double* a, double* roots)
 {
 
-  int TWO_ROOTS = 2;
-  int REPEATED_ROOT  = 1;
-  int COMPLEX_ROOTS = 0;
-  int ONE_ROOT  = -1;
-  int INF_ROOTS = -2;
-  int NO_ROOTS  = -3;
-
   /* Chan, Joey, JMC */
-  double  a2 = *a,
-          a1 = *(a+1),
-          a0 = *(a+2);
+  double a2 = *a,
+         a1 = *(a+1),
+         a0 = *(a+2);
 
-  double* r1 = roots+1,
-        * r2 = roots+2;
-
+  double *r1 = roots+1,
+         *r2 = roots+2;
+         
   double sqroot;
+  double argv[2];
   int result;
 
   /* Handle Linear Equation */
   if (a2 == 0)
   {
-    double a[2] = {a1, a0};
-    return lin_root(&a, r1) - 2;
+    argv[0] = a1;
+    argv[1] = a2;
+    return lin_root(&argv[0], r1) - 2;
   }
   
 
@@ -41,18 +36,28 @@ int quad_roots(double* a, double* roots)
     *r1 = -a1/(2*a2);
     *r2 = sqroot/(2*a2);
   }
-  else if (a1 >= 0)
-  /* Real roots */
-  /* Using the more accurate way by avoiding substraction of coefficients with different signs */
-  {
-    *r1 = -(a1 + sqroot)/(2*a2);
-    *r2 = (a0/a2)/(*r1);
-  }
   else
   {
-    *r2 = ((-a1) + sqroot)/(2*a2);
-    *r1 = (a0/a2)/(*r2);
+    /*printf("a2 = %.30f, a1 = %.30f, a0 = %.30f\n", a2, a1, a0);*/
+    if (a2 > 0 && a0 > 0 && 2*sqrt(a2)*sqrt(a0) == fabs(a1))
+    {
+      printf("bye\n");
+      *r1 = *r2 = sqrt(a0)/sqrt(a2);
+      if (a1 > 0)
+        *r1 = *r2 = -(*r2);
+    }
+    else if (a1 >= 0)
+    {
+      *r1 = -(a1 + sqroot)/(2*a2);
+      *r2 = (a0/a2)/(*r1);
+    }
+    else
+    {
+      *r2 = ((-a1) + sqroot)/(2*a2);
+      *r1 = (a0/a2)/(*r2);
+    }
   }
+
   return result + 1;
 }
 

@@ -8,29 +8,24 @@ int calculateSqrt(double*, double*);
 int quad_roots(double* a, double* roots)
 {
 
-  int TWO_ROOTS = 2;
-  int REPEATED_ROOT  = 1;
-  int COMPLEX_ROOTS = 0;
-  int ONE_ROOT  = -1;
-  int INF_ROOTS = -2;
-  int NO_ROOTS  = -3;
-
   /* Chan, Joey, JMC */
-  double  a2 = *a,
-          a1 = *(a+1),
-          a0 = *(a+2);
+  double a2 = *a,
+         a1 = *(a+1),
+         a0 = *(a+2);
 
-  double* r1 = roots+1,
-        * r2 = roots+2;
-
+  double *r1 = roots+1,
+         *r2 = roots+2;
+         
   double sqroot;
+  double argv[2];
   int result;
 
   /* Handle Linear Equation */
   if (a2 == 0)
   {
-    double a[2] = {a1, a0};
-    return lin_root(&a, r1) - 2;
+    argv[0] = a1;
+    argv[1] = a2;
+    return lin_root(&argv[0], r1) - 2;
   }
   
 

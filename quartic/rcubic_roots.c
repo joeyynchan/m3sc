@@ -5,6 +5,7 @@
 void sort(double*, double*, double*);
 void swap(double*, double*);
 int quad_roots(double*, double*);
+double _cbrt(double a);
 
 int rcubic_roots(double* args, double* roots)
 {
@@ -12,18 +13,14 @@ int rcubic_roots(double* args, double* roots)
   /* Chan, Joey, JMC */
 
   /* For result clarity */
-  int THREE_DISTINCT_ROOTS = 3;
-  int TWO_REPEATING_ROOTS = 2;
-  int ONE_ROOT = 1;
-  int COMPLEX_ROOT = 0;
+  int THREE_DISTINCT_ROOTS = 3,
+      TWO_REPEATING_ROOTS = 2,
+      ONE_ROOT = 1,
+      COMPLEX_ROOT = 0;
 
   double UNITY_1  = 1.;           /* Unity Real root */
   double UNITY_RE = -1./2.;       /* Real part of the complex unity root */
   double UNITY_IM = sqrt(3.)/2.;  /* Imaginary part of the complex unity root */
-
-  int result;
-  double a, b, p;
-  double y_n, y_n1;
 
   double  a2 = *args,
           a1 = *(args+1),
@@ -33,10 +30,14 @@ int rcubic_roots(double* args, double* roots)
         * r2 = roots+2,
         * r3 = roots+3;
 
+  double a, b, p;
+  double y_n, y_n1;
+  int result;
+
   /* Case i: a2 == a1 == 0 */
   if (a2 == 0 && a1 == 0)
   {
-    *r1 = *r2 = *r3 = (a0 < 0) ? cbrt(-a0) : -cbrt(a0);
+    *r1 = *r2 = *r3 = (a0 < 0) ? _cbrt(-a0) : -_cbrt(a0);
     *r2 *= UNITY_RE;
     *r3 *= UNITY_IM;
     return COMPLEX_ROOT;
@@ -45,9 +46,12 @@ int rcubic_roots(double* args, double* roots)
   /* Case ii: a0 == 0 */
   else if (a0 == 0)
   {
-    double a[3] = {1., a2, a1};
+    double argv[3];
+    argv[0] = 1.;
+    argv[1] = a2;
+    argv[2] = a1;
     *r1 = 0;
-    result = quad_roots(&a, r1);
+    result = quad_roots(&argv[0], r1);
   }
 
   /* Case iii: a0 = a1*a2 */
@@ -71,18 +75,22 @@ int rcubic_roots(double* args, double* roots)
   else if (3*a1 == a2*a2 && 27*a0 == a2*a2*a2)
   {
     *r1 = *r2 = *r3 = -a2/3.;
+    result = ONE_ROOT;
   }
 
   else
   {
-    a = -cbrt(2*a2*a2*a2-9*a1*a2+27*a0)/3.;
+    a = -_cbrt(2*a2*a2*a2-9*a1*a2+27*a0)/3.;
 
     /* alpha is 0, p cannot be calculated */
     if (a == 0)
     {
-      double a[3] = {1., 0., a1 - a2*a2/3.};
+      double argv[3];
+      argv[0] = 1.;
+      argv[1] = 0.;
+      argv[2] = a1 - a2*a2/3.;
       *r1 = 0;
-      result = quad_roots(args, r1);
+      result = quad_roots(&argv[0], r1);
     }
 
 
@@ -105,7 +113,7 @@ int rcubic_roots(double* args, double* roots)
       {
         int count = 1;     /* Counter for number of iterations */
         double difference; /* Difference between y_n and y_(n+1) */
-        double args[3];
+        double _a[3];
         double p2;
 
         y_n  = fabs(p) < 2. ? 1-p/3. : 1/p;
@@ -116,30 +124,32 @@ int rcubic_roots(double* args, double* roots)
          * 1) y_(n+1) = y_n OR |y_(n+1) - y_n| starts diverging
          * 2) Performed at least 3 iterations
          */
-        while ((y_n != y_n1 || difference > fabs(y_n1-y_n)) &&
-                count < 3)
+        while ( (y_n != y_n1 && difference < fabs(y_n1-y_n)) || count < 3)
         {
           count++;
           difference = fabs(y_n1-y_n); 
-
           y_n = y_n1;
           y_n1 = y_n - (y_n*y_n*y_n + p*y_n - 1)/(3*y_n*y_n + p);
         }
         *r1 = a*y_n1+b;
         
         /* Case vi */
+        
         p2 = -3. * (*r1) * (*r1);
         if (p2 == p)
         {
           *r2 = *r1;
           *r3 = 1./((*r1)*(*r1));
+          result = TWO_REPEATING_ROOTS;
         }
-        args[0] = 1.;
-        args[1] = a2+(*r1);
-        args[2] = -a0/(*r1);
-        result = quad_roots(&args, r1);
+        else
+        {
+          _a[0] = 1.;
+          _a[1] = a2+(*r1);
+          _a[2] = -a0/(*r1);
+          result = quad_roots(&_a[0], r1);
+        }
       }
-
     }
   }
 
@@ -176,4 +186,11 @@ void swap(double* r1, double* r2)
 	double temp = *r1;
 	*r1 = *r2;
 	*r2 = temp;
+}
+
+double _cbrt(double a)
+{
+  if (a < 0)
+    return -pow(-a, 1./3.);
+  return pow(a, 1./3.);
 }

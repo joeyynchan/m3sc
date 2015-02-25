@@ -8,11 +8,8 @@ int main()
 {
   /* Chan, Joey, JMC */
 
-  int NUMBER_OF_ARGUMENTS = 4;
-  int NUMBER_OF_ROOTS = 4;
-
-  double a[NUMBER_OF_ARGUMENTS]; /* Coefficients to the equation */
-  double roots[NUMBER_OF_ROOTS+1]; /* Roots */
+  double argv[4]; /* Coefficients to the equation */
+  double roots[5]; /* Roots */
 
   int numberOfRoots;
 
@@ -23,11 +20,11 @@ int main()
   printf("To solve x^4 + a3 * x^3 + a2 * x^2 + a1 * x + a0 = 0\n");
   printf("Please enter the 3 coefficient in the order a3, a2, a1, a0\n");
   printf("separated with spaces: ");
-  scanf("%lf %lf %lf %lf", &a[0], &a[1], &a[2], &a[3]);
+  scanf("%lf %lf %lf %lf", &argv[0], &argv[1], &argv[2], &argv[3]);
 
-  numberOfRoots = rquartic_roots(a, roots);
-  printResult(numberOfRoots, &roots);
-
+  numberOfRoots = rquartic_roots(&argv[0], &roots[0]);
+  printResult(numberOfRoots, &roots[0]);
+  return 0;
 }
 
 void printResult(int numberOfRoots, double* roots)
@@ -43,7 +40,7 @@ void printResult(int numberOfRoots, double* roots)
     case 4:
       printf("There are 4 distinct real roots\n");
       printf("--------------------------------------------------\n");
-      printf("x1 = %10.5g\nx2 = %10.5g\nx3 = %10.5g\nx4 = %10.5g\n", r1, r2, r3, r4);
+      printf("x1 = %.10f\nx2 = %.10f\nx3 = %.10f\nx4 = %.10f\n", r1, r2, r3, r4);
       break;
     case 3:
       printf("There are 3 distinct real roots\n");

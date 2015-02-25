@@ -3,11 +3,12 @@
 #include <math.h>
 #include <float.h>
 
-int test(double* args, double* roots, int* n);
+int cubic_test(double* args, double* roots, int* n);
 int assertEqualRoot(double actual, double expected);
 int assertEqualResult(int actual, int expected);
 int quad_test(double* args, double* roots, int* n);
-
+int rcubic_roots(double*, double*);
+int quad_roots(double*, double*);
 
 int main()
 {
@@ -45,7 +46,7 @@ int main()
   int i;
   for (i = 0; i < NUMBER_OF_CUBIC_TEST; i++)
   {
-    if (test(&data[i], &data[i][3], &n[i]) == 1)
+    if (cubic_test(&data[i][0], &data[i][3], &n[i]) == 1)
       printf("Test %2d Passed!\n", i);
     else
       printf("Test %2d Failed!!!\n", i);
@@ -56,18 +57,18 @@ int main()
 
   for (i = 0; i < NUMBER_OF_QUAD_TEST; i++)
   {
-    if (quad_test(&data2[i], &data2[i][3], &n2[i]) == 1)
+    if (quad_test(&data2[i][0], &data2[i][3], &n2[i]) == 1)
       printf("Test %2d Passed!\n", i);
     else
       printf("Test %2d Failed!!!\n", i);
   }
-
+  return 0;
 }
 
-int test(double* args, double* roots, int* n)
+int cubic_test(double* args, double* roots, int* n)
 {
   double _roots[4];
-  int _n = rcubic_roots(args, &_roots);
+  int _n = rcubic_roots(args, &_roots[0]);
   if (assertEqualRoot(_roots[1], *(roots)) &&
       assertEqualRoot(_roots[2], *(roots+1)) &&
       assertEqualRoot(_roots[3], *(roots+2)) &&
@@ -80,7 +81,7 @@ int test(double* args, double* roots, int* n)
 int quad_test(double* args, double* roots, int* n)
 {
   double _roots[3];
-  int _n = quad_roots(args, &_roots);
+  int _n = quad_roots(args, &_roots[0]);
   if (assertEqualRoot(_roots[1], *(roots)) &&
       assertEqualRoot(_roots[2], *(roots+1)) &&
       assertEqualResult(_n, *n))
