@@ -1,9 +1,11 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
+#include <float.h>
 
 int lin_root(double*, double*);
 int calculateSqrt(double*, double*);
+void swap(double*, double*);
 
 int quad_roots(double* a, double* roots)
 {
@@ -24,12 +26,13 @@ int quad_roots(double* a, double* roots)
   if (a2 == 0)
   {
     argv[0] = a1;
-    argv[1] = a2;
-    return lin_root(&argv[0], r1) - 2;
+    argv[1] = a0;
+    return lin_root(&argv[0], roots) - 2;
   }
   
 
   result = calculateSqrt(a, &sqroot);
+  /*printf("result = %d, a2= %.20f, a1 = %.20f, a0 = %.20f\n", result, a2, a1, a0);*/
   if (result < 0)
   /* Complex roots*/
   {
@@ -38,16 +41,20 @@ int quad_roots(double* a, double* roots)
   }
   else
   {
-    /*printf("a2 = %.30f, a1 = %.30f, a0 = %.30f\n", a2, a1, a0);*/
     if (a2 > 0 && a0 > 0 && 2*sqrt(a2)*sqrt(a0) == fabs(a1))
     {
-      printf("bye\n");
       *r1 = *r2 = sqrt(a0)/sqrt(a2);
       if (a1 > 0)
         *r1 = *r2 = -(*r2);
     }
-    else if (a1 >= 0)
+    else if (fabs(a1) < DBL_EPSILON)
     {
+      *r1 = sqrt(-a0/a2);
+      *r2 = -sqrt(-a0/a2);
+    }
+    else if (a1 > 0)
+    {
+      /*printf("a2 = %.20f, a1 = %.20f, a0 = %.20f, sqroot = %.20f\n", a2, a1, a0, sqroot);*/
       *r1 = -(a1 + sqroot)/(2*a2);
       *r2 = (a0/a2)/(*r1);
     }
@@ -57,6 +64,9 @@ int quad_roots(double* a, double* roots)
       *r1 = (a0/a2)/(*r2);
     }
   }
+
+  if (result >= 0 && (*r1) > (*r2))
+    swap(r1, r2);
 
   return result + 1;
 }
@@ -94,11 +104,14 @@ int calculateSqrt(double* a, double* sqroot)
   else 
   {
     result = (a1 * a1 - 4. * a2 * a0);
-    *sqroot = sqrt(fabs(result));
+    *sqroot = fabs(sqrt(fabs(result)));
   }
 
-  if (result >= 0)
-    return (result == 0) ? 0 : 1;
+  /*printf("Result = %.20f\n", result);*/
+  if (fabs(result) < 1e-6)
+    return 0;
+  else if (result > 0)
+    return 1;
   else
     return -1;
 }

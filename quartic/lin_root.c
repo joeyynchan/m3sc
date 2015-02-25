@@ -1,3 +1,5 @@
+#include <stdio.h>
+
 int lin_root(double* args, double* root)
 {
   /* Chan, Joey, JMC */
@@ -9,6 +11,7 @@ int lin_root(double* args, double* root)
   double a1 = args[0];
   double a0 = args[1];
 
+  printf("HI\n");
   /* No roots or every number is a root */
   if (a1 == 0)
     return a0 == 0 ? INF_ROOTS : NO_ROOT ;

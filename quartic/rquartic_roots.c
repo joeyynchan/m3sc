@@ -52,26 +52,29 @@ int rquartic_roots(double* args, double* roots)
     a[1] = a2;
     a[2] = a0;
     quad_roots(&a[0], &qroots[0]);
+    /*printf("qroots = %.20f, %.20f\n", qroots[1], qroots[2]);*/
     if (qroots[1] < 0)
     {
+      *(roots+1) = 0;
       *(roots+2) = sqrt(-qroots[1]);
       conjugate_pair_count = 2;
     }
     else
     {
       *(roots+1) = -sqrt(qroots[1]);
-      *(roots+1) =  sqrt(qroots[1]);
+      *(roots+2) =  sqrt(qroots[1]);
     }
 
     if (qroots[2] < 0)
     {
+      *(roots+3) = 0;
       *(roots+4) = sqrt(-qroots[2]);
       conjugate_pair_count++;
     }
     else
     {
       *(roots+3) = -sqrt(qroots[2]);
-      *(roots+3) =  sqrt(qroots[2]);
+      *(roots+4) =  sqrt(qroots[2]);
     }
   }
   else if (a3 == 0 && a2 == 0 && a1 == 0)
@@ -101,7 +104,8 @@ int rquartic_roots(double* args, double* roots)
     b[1] = a1*a3 - 4.*a0;
     b[2] = 4.*a0*a2 - a1*a1 - a0*a3*a3;
 
-    r = (rcubic_roots(&b[0], &roots[0]) == 3) ? *(roots+3) : *(roots+1);
+    r = (rcubic_roots(&b[0], &roots[0]) == 0) ? *(roots+1) : *(roots+3);
+    /*printf("r1 = %.20f r2 = %.20f r3 = %.20f\n", *(roots+1), *roo */
 
     p[0] = 1.;
     p[1] = a3/2. + sqrt(a3*a3/4. + r - a2);
@@ -130,8 +134,10 @@ int rquartic_roots(double* args, double* roots)
     printf("%.10f %.10f %.10f %.10f %.10f %.10f\n\n", r, p[1], p[2], q[1], q[2], p[1]*q[2] + q[1]*p[2]);
 */
 
-    conjugate_pair_count += (quad_roots(&q[0], roots+2) == 0)*2;
-    conjugate_pair_count += (quad_roots(&p[0], roots  ) == 0);
+    conjugate_pair_count += (quad_roots(&p[0], roots  ) == 0)*2;
+    /*printf ("conjugate_pair_count = %d\n", conjugate_pair_count);*/
+    conjugate_pair_count += (quad_roots(&q[0], roots+2) == 0);
+    /*printf ("conjugate_pair_count = %d\n", conjugate_pair_count);*/
   }
 
 /*
@@ -147,17 +153,27 @@ int rquartic_roots(double* args, double* roots)
       swap(roots+1, roots+3);
       swap(roots+2, roots+4);
     }
+    else if (conjugate_pair_count == 3)
+    {
+      if (equal(roots+1, roots+3) && *(roots+2) > *(roots+4))
+        swap(roots+2, roots+4);
+      else if (*(roots+1) > *(roots+3))
+      {
+        swap(roots+1, roots+3);
+        swap(roots+2, roots+4);
+      }
+    }
   }
   else
   {
     result = 4;
     /*qsort(roots+1, 4, sizeof(double), ascending);*/
-    if (equal(roots+1, roots+2) || equal(roots+1, roots+3) || equal(roots+1, roots+4))
-      result--;
-    if (equal(roots+2, roots+3) || equal(roots+2, roots+4))
-      result--;
-    if (equal(roots+3, roots+4))
-      result--;
+    if (equal(roots+1, roots+2) || equal(roots+1, roots+3) || equal(roots+1, roots+4) ||
+        equal(roots+2, roots+3) || equal(roots+2, roots+4) ||
+        equal(roots+3, roots+4))
+      result = 3;
+    if (equal(roots+1, roots+2) && equal(roots+2, roots+3) && equal(roots+3, roots+4))
+      result = 1;
   }
   return result;
 }
