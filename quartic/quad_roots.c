@@ -22,6 +22,15 @@ int quad_roots(double* a, double* roots)
   double argv[2];
   int result;
 
+/*
+  if (a2 < DBL_EPSILON)
+    a2 = 0;
+  if (a1 < DBL_EPSILON)
+    a1 = 0;
+  if (a0 < DBL_EPSILON)
+    a0 = 0;
+*/
+
   /* Handle Linear Equation */
   if (a2 == 0)
   {

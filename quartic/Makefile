@@ -11,6 +11,8 @@ main: main.c $(SOURCE)
 test: test.c $(SOURCE)
 	$(GCC) test.c $(SOURCE) -o test.out $(FLAG)
 
+main_ellipse_plot: main_ellipse_plot.c $(SOURCE)
+	$(GCC) main_ellipse_plot.c $(SOURCE) -o main_ellipse_plot.out $(FLAG)
 
 .PHONY: clean
 

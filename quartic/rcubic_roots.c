@@ -190,6 +190,7 @@ void swap(double* r1, double* r2)
 
 double _cbrt(double a)
 {
+  /* Chan, Joey, JMC */
   if (a < 0)
     return -pow(-a, 1./3.);
   return pow(a, 1./3.);

@@ -12,6 +12,7 @@ int equal(double* a, double* b);
 
 int rquartic_roots(double* args, double* roots)
 {
+  /* Chan, Joey, JMC */
 
   int ONE_COMPLEX_PAIR = 2;
   int TWO_COMPLEX_PAIRS = 0;
@@ -166,20 +167,25 @@ int rquartic_roots(double* args, double* roots)
   }
   else
   {
-    result = 4;
+    result = 3;
     /*qsort(roots+1, 4, sizeof(double), ascending);*/
-    if (equal(roots+1, roots+2) || equal(roots+1, roots+3) || equal(roots+1, roots+4) ||
-        equal(roots+2, roots+3) || equal(roots+2, roots+4) ||
-        equal(roots+3, roots+4))
-      result = 3;
-    if (equal(roots+1, roots+2) && equal(roots+2, roots+3) && equal(roots+3, roots+4))
+    if ((equal(roots+1, roots+2) && equal(roots+1, roots+3)) ||
+        (equal(roots+1, roots+3) && equal(roots+2, roots+4)) ||
+        (equal(roots+2, roots+3) && equal(roots+3, roots+4)) ||
+        (equal(roots+1, roots+2) && equal(roots+2, roots+3) && equal(roots+3, roots+4)))
       result = 1;
+    if (!equal(roots+1, roots+2) && !equal(roots+1, roots+3) && !equal(roots+1, roots+4) &&
+        !equal(roots+2, roots+3) && !equal(roots+2, roots+4) &&
+        !equal(roots+3, roots+4))
+      result = 4;
   }
   return result;
 }
 
 double max_ratio(double* argv, int n)
 {
+  /* Chan, Joey, JMC */
+
   int i;
   double min = DBL_MAX;
   double max = DBL_MIN;
@@ -192,10 +198,14 @@ double max_ratio(double* argv, int n)
 
 int ascending(const void* a, const void* b)
 {
+  /* Chan, Joey, JMC */
+
   return (*(double*)a - *(double*)b);
 }
 
 int equal(double* a, double* b)
 {
+  /* Chan, Joey, JMC */
+  
   return (fabs(*a - *b) < 1e-5);
 }

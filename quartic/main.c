@@ -2,6 +2,7 @@
 #include <stdlib.h>
 
 void printResult(int, double*);
+void printInfo();
 int rquartic_roots(double*, double*);
 
 int main()
@@ -14,8 +15,7 @@ int main()
   int numberOfRoots;
 
   /* Extract information about the equation */
-  printf("Chan, Joey | JMC | Cubic Solver\n");
-  printf("-------------------------------\n");
+  printInfo();
 
   printf("To solve x^4 + a3 * x^3 + a2 * x^2 + a1 * x + a0 = 0\n");
   printf("Please enter the 3 coefficient in the order a3, a2, a1, a0\n");
@@ -65,4 +65,15 @@ void printResult(int numberOfRoots, double* roots)
     default:
       break;
   }
+}
+
+void printInfo()
+{
+  /* Chan, Joey, JMC */
+  
+  /*printf("\n What is this? : \234 ");*/
+  printf("\n");
+  printf("Chan, Joey | JMC | Cubic Solver\n");
+  printf("Compilation Time : %s, %s \n", __TIME__, __DATE__);
+  printf("-------------------------------\n");
 }
