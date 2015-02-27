@@ -10,6 +10,9 @@ main_c89: main.c $(SOURCE)
 main:  main.c $(SOURCE)
 	gcc main.c $(SOURCE) -o main.out -lm
 
+main_plot: main_plot.c $(SOURCE)
+	gcc main_plot.c $(SOURCE) -o main_plot.out -lm
+
 test: test.c $(SOURCE)
 	$(GCC) test.c $(SOURCE) -o test.out -lm
 

@@ -104,11 +104,11 @@ int rquartic_roots(double* args, double* roots)
     b[0] = -a2;
     b[1] = a1*a3 - 4.*a0;
     b[2] = 4.*a0*a2 - a1*a1 - a0*a3*a3;
-    printf("b[0] = %.20f\nb[1] = %.20f\nb[2] = %.20f\n", b[0], b[1], b[2]); 
+    /*printf("b[0] = %.20f\nb[1] = %.20f\nb[2] = %.20f\n", b[0], b[1], b[2]); */
 
     r = (rcubic_roots(&b[0], &roots[0]) == 0) ? *(roots+1) : *(roots+3);
     /*printf("r1 = %.20f r2 = %.20f r3 = %.20f\n", *(roots+1), *roo */
-    printf("r = %.20f\n", r);
+    /*printf("r = %.20f\n", r);*/
 
     p[0] = 1.;
     p[1] = a3/2. + sqrt(a3*a3/4. + r - a2);

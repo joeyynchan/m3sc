@@ -74,7 +74,6 @@ int rcubic_roots(double* args, double* roots)
   /* Case iv: 3*a1 == (a2)^2 && 27*a0 = (a2)^3 */
   else if (3*a1 == a2*a2 && 27*a0 == a2*a2*a2)
   {
-      printf("HI\n");
     *r1 = *r2 = *r3 = -a2/3.;
     result = ONE_ROOT;
   }
@@ -82,7 +81,7 @@ int rcubic_roots(double* args, double* roots)
   else
   {
     a = -_cbrt(2*a2*a2*a2-9*a1*a2+27*a0)/3.;
-    printf ("a = %.20f\n", a);
+    b = -a2/3.;
 
     /* alpha is 0, p cannot be calculated */
     if (a == 0)
@@ -91,15 +90,16 @@ int rcubic_roots(double* args, double* roots)
       argv[0] = 1.;
       argv[1] = 0.;
       argv[2] = a1 - a2*a2/3.;
-      *r1 = 0;
+      *r1 = b;
       result = quad_roots(&argv[0], r1);
+      *r2 += b;
+      *r3 += b;
     }
 
 
     /* Normal calculation */
     else
     {
-      b = -a2/3.;
       p = (a1 - a2*a2/3.)/(a*a);
 
       /* Case v: p = 0 */
