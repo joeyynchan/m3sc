@@ -14,6 +14,9 @@ test: test.c $(SOURCE)
 main_ellipse_plot: main_ellipse_plot.c $(SOURCE)
 	$(GCC) main_ellipse_plot.c $(SOURCE) -o main_ellipse_plot.out $(FLAG)
 
+main_recurrence: main_recurrence.c
+	$(GCC) main_recurrence.c -o main_recurrence.out $(FLAG)
+
 .PHONY: clean
 
 clean:
