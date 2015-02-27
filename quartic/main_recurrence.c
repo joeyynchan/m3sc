@@ -6,8 +6,8 @@ void printInfo();
 int main()
 {
 	int argv[3];
-	double A, B, c;
-	double x[26];
+	long double A, B, c;
+	long double x[26];
 	int i;
 
 	printf("Please enter the 3 parameters, I1, I2, I3 seperated with space:\n");
@@ -15,19 +15,17 @@ int main()
 
 	A = argv[0]+1;
 	B = -argv[0];
-	c = (double) argv[1]/ (double)argv[2];
+	c = (long double) argv[1]/ (long double)argv[2];
 	x[0] = x[1] = c;
-	printf("x[0] = %20.10f\nx[1] = %20.10f\n", x[0], x[1]);
 	for (i = 2; i < 26; i++)
 	{
-		/*x[i] = A*x[i-1] + B*x[i-2];*/
-		x[i] = c + 0. * pow(-B, i);
-		printf("x[%d] = %20.10f\n", i, x[i]);
+		x[i] = A*x[i-1] + B*x[i-2];
 	}
-	printf("x[0]-x[25] = %20.10f\n", x[0] - x[25]);
-
+	printf("x[2]-x[25] = %10.6Lg\n", x[2] - x[25]);
 	return 0;
 }
+
+
 
 void printInfo()
 {
