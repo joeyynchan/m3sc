@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-//#include "rcubic_roots.h"
-//#include "info.h"
+#include <complex.h>
 
 void printResult(int, double, double, double);
 
@@ -9,51 +8,27 @@ int main()
 {
 
   /* Chan, Joey, JMC */
-  double argv[3] a0, a1, a2; /* Coefficients to the equation */
-  double r1, r2, r3; /* Roots */
 
-  int numberOfRoots;
+  double argv[8]; /* Coefficients to the equation */
+  double complex a[4];
+  double complex roots[5]; /* Roots */
 
-  /* Extract information about the equation */
-  printf("###################\n");
-  printf("# JMC | JOEY CHAN　#\n");
-  printf("###################\n");
   printf("To solve x^3 + a2 * x^2 + a1 * x + a0 = 0\n");
   printf("Please enter the 3 coefficient in the order a2, a1, a0\n");
   printf("separated with spaces: ");
-  scanf("%lf %lf %lf", &a2, &a1, &a0);
+  scanf("%lf %lf %lf %lf %lf %lf %lf %lf", &argv[0], &argv[1], &argv[2], &argv[3], &argv[4], &argv[5], &argv[6], &argv[7]);
 
-  numberOfRoots = rcubic_roots(a2, a1, a0, &r1, &r2, &r3);
-  printResult(numberOfRoots, r1, r2, r3);
+  a[0] = argv[0] + argv[1]*I;
+  a[1] = argv[2] + argv[3]*I;
+  a[2] = argv[4] + argv[5]*I;
+  a[3] = argv[6] + argv[7]*I;
+
+  rquartic_roots(&a[0], &roots[0]);
+  printf("x1 = %10.6f + %10.6fi\n", creal(roots[1]), cimag(roots[1]));
+  printf("x2 = %10.6f + %10.6fi\n", creal(roots[2]), cimag(roots[2]));
+  printf("x3 = %10.6f + %10.6fi\n", creal(roots[3]), cimag(roots[3]));
+  printf("x4 = %10.6f + %10.6fi\n", creal(roots[4]), cimag(roots[4]));
 
 }
 
-void printResult(int numberOfRoots, double r1, double r2, double r3)
-{
-  /* Chan, Joey, JMC */
-  switch (numberOfRoots)
-  {
-    case 3:
-      printf("There are 3 distinct real roots\n");
-      printf("--------------------------------------------------\n");
-      printf("x1 = %10.5g\nx2 = %10.5g\nx3 = %10.5g\n", r1, r2, r3);
-      break;
-    case 2:
-      printf("There are 2 distinct real roots\n");
-      printf("--------------------------------------------------\n");
-      printf("x1 = %10.5g\nx2 = %10.5g\nx3 = %10.5g\n", r1, r2, r3);
-      break;
-    case 1:
-      printf("There is 1 distinct real root\n");
-      printf("--------------------------------------------------\n");
-      printf("x = %10.5g\n", r1);
-      break;
-    case 0:
-      printf("There are 1 real root and a complex conjugate pair\n");
-      printf("--------------------------------------------------\n");
-      printf("x1 = %10.5g\nx2 = %10.5g+%10.5gi\nx3 = %10.5g-%10.5gi\n", r1, r2, r3, r2, r3);
-      break;
-    default:
-      break;
-  }
-}
+
