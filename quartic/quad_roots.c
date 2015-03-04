@@ -10,7 +10,8 @@ void swap(double*, double*);
 int quad_roots(double* a, double* roots)
 {
 
-  /* Chan, Joey, JMC */
+  /* Chan, Joey, JMCSC, ync12 */
+  
   double a2 = *a,
          a1 = *(a+1),
          a0 = *(a+2);
@@ -22,14 +23,7 @@ int quad_roots(double* a, double* roots)
   double argv[2];
   int result;
 
-/*
-  if (a2 < DBL_EPSILON)
-    a2 = 0;
-  if (a1 < DBL_EPSILON)
-    a1 = 0;
-  if (a0 < DBL_EPSILON)
-    a0 = 0;
-*/
+
 
   /* Handle Linear Equation */
   if (a2 == 0)
@@ -41,7 +35,6 @@ int quad_roots(double* a, double* roots)
   
 
   result = calculateSqrt(a, &sqroot);
-  /*printf("result = %d, a2= %.20f, a1 = %.20f, a0 = %.20f\n", result, a2, a1, a0);*/
   if (result < 0)
   /* Complex roots*/
   {
@@ -63,7 +56,6 @@ int quad_roots(double* a, double* roots)
     }
     else if (a1 > 0)
     {
-      /*printf("a2 = %.20f, a1 = %.20f, a0 = %.20f, sqroot = %.20f\n", a2, a1, a0, sqroot);*/
       *r1 = -(a1 + sqroot)/(2*a2);
       *r2 = (a0/a2)/(*r1);
     }
@@ -85,10 +77,11 @@ int quad_roots(double* a, double* roots)
  */
 int calculateSqrt(double* a, double* sqroot)
 {
-  /* Chan, Joey, JMC */
-  double  a2 = *a,
-          a1 = *(a+1),
-          a0 = *(a+2);
+  /* Chan, Joey, JMCSC, ync12 */
+
+  double a2 = *a,
+         a1 = *(a+1),
+         a0 = *(a+2);
 
   double result;
   
@@ -116,7 +109,6 @@ int calculateSqrt(double* a, double* sqroot)
     *sqroot = fabs(sqrt(fabs(result)));
   }
 
-  /*printf("Result = %.20f\n", result);*/
   if (fabs(result) < 1e-6)
     return 0;
   else if (result > 0)

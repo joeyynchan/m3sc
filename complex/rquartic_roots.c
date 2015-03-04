@@ -6,6 +6,7 @@ void swap(double complex*, double complex*);
 
 int rquartic_roots(double complex* argv, double complex* roots)
 {
+  /* Chan, Joey, JMCSC, ync12 */
 	double complex  a3 = *(argv+0),
   					      a2 = *(argv+1),
   					      a1 = *(argv+2),
@@ -61,7 +62,7 @@ int rquartic_roots(double complex* argv, double complex* roots)
 
 void swap(double complex* r1, double complex* r2)
 {
-  /* Chan, Joey, JMC */
+  /* Chan, Joey, JMCSC, ync12 */
 	double complex temp = *r1;
 	*r1 = *r2;
 	*r2 = temp;

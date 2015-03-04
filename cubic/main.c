@@ -1,22 +1,19 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+void printInfo();
 void printResult(int, double*);
 int rcubic_roots(double*, double*);
 
 int main()
 {
-  /* Chan, Joey, JMC */
-
+  /* Chan, Joey, JMCSC, ync12 */
   double a[3]; /* Coefficients to the equation */
   double roots[4]; /* Roots */
 
   int numberOfRoots;
 
-  /* Extract information about the equation */
-  printf("Chan, Joey | JMC | Cubic Solver\n");
-  printf("-------------------------------\n");
-
+  printInfo();
   printf("To solve x^3 + a2 * x^2 + a1 * x + a0 = 0\n");
   printf("Please enter the 3 coefficient in the order a2, a1, a0\n");
   printf("separated with spaces: ");
@@ -30,8 +27,7 @@ int main()
 
 void printResult(int numberOfRoots, double* roots)
 {
-  /* Chan, Joey, JMC */
-
+  /* Chan, Joey, JMCSC, ync12 */
   double  r1 = *(roots+1),
           r2 = *(roots+2),
           r3 = *(roots+3);
@@ -61,4 +57,19 @@ void printResult(int numberOfRoots, double* roots)
     default:
       break;
   }
+}
+
+void printInfo()
+{
+  /* Chan, Joey, JMCSC, ync12 */
+  
+  /*printf("\n What is this? : \234 ");*/
+  printf("\n");
+  printf("%15s: %s\n", "Name", "Joey");
+  printf("%15s: %s\n", "CID", "00730306");
+  printf("%15s: %s\n", "LIBRARY NO", "0246734100");
+  printf("%15s: %s\n", "Email Address", "ync12@ic.ac.uk");
+  printf("%15s: %s\n", "Course Code", "JMCSC");
+  printf("%15s: %s, %s \n", "Compile Time", __TIME__, __DATE__);
+  printf("-------------------------------------------------\n");
 }

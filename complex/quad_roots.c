@@ -5,8 +5,8 @@
 
 int quad_roots(double complex* argv, double complex* roots)
 {
-
-  /* Chan, Joey, JMC */
+  /* Chan, Joey, JMCSC, ync12 */
+  
   double complex c2 = *(argv+0),
                  c1 = *(argv+1),
                  c0 = *(argv+2);

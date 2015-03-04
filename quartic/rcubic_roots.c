@@ -10,9 +10,8 @@ double _cbrt(double a);
 int rcubic_roots(double* args, double* roots)
 {
 
-  /* Chan, Joey, JMC */
+  /* Chan, Joey, JMCSC, ync12 */
 
-  /* For result clarity */
   int THREE_DISTINCT_ROOTS = 3,
       TWO_REPEATING_ROOTS = 2,
       ONE_ROOT = 1,
@@ -122,10 +121,6 @@ int rcubic_roots(double* args, double* roots)
         y_n1 = y_n - (y_n*y_n*y_n + p*y_n - 1)/(3*y_n*y_n + p);
         difference = fabs(y_n1-y_n);
 
-        /* Iteration only stops when both of the following conditions are fulfilled
-         * 1) y_(n+1) = y_n OR |y_(n+1) - y_n| starts diverging
-         * 2) Performed at least 3 iterations
-         */
         while ( (y_n != y_n1 && difference < fabs(y_n1-y_n)) || count < 3)
         {
           count++;
@@ -173,7 +168,7 @@ int rcubic_roots(double* args, double* roots)
 
 void sort(double* r1, double* r2, double* r3)
 {
-  /* Chan, Joey, JMC */
+  /* Chan, Joey, JMCSC, ync12 */
 	if (*r1 > *r2)
 		swap(r1, r2);
 	if (*r2 > *r3)
@@ -184,7 +179,7 @@ void sort(double* r1, double* r2, double* r3)
 
 void swap(double* r1, double* r2)
 {
-  /* Chan, Joey, JMC */
+  /* Chan, Joey, JMCSC, ync12 */
 	double temp = *r1;
 	*r1 = *r2;
 	*r2 = temp;
@@ -192,7 +187,7 @@ void swap(double* r1, double* r2)
 
 double _cbrt(double a)
 {
-  /* Chan, Joey, JMC */
+  /* Chan, Joey, JMCSC, ync12 */
   if (a < 0)
     return -pow(-a, 1./3.);
   return pow(a, 1./3.);

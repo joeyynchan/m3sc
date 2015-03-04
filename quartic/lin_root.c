@@ -1,6 +1,6 @@
 int lin_root(double* args, double* root)
 {
-  /* Chan, Joey, JMC */
+  /* Chan, Joey, JMCSC, ync12 */
 
   int ONE_ROOT  = 1;
   int INF_ROOTS = 0;

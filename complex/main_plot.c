@@ -20,13 +20,15 @@ int main()
 	d[2] = (-108.*s*(5.*s+1.))/d4;
 	d[3] = -324.*s*(s-1.)/d4;
 	rquartic_roots(d, roots);
-
+/*
 	printf("%3d %10.6f %10.6f %10.6f %10.6f %10.6f %10.6f %10.6f %10.6f\n",
 	 j,
 	 creal(roots[1]), cimag(roots[1]),
 	 creal(roots[2]), cimag(roots[2]),
 	 creal(roots[3]), cimag(roots[3]),
 	 creal(roots[4]), cimag(roots[4]));
+*/
+	printf("%10.6f\n%10.6f\n%10.6f\n%10.6f\n", creal(roots[1]), creal(roots[2]), creal(roots[3]), creal(roots[4]));
   }
 
   return 0;

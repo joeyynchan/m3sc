@@ -10,6 +10,7 @@ int main()
 	long double x[26];
 	int i;
 
+	printInfo();
 	printf("Please enter the 3 parameters, I1, I2, I3 seperated with space:\n");
 	scanf("%d %d %d", &argv[0], &argv[1], &argv[2]);
 
@@ -29,11 +30,15 @@ int main()
 
 void printInfo()
 {
-  /* Chan, Joey, JMC */
+  /* Chan, Joey, JMCSC, ync12 */
   
   /*printf("\n What is this? : \234 ");*/
   printf("\n");
-  printf("Chan, Joey | JMC | Cubic Solver\n");
-  printf("Compilation Time : %s, %s \n", __TIME__, __DATE__);
-  printf("-------------------------------\n");
+  printf("%15s: %s\n", "Name", "Joey");
+  printf("%15s: %s\n", "CID", "00730306");
+  printf("%15s: %s\n", "LIBRARY NO", "0246734100");
+  printf("%15s: %s\n", "Email Address", "ync12@ic.ac.uk");
+  printf("%15s: %s\n", "Course Code", "JMCSC");
+  printf("%15s: %s, %s \n", "Compile Time", __TIME__, __DATE__);
+  printf("-------------------------------------------------\n");
 }

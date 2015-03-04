@@ -7,6 +7,7 @@ int ascending(const void* a, const void* b);
 
 int rcubic_roots(double complex* argv, double complex* roots)
 {
+  /* Chan, Joey, JMCSC, ync12 */
 
   double complex a2 = *(argv+0),
                  a1 = *(argv+1),
@@ -20,7 +21,6 @@ int rcubic_roots(double complex* argv, double complex* roots)
                  *r2 = roots+2,
                  *r3 = roots+3;
 
-  /* Chan, Joey, JMC */
   double ALLOWED_ERROR = DBL_EPSILON;
 
   double complex UNITY_1  = 1. + 0.*I;           /* Unity Real root */
@@ -78,8 +78,7 @@ int rcubic_roots(double complex* argv, double complex* roots)
 
 int ascending(const void* a, const void* b)
 {
-  /* Chan, Joey, JMC */
-
+  /* Chan, Joey, JMCSC, ync12 */
   return (cabs(*(double complex*)a) - cabs(*(double complex*)b));
 }
 
