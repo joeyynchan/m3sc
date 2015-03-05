@@ -1,7 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 
-#define ARC4RANDOM_MAX      0x100000000
+#define ARC4RANDOM_MAX    0x100000000
+#define PI                3.14159265359
 
 /* Matrix Construction and Destruction*/
 double** create_matrix(int, int);
@@ -18,6 +20,9 @@ double **mymatmul_jik(double** m1, double** m2, int row1, int col1, int col2);
 double **mymatmul_jki(double** m1, double** m2, int row1, int col1, int col2);
 double **mymatmul_kij(double** m1, double** m2, int row1, int col1, int col2);
 double **mymatmul_kji(double** m1, double** m2, int row1, int col1, int col2);
+
+/* Construct Symmetric Matrix */
+double **MakeSN(int);
 
 double** create_matrix(int row, int col)
 {
@@ -148,6 +153,18 @@ double **mymatmul_kji(double** m1, double** m2, int row1, int col1, int col2)
       for (i = 1; i <= row1; i++)
         m[i][j] += m1[i][k] * m2[k][j];
   return m;
+}
+
+
+
+double **MakeSN(int N)
+{
+  int i, j;
+  double** M = create_matrix(N-1, N-1);
+  for (i = 1; i < N; i++)
+    for (j = 1; j < N; j++)
+      M[i][j] = sin((double)i*(double)j*PI/(double)N);
+  return M;
 }
 
 
