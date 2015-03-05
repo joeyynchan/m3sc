@@ -7,7 +7,8 @@
 double** create_matrix(int, int);
 double**create_random_matrix(int, int);
 double** create_matrix_with_entries(int, int, double*);
-void free_matrix(double** matrix);
+void free_matrix(double**);
+void print_matrix(double**, int, int);
 
 /* Matrix Multiplication with different loop order*/
 double **mymatmul(double** m1, double** m2, int row1, int col1, int col2);
@@ -29,19 +30,14 @@ double** create_matrix(int row, int col)
   return m;
 }
 
-void free_matrix(double** matrix)
-{
-  free(matrix[0]);
-  free(matrix);
-}
-
 double** create_random_matrix(int row, int col)
 {
   int i, j;
   double** m = create_matrix(row, col);
   for (i = 1; i <= row; i++)
     for (j = 1; j <= col; j++)
-      m[i][j] = (double)arc4random()/(double)ARC4RANDOM_MAX; 
+      /*m[i][j] = (double)arc4random()/(double)ARC4RANDOM_MAX;*/
+      m[i][j] = (double)rand() / RAND_MAX;
   return m;
 }
 
@@ -59,12 +55,36 @@ double** create_matrix_with_entries(int row, int col, double* e)
   return m;
 }
 
-double **mymatmul(double** m1, double** m2, int row1, int col1, int col2)
+void free_matrix(double** matrix)
 {
-  return mymatmul_iku(m1, m2, row1, col1, col2);
+  free(matrix[0]);
+  free(matrix);
 }
 
-double **mymatmul_ikj(double** m1, double** m2, int row1, int col1, int col2)
+void print_matrix(double** m, int row, int col)
+{
+  int i, j;
+  for (i = 1; i <= row; i++)
+  {
+    printf("(");
+    for (j = 1; j < col; j++)
+    {
+        printf("%10.5f, ", m[i][j]);
+    }
+    printf("%10.5f)\n", m[i][col]);
+  }
+}
+
+
+
+
+
+double **mymatmul(double** m1, double** m2, int row1, int col1, int col2)
+{
+  return mymatmul_ikj(m1, m2, row1, col1, col2);
+}
+
+double **mymatmul_ijk(double** m1, double** m2, int row1, int col1, int col2)
 {
   double** m = create_matrix(row1, col2);
   int i, j, k;
@@ -130,17 +150,4 @@ double **mymatmul_kji(double** m1, double** m2, int row1, int col1, int col2)
   return m;
 }
 
-void print_matrix(double** m, int row, int col)
-{
-  int i, j;
-  for (i = 1; i <= row; i++)
-  {
-  	printf("(");
-    for (j = 1; j < col; j++)
-    {
-        printf("%10.5f, ", m[i][j]);
-    }
-    printf("%10.5f)\n", m[i][col]);
-  }
-}
 

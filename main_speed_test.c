@@ -16,7 +16,6 @@ void free_matrix(double**);
 
 int main()
 {
-  printf("HI\n");
   int N[19] = {8, 9, 10, 32, 34, 64, 68, 72, 128, 136, 144, 160, 256, 264, 272, 512, 528, 542, 1024};
   int i, j;
   clock_t start_time, end_time;
