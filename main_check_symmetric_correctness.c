@@ -6,6 +6,7 @@
 int check_symmetric_matrix_correctness(double**, int);
 double** mymatmul(double**, double**, int, int, int);
 double** MakeSN(int);
+void free_matrix(double**);
 
 int main()
 {
@@ -29,8 +30,9 @@ int main()
       time_taken = (double) (end - start) / CLOCKS_PER_SEC;
       result = check_symmetric_matrix_correctness(MM, N);
       printf("%7d %10d %20s %12.4f\n", m, N, result == 1 ? "True" : "False", time_taken);
-
-      if (time_taken > 300)
+      free_matrix(M);
+      free_matrix(MM);
+      if (time_taken > 5)
       {
         should_stop = 1;
         break;
