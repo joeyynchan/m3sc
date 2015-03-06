@@ -17,6 +17,12 @@ main_speed_test: main_speed_test.c $(SOURCE)
 main_speed_test_memcheck: main_speed_test.c $(SOURCE)
 	$(GCC) $(FLAG) main_speed_test.c $(SOURCE) -Ofast -o main_speed_test -lm && $(VALGRIND) ./main_speed_test
 
+main_check_symmetric_correctness: main_check_symmetric_correctness.c $(SOURCE)
+	$(GCC) $(FLAG) main_check_symmetric_correctness.c $(SOURCE) -Ofast -o main_check_symmetric_correctness -lm
+
+main_check_symmetric_correctness_memcheck: main_check_symmetric_correctness.c $(SOURCE)
+	$(GCC) $(FLAG) main_check_symmetric_correctness.c $(SOURCE) -Ofast -o main_check_symmetric_correctness -lm && $(VALGRIND) ./main_check_symmetric_correctness
+
 .PHONY: clean
 
 clean:
