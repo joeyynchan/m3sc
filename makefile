@@ -23,6 +23,9 @@ main_check_symmetric_correctness: main_check_symmetric_correctness.c $(SOURCE)
 main_check_symmetric_correctness_memcheck: main_check_symmetric_correctness.c $(SOURCE)
 	$(GCC) $(FLAG) main_check_symmetric_correctness.c $(SOURCE) -Ofast -o main_check_symmetric_correctness -lm && $(VALGRIND) ./main_check_symmetric_correctness
 
+main_find_gravitational_potential: main_find_gravitational_potential.c $(SOURCE)
+	$(GCC) $(FLAG) main_find_gravitational_potential.c $(SOURCE) -Ofast -o main_find_gravitational_potential -lm
+
 .PHONY: clean
 
 clean:

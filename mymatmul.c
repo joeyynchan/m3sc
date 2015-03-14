@@ -74,9 +74,11 @@ void print_matrix(double** m, int row, int col)
     printf("(");
     for (j = 1; j < col; j++)
     {
-        printf("%10.5f, ", m[i][j]);
+        /*printf("%10.5f, ", m[i][j]);*/
+        printf("%6.1f, ", m[i][j]);
     }
-    printf("%10.5f)\n", m[i][col]);
+    /*printf("%10.5f)\n", m[i][col]);*/
+    printf("%6.1f)\n", m[i][col]);
   }
 }
 
@@ -164,6 +166,26 @@ double **MakeSN(int N)
   for (i = 1; i < N; i++)
     for (j = 1; j < N; j++)
       M[i][j] = sin((double)i*(double)j*PI/(double)N);
+  return M;
+}
+
+double **create_sigma_matrix(int N)
+{
+  int i, j;
+  double** M = create_matrix(N, N);
+
+  if (N % 32 != 0)
+  {
+    printf("%d is not a valid value for N\n", N);
+    return 0;
+  }
+
+  for (i = N*3/8; i <= N/2; i++)
+    for (j = N*7/16; j <= N*9/16; j++)
+      M[i][j] = 1000.;
+  for (i = N/2; i <= N*9/16; i++)
+    for (j = N*15/32; j < N*17/32; j++)
+      M[i][j] = (M[i][j] == 1000.) ? 750. : 500. ;
   return M;
 }
 
