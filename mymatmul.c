@@ -184,7 +184,7 @@ double **create_sigma_matrix(int N)
     for (j = N*7/16; j <= N*9/16; j++)
       M[i][j] = 1000.;
   for (i = N/2; i <= N*9/16; i++)
-    for (j = N*15/32; j < N*17/32; j++)
+    for (j = N*15/32; j <= N*17/32; j++)
       M[i][j] = (M[i][j] == 1000.) ? 750. : 500. ;
   return M;
 }
