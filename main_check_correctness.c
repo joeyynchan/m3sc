@@ -4,6 +4,7 @@
 
 void print_matrix(double**, int, int);
 double** mymatmul(double**, double**, int, int, int);
+double** mymatmul_ijk(double**, double**, int, int, int);
 double** mymatmul_ikj(double**, double**, int, int, int);
 double** mymatmul_jik(double**, double**, int, int, int);
 double** mymatmul_jki(double**, double**, int, int, int);

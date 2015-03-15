@@ -27,6 +27,9 @@ main_check_symmetric_correctness_memcheck: main_check_symmetric_correctness.c $(
 main_find_gravitational_potential: main_find_gravitational_potential.c $(SOURCE)
 	$(GCC) $(FLAG) main_find_gravitational_potential.c $(SOURCE) $(COMPILE_FLAG) -o main_find_gravitational_potential -lm
 
+main_super_speed_test: main_super_speed_test.c $(SOURCE)
+	$(GCC) $(FLAG) main_super_speed_test.c $(SOURCE) $(COMPILE_FLAG) -o main_super_spee_test -lm
+
 .PHONY: clean
 
 clean:

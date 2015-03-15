@@ -32,7 +32,7 @@ int main()
       printf("%7d %10d %20s %12.4f\n", m, N, result == 1 ? "True" : "False", time_taken);
       free_matrix(M);
       free_matrix(MM);
-      if (time_taken > 5)
+      if (time_taken > 300)
       {
         should_stop = 1;
         break;
@@ -49,7 +49,7 @@ int check_symmetric_matrix_correctness(double** MM, int N)
   int result = 1;
   for (i = 1; i < N; i++)
     for (j = 1; j < N; j++)
-      if ((i == j && fabs(MM[i][j] - N/2) > 1e-6) || (i != j && fabs(MM[i][j]) > 1e-6))
+      if ((i == j && fabs(MM[i][j] - N/2) > 1e-5) || (i != j && fabs(MM[i][j]) > 1e-5))
       {
         result = 0;
         printf("MM[%d][%d] expected = %20.12f but actual = %20.12f \n", i, j, i==j ? (double)N/2 : 0., MM[i][j]);

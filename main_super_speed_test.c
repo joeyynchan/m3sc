@@ -24,8 +24,8 @@ int main()
                896,928,960,992,1024};
   int i;
   clock_t start_time, end_time;
-  printf("  N      I J K      I K J      J I K       J K I      K I J     K J I  \n");
-  printf("----- ---------- ---------- ---------- ---------- ---------- ----------\n");
+  printf("  N     I K J      K I J    mymatmul \n");
+  printf("----- ---------- ---------- ----------\n");
   for (i = 0; i < 105; i++)
   {
   	double** M, ** MM;
@@ -33,31 +33,7 @@ int main()
 
     M = create_random_matrix(N[i], N[i]);
     start_time = clock();
-    MM = mymatmul_ijk(M, M, N[i], N[i], N[i]);  
-    end_time = clock();
-    printf("%10.6f ", ((double) (end_time - start_time)) / CLOCKS_PER_SEC);
-    free_matrix(MM);
-    free_matrix(M);
-
-    M = create_random_matrix(N[i], N[i]);
-    start_time = clock();
     MM = mymatmul_ikj(M, M, N[i], N[i], N[i]);  
-    end_time = clock();
-    printf("%10.6f ", ((double) (end_time - start_time)) / CLOCKS_PER_SEC);
-    free_matrix(MM);
-    free_matrix(M);
-
-    M = create_random_matrix(N[i], N[i]);
-    start_time = clock();
-    MM = mymatmul_jik(M, M, N[i], N[i], N[i]);  
-    end_time = clock();
-    printf("%10.6f ", ((double) (end_time - start_time)) / CLOCKS_PER_SEC);
-    free_matrix(MM);
-    free_matrix(M);
-
-    M = create_random_matrix(N[i], N[i]);
-    start_time = clock();
-    MM = mymatmul_jki(M, M, N[i], N[i], N[i]);  
     end_time = clock();
     printf("%10.6f ", ((double) (end_time - start_time)) / CLOCKS_PER_SEC);
     free_matrix(MM);
@@ -73,7 +49,7 @@ int main()
 
     M = create_random_matrix(N[i], N[i]);
     start_time = clock();
-    MM = mymatmul_kji(M, M, N[i], N[i], N[i]);  
+    MM = mymatmul(M, M, N[i], N[i], N[i]);  
     end_time = clock();
     printf("%10.6f \n", ((double) (end_time - start_time)) / CLOCKS_PER_SEC);
     free_matrix(MM);
