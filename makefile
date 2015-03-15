@@ -30,6 +30,9 @@ main_find_gravitational_potential: main_find_gravitational_potential.c $(SOURCE)
 main_mastery: main_mastery.c $(SOURCE)
 	$(GCC) $(FLAG) main_mastery.c $(SOURCE) $(COMPILE_FLAG) -o main_mastery -lm
 
+main_super_speed_test: main_super_speed_test.c $(SOURCE)
+	$(GCC) $(FLAG) main_super_speed_test.c $(SOURCE) $(COMPILE_FLAG) -o main_super_spee_test -lm
+
 .PHONY: clean
 
 clean:

@@ -112,16 +112,19 @@ void print_matrix(double** m, int row, int col)
 double **mymatmul(double** m1, double** m2, int row1, int col1, int col2)
 {
   double** m = create_matrix(row1, col2);
-  double** temp = create_matrix(col1, col2);
   int i, j, k;
-  for (i = 1; i <= col1; i++)
-    for (j = 1; j <= col2; j++)
-      temp[i][j] = m2[j][i];
   for (i = 1; i <= row1; i++)
+  {
+    double* m1_row_i = m1[i];
+    double* m_row_i = m[i];
     for (k = 1; k <= col1; k++)
+    {
+      double* m2_row_k = m2[k];
+      double m1_ik = m1_row_i[k];
       for (j = 1; j <= col2; j++)
-        m[i][j] += m1[i][k] * temp[j][k];
-  free_matrix(temp);
+        m_row_i[j] += m1_ik * m2_row_k[j];
+    }
+  }
   return m;
 }
 
