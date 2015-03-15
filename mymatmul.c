@@ -35,6 +35,24 @@ double** create_matrix(int row, int col)
   return m;
 }
 
+double*** create_cube(int N)
+{
+  int i;
+  double*** m = (double***) calloc(N+1, sizeof(double**));
+  for (i = 1; i <=N; i++)
+    m[i] = create_matrix(N, N);
+
+  return m;
+}
+
+void free_cube(double*** m, int N)
+{
+  int i;
+  for (i = 1; i <=N; i++)
+    free_matrix(m[i]);
+  free(m);
+}
+
 double** create_random_matrix(int row, int col)
 {
   int i, j;
@@ -66,6 +84,16 @@ void free_matrix(double** matrix)
   free(matrix);
 }
 
+void print_cube(double*** m, int N)
+{
+   int i;
+   for (i = 1; i <= N; i++)
+   {
+    printf("\nLayer %5d\n", i);
+    print_matrix(m[i], N, N);
+   }
+}
+
 void print_matrix(double** m, int row, int col)
 {
   int i, j;
@@ -74,21 +102,27 @@ void print_matrix(double** m, int row, int col)
     printf("(");
     for (j = 1; j < col; j++)
     {
-        /*printf("%10.5f, ", m[i][j]);*/
-        printf("%6.1f, ", m[i][j]);
+      printf("%6.1f, ", m[i][j]);
     }
-    /*printf("%10.5f)\n", m[i][col]);*/
     printf("%6.1f)\n", m[i][col]);
   }
 }
 
 
-
-
-
 double **mymatmul(double** m1, double** m2, int row1, int col1, int col2)
 {
-  return mymatmul_ikj(m1, m2, row1, col1, col2);
+  double** m = create_matrix(row1, col2);
+  double** temp = create_matrix(col1, col2);
+  int i, j, k;
+  for (i = 1; i <= col1; i++)
+    for (j = 1; j <= col2; j++)
+      temp[i][j] = m2[j][i];
+  for (i = 1; i <= row1; i++)
+    for (k = 1; k <= col1; k++)
+      for (j = 1; j <= col2; j++)
+        m[i][j] += m1[i][k] * temp[j][k];
+  free_matrix(temp);
+  return m;
 }
 
 double **mymatmul_ijk(double** m1, double** m2, int row1, int col1, int col2)

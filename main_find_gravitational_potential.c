@@ -69,10 +69,7 @@ double calculate_gravitational_potential(double x, double y, int N)
 
   for (j = 1; j < N; j++)
     for (k = 1; k < N; k++)
-    {
       result += sigma_jk[j][k] * (4./(N*N)) * (1/((j*j+k*k)*PI*PI)) *sin(j*PI*x)*sin(k*PI*y);
-      /*printf("%5d %5d %20.10f %20.10f\n", j, k, sigma_jk[j][k] * (4./N*N) * (1/((j*j+k*k)*PI*PI)) *sin(j*PI*x)*sin(k*PI*y), result);*/
-    }
 
   free_matrix(M);
   free_matrix(Sn);
