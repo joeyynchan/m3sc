@@ -15,41 +15,20 @@ void free_matrix(double**);
 
 int main()
 {
-  int m = 0, N;
+  int m = 0, N = 8192;
   int should_stop = 0;
   clock_t start, end;
   double result, time_taken;
-  printf("    N            Result         Time taken \n");
-  printf("--------- -------------------- ------------\n");
+  printf("  x     y          Result      \n");
+  printf("----- ----- -------------------\n");
 
-  for (N = 32; N <= 96; N+= 32)
+  
+  for (m = 1; m < 8192; m++)
   {
-    start = clock();
-    result = calculate_gravitational_potential(0.5, 0.5, N);
-    end = clock();
-    time_taken = (double) (end - start) / CLOCKS_PER_SEC;
-    printf("%9d %20.8f %12.6f\n", N, result, time_taken);  	
+    result = calculate_gravitational_potential(0.5, 0.5, 96);
+    printf("%5d %5d %20.8e\n", m, N/2, result);  	
   }
 
-  while (!should_stop)
-  {
-  	int i;
-    for (i = 4; i <= 6; i++)
-    {
-      N = i*(int)pow(2, 5+m);
-      start = clock();
-      result = calculate_gravitational_potential(0.5, 0.5, N);
-      end = clock();
-      time_taken = (double) (end - start) / CLOCKS_PER_SEC;
-      printf("%9d %20.8f %12.6f\n", N, result, time_taken);
-      if (time_taken > 600)
-      {
-        should_stop = 1;
-        break;
-      }
-    }
-    m++;
-  }
   return 0;
 }
 

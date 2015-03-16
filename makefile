@@ -31,9 +31,12 @@ main_mastery: main_mastery.c $(SOURCE)
 	$(GCC) $(FLAG) main_mastery.c $(SOURCE) $(COMPILE_FLAG) -o main_mastery -lm
 
 main_super_speed_test: main_super_speed_test.c $(SOURCE)
-	$(GCC) $(FLAG) main_super_speed_test.c $(SOURCE) $(COMPILE_FLAG) -o main_super_spee_test -lm
+	$(GCC) $(FLAG) main_super_speed_test.c $(SOURCE) $(COMPILE_FLAG) -o main_super_speed_test -lm
+
+main_find_gravitational_potential_plot: main_find_gravitational_potential_plot.c $(SOURCE)
+	$(GCC) $(FLAG) main_find_gravitational_potential_plot.c $(SOURCE) $(COMPILE_FLAG) -o main_find_gravitational_potential_plot -lm
 
 .PHONY: clean
 
 clean:
-	rm main_check_correctness main_speed_test
+	rm main_check_correctness main_speed_test main_check_symmetric_correctness main_find_gravitational_potential main_mastery main_super_speed_test *.c~
