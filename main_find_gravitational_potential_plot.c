@@ -14,7 +14,7 @@ void free_matrix(double**);
 
 int main()
 {
-  int m = 0, N = 8192;
+  int m = 0, N = 96;
   double ** result;
   printf("  x     y          Result      \n");
   printf("----- ----- -------------------\n");
@@ -24,6 +24,11 @@ int main()
   for (m = 1; m < N; m++)
   {
     printf("%5d %5d %20.8f\n", m, N/2, result[m][N/2]);  	
+  }
+
+  for (m = 1; m < N; m++)
+  {
+    printf("%5d %5d %20.8f\n", N/2, m, result[N/2][m]);   
   }
 
   return 0;
