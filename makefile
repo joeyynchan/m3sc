@@ -36,6 +36,9 @@ main_super_speed_test: main_super_speed_test.c $(SOURCE)
 main_find_gravitational_potential_plot: main_find_gravitational_potential_plot.c $(SOURCE)
 	$(GCC) $(FLAG) main_find_gravitational_potential_plot.c $(SOURCE) $(COMPILE_FLAG) -o main_find_gravitational_potential_plot -lm
 
+main_single_speed_test: main_single_speed_test.c $(SOURCE)
+	$(GCC) $(FLAG) main_single_speed_test.c $(SOURCE) $(COMPILE_FLAG) -o main_single_speed_test -lm
+
 .PHONY: clean
 
 clean:

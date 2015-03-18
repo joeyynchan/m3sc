@@ -13,21 +13,16 @@ void free_matrix(double**);
 void print_matrix(double**, int, int);
 
 /* Matrix Multiplication with different loop order*/
-double **mymatmul(double** m1, double** m2, int row1, int col1, int col2);
-double **mymatmul_ijk(double** m1, double** m2, int row1, int col1, int col2);
-double **mymatmul_ikj(double** m1, double** m2, int row1, int col1, int col2);
-double **mymatmul_jik(double** m1, double** m2, int row1, int col1, int col2);
-double **mymatmul_jki(double** m1, double** m2, int row1, int col1, int col2);
-double **mymatmul_kij(double** m1, double** m2, int row1, int col1, int col2);
-double **mymatmul_kji(double** m1, double** m2, int row1, int col1, int col2);
+double **mymatmul(double**, double**, int, int, int);
+double **mymatmul_ijk(double**, double**, int, int, int);
+double **mymatmul_ikj(double**, double**, int, int, int);
+double **mymatmul_jik(double**, double**, int, int, int);
+double **mymatmul_jki(double**, double**, int, int, int);
+double **mymatmul_kij(double**, double**, int, int, int);
+double **mymatmul_kji(double**, double**, int, int, int);
 
 /* Construct Symmetric Matrix */
 double **MakeSN(int);
-
-
-
-
-
 
 /*
  *  Function Implementation
