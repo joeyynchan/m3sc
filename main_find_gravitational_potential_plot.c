@@ -7,7 +7,6 @@
 
 double **create_sigma_matrix(int);
 double **create_smooth_sigma_matrix(int);
-void print_matrix(double**, int, int);
 double **MakeSN(int);
 double **mymatmul(double** m1, double** m2, int row1, int col1, int col2);
 double **calculate_gravitational_potential(int);
@@ -16,10 +15,7 @@ void free_matrix(double**);
 int main()
 {
   int m = 0, N = 8192;
-  int should_stop = 0;
-  clock_t start, end;
   double ** result;
-  double time_taken;
   printf("  x     y          Result      \n");
   printf("----- ----- -------------------\n");
 
