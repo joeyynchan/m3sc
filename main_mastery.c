@@ -16,10 +16,11 @@ double **create_sigma_matrix(int);
 double **mymatmul(double** m1, double** m2, int row1, int col1, int col2);
 
 double ***create_sigma_cube(int);
+double ***create_smooth_sigma_cube(int);
 double ***to_sigma_imn(double***, double**, int);
 double ***to_sigma_ijn(double***, double**, int);
 double ***to_sigma_ijk(double***, double**, int);
-double*** to_psi_ijk(double***, int );
+double ***to_psi_ijk(double***, int);
 
 
 int main()
@@ -79,7 +80,7 @@ double calculate_gravitational_potential(double x, double y, double z, int N)
   int i, j, k;
 
 
-  sigma_lmn = create_sigma_cube(N);
+  sigma_lmn = create_smooth_sigma_cube(N);
 
   sigma_imn = to_sigma_imn(sigma_lmn, Sn, N); 
   free_cube(sigma_lmn, N);
