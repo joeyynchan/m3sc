@@ -57,25 +57,32 @@ double calculate_gravitational_potential(double x, double y, double z, int N)
   double*** sigma_lmn,
         *** sigma_imn,
         *** sigma_ijn,
-        *** sigma_ijk;
+        *** sigma_ijk,
+        *** psi_ijk;
+
+  double** Sn = MakeSN(N);
 
   double result = 0;
   int i, j, k;
 
+
   sigma_lmn = create_sigma_cube(N);
   sigma_imn = to_sigma_imn(sigma_lmn, N); 
+  free_cube(sigma_lmn);
   sigma_ijn = to_sigma_ijn(sigma_imn, N);
+  free_cube(sigma_imn);
   sigma_ijk = to_sigma_ijk(sigma_ijn, N);
+  free_cube(sigma_ijn);
+  psi_ijk   = to_psi_ijk(sigma_ijk, N);
+  free_cube(sigma_ijk);
 
   for (i = 1; i < N; i++) 
     for (j = 1; j < N; j++)
       for (k = 1; k < N; k++)
-        result += sigma_ijk[i][j][k] * (8./(N*N*N)) * (1/((i*i+j*j+k*k)*PI*PI)) *sin(i*PI*x)*sin(j*PI*y)*sin(k*PI*z);
+        result += psi_ijk[i][j][k] *sin(i*PI*x)*sin(j*PI*y)*sin(k*PI*z);
 
-  free_cube(sigma_lmn);
-  free_cube(sigma_imn);
-  free_cube(sigma_ijn);
-  free_cube(sigma_ijk);
+  free_cube(psi_ijk);
+  free_matrix(Sn);
 
   return result;
 }

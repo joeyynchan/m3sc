@@ -332,39 +332,55 @@ double*** create_sigma_cube(int N)
   return cube;
 }
 
-double*** to_sigma_imn(double*** cube, int N)
+double*** to_sigma_imn(double*** c, double** Sn, int N)
 {
-  double*** new_cube = create_cube(N);
-  double** Sn = MakeSN(N);
-  int i;
-  for (i = 1; i <=N; i++)
-    new_cube[i] = mymatmul(Sn, cube[i], N-1, N-1, N-1);
-  free_matrix(Sn);
-  return new_cube;
+  double*** c_new = create_cube(N);
+  int i, l, m, n;
+  for (i = 1; i < N; i++)
+    for (m = 1; m < N; m++)
+      for (n = 1; n < N; n++)
+        for (l = 1; l < N; l++)
+          /*printf("%d, %d, %d, %d, %5.2f, %10.5f, %10.5f\n", i, m, n, l, c_new[i][m][n], c[l][m][n], Sn[i][l]);*/
+          c_new[i][m][n] += c[l][m][n] * Sn[i][l];
+  return c_new;
 }
 
-double*** to_sigma_ijn(double*** cube, int N)
+double*** to_sigma_ijn(double*** c, double** Sn, int N)
 {
-  double*** new_cube = create_cube(N);
-  double** Sn = MakeSN(N);
-  int i;
-  for (i = 1; i <=N; i++)
-    new_cube[i] = mymatmul(cube[i], Sn, N-1, N-1, N-1);
-  free_matrix(Sn);
-  return new_cube;
+  double*** c_new = create_cube(N);
+  int i, j, m, n;
+  for (i = 1; i < N; i++)
+    for (j = 1; j < N; j++)
+      for (n = 1; n < N; n++)
+        for (m = 1; m < N; m++)
+          c_new[i][j][n] += c[i][m][n] * Sn[j][m];
+  return c_new;
 }
 
 
-double*** to_sigma_ijk(double*** cube, int N)
+double*** to_sigma_ijk(double*** c, double** Sn, int N)
 {
-  double*** new_cube = create_cube(N);
+  double*** c_new = create_cube(N);
   int i, j, k, n;
-  for (i = 1; i <=N-1; i++)
-    for (k = 1; k <= N-1; k++)
-      for (n = 1; n <= N-1; n++)
-        for (j = 1; j <= N-1; j++)
-          new_cube[i][j][k] += cube[i][j][n] * sin(k*n*PI/N);
-  return new_cube;
+  for (i = 1; i < N; i++)
+    for (j = 1; j < N; j++)
+      for (k = 1; k < N; k++)
+        for (n = 1; n < N; n++)
+          c_new[i][j][k] += c[i][j][n] * Sn[n][k];
+  return c_new;
 }
+
+double*** to_psi_ijk(double*** c, int N)
+{
+  double*** c_new = create_cube(N);
+  int i, j, k;
+  for (i = 1; i < N; i++)
+    for (j = 1; j < N; j++)
+      for (k = 1; k < N; k++)
+        c_new[i][j][k] = c[i][j][k] * 8./(N*N) / ((j*j+k*k)*PI*PI);
+  return c_new;
+}
+
+
 
 
