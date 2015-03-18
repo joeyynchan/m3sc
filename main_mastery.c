@@ -9,7 +9,7 @@ void free_matrix(double**);
 void free_cube(double***, int);
 void print_matrix(double**, int, int);
 
-double calculate_gravitational_potential(double, double, double, int);
+double ***calculate_gravitational_potential(int);
 
 double **MakeSN(int);
 double **create_sigma_matrix(int);
@@ -28,17 +28,19 @@ int main()
   int m = 0, N;
   int should_stop = 0;
   clock_t start, end;
-  double result, time_taken;
+  double ***result;
+  double time_taken;
   printf("    N            Result         Time taken \n");
   printf("--------- -------------------- ------------\n");
 
   for (N = 32; N <= 96; N+= 32)
   {
     start = clock();
-    result = calculate_gravitational_potential(0.5, 0.5, 0.5, N);
+    result = calculate_gravitational_potential(N);
     end = clock();
     time_taken = (double) (end - start) / CLOCKS_PER_SEC;
-    printf("%9d %20.8f %12.6f\n", N, result, time_taken);  	
+    printf("%9d %20.8f %12.6f\n", N, result[N/2][N/2][N/2], time_taken);
+    free_cube(result, N);
   }
 
   while (!should_stop)
@@ -48,10 +50,11 @@ int main()
     {
       N = i*(int)pow(2, 5+m);
       start = clock();
-      result = calculate_gravitational_potential(0.5, 0.5, 0.5, N);
+      result = calculate_gravitational_potential(N);
       end = clock();
       time_taken = (double) (end - start) / CLOCKS_PER_SEC;
-      printf("%9d %20.8f %12.6f\n", N, result, time_taken);
+      printf("%9d %20.8f %12.6f\n", N, result[N/2][N/2][N/2], time_taken);
+      free_cube(result, N);
       if (time_taken > 600)
       {
         should_stop = 1;
@@ -63,7 +66,7 @@ int main()
   return 0;
 }
 
-double calculate_gravitational_potential(double x, double y, double z, int N)
+double*** calculate_gravitational_potential(int N)
 {
   double*** sigma_lmn,
         *** sigma_imn,
@@ -109,10 +112,8 @@ double calculate_gravitational_potential(double x, double y, double z, int N)
   psi_lmn = to_sigma_imn(psi_imn, Sn, N);
   free_cube(psi_imn, N);
 
-  result = psi_lmn[N/2][N/2][N/2];
-  free_cube(psi_lmn, N);
   free_matrix(Sn);
 
-  return result;
+  return psi_lmn;
 }
 
