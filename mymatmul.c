@@ -300,12 +300,12 @@ void free_cube(double*** m, int N)
 
 void print_cube(double*** m, int N)
 {
-   int i;
+   int i, j, k;
    for (i = 1; i <= N; i++)
-   {
-    printf("\nLayer %5d\n", i);
-    print_matrix(m[i], N, N);
-   }
+     for (j = 1; j <= N; j++)
+       for (k = 1; k <= N; k++)
+        if (fabs(m[i][j][k]) > 1e-5)
+        printf("M[%5d][%5d][%5d] = %10.5f\n", i, j, k, m[i][j][k]);
 }
 
 
@@ -443,7 +443,7 @@ double*** to_psi_ijk(double*** c, int N)
   for (i = 1; i < N; i++)
     for (j = 1; j < N; j++)
       for (k = 1; k < N; k++)
-        c_new[i][j][k] = c[i][j][k] * 8./(N*N*N) / ((j*j+k*k)*PI*PI);
+        c_new[i][j][k] = c[i][j][k] * 8./(N*N*N) / ((i*i+j*j+k*k)*PI*PI);
   return c_new;
 }
 
