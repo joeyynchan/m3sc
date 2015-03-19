@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include <omp.h>
 
 #define ARC4RANDOM_MAX    0x100000000
 #define PI                3.14159265359
@@ -109,6 +110,8 @@ double **mymatmul(double** m1, double** m2, int row1, int col1, int col2)
 {
   double** m = create_matrix(row1, col2);
   int i, j, k;
+
+  #pragma omp parallel for
   for (i = 1; i <= row1; i++)
   {
     double* m1_row_i = m1[i];
@@ -128,6 +131,7 @@ double **mymatmul_ijk(double** m1, double** m2, int row1, int col1, int col2)
 {
   double** m = create_matrix(row1, col2);
   int i, j, k;
+  #pragma omp parallel for
   for (i = 1; i <= row1; i++)
     for (j = 1; j <= col2; j++)
       for (k = 1; k <= col1; k++)
@@ -139,6 +143,7 @@ double **mymatmul_ikj(double** m1, double** m2, int row1, int col1, int col2)
 {
   double** m = create_matrix(row1, col2);
   int i, j, k;
+  #pragma omp parallel for
   for (i = 1; i <= row1; i++)
     for (k = 1; k <= col1; k++)
       for (j = 1; j <= col2; j++)
@@ -150,6 +155,7 @@ double **mymatmul_jik(double** m1, double** m2, int row1, int col1, int col2)
 {
   double** m = create_matrix(row1, col2);
   int i, j, k;
+  #pragma omp parallel for
   for (j = 1; j <= col2; j++)
     for (i = 1; i <= row1; i++)
       for (k = 1; k <= col1; k++)
@@ -161,6 +167,7 @@ double **mymatmul_jki(double** m1, double** m2, int row1, int col1, int col2)
 {
   double** m = create_matrix(row1, col2);
   int i, j, k;
+  #pragma omp parallel for
   for (j = 1; j <= col2; j++)
     for (k = 1; k <= col1; k++)
       for (i = 1; i <= row1; i++)
@@ -172,6 +179,7 @@ double **mymatmul_kij(double** m1, double** m2, int row1, int col1, int col2)
 {
   double** m = create_matrix(row1, col2);
   int i, j, k;
+  #pragma omp parallel for
   for (k = 1; k <= col1; k++)
     for (i = 1; i <= row1; i++)
       for (j = 1; j <= col2; j++)
@@ -183,6 +191,7 @@ double **mymatmul_kji(double** m1, double** m2, int row1, int col1, int col2)
 {
   double** m = create_matrix(row1, col2);
   int i, j, k;
+  #pragma omp parallel for
   for (k = 1; k <= col1; k++)
     for (j = 1; j <= col2; j++)
       for (i = 1; i <= row1; i++)
@@ -403,6 +412,8 @@ double*** to_sigma_imn(double*** c, double** Sn, int N)
 {
   double*** c_new = create_cube(N);
   int i, l, m, n;
+  
+  #pragma omp parallel for
   for (i = 1; i < N; i++)
     for (l = 1; l < N; l++)
       for (m = 1; m < N; m++)
@@ -415,6 +426,8 @@ double*** to_sigma_ijn(double*** c, double** Sn, int N)
 {
   double*** c_new = create_cube(N);
   int i, j, m, n;
+  
+  #pragma omp parallel for
   for (i = 1; i < N; i++)
     for (j = 1; j < N; j++)
       for (m = 1; m < N; m++)
@@ -428,6 +441,8 @@ double*** to_sigma_ijk(double*** c, double** Sn, int N)
 {
   double*** c_new = create_cube(N);
   int i, j, k, n;
+  
+  #pragma omp parallel for
   for (i = 1; i < N; i++)
     for (n = 1; n < N; n++)
       for (j = 1; j < N; j++)
@@ -440,6 +455,8 @@ double*** to_psi_ijk(double*** c, int N)
 {
   double*** c_new = create_cube(N);
   int i, j, k;
+  
+  #pragma omp parallel for
   for (i = 1; i < N; i++)
     for (j = 1; j < N; j++)
       for (k = 1; k < N; k++)

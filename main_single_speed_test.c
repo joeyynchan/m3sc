@@ -7,7 +7,7 @@ void print_matrix(double**, int, int);
 double** create_matrix(int, int);
 double** create_random_matrix(int, int);
 double** create_matrix_with_entries(int, int, double*);
-double** mymatmul(double**, double**, int, int , int);
+double** mymatmul_ijk(double**, double**, int, int , int);
 void free_matrix(double**);
 
 int main()
@@ -28,13 +28,13 @@ int main()
   	double** M, ** MM;
     M = create_random_matrix(N[i], N[i]);
     start_time = clock();
-    MM = mymatmul(M, M, N[i], N[i], N[i]);  
+    MM = mymatmul_ijk(M, M, N[i], N[i], N[i]);  
     end_time = clock();
     time_diff = (double) (end_time - start_time);
     time_diff = (time_diff == 0) ? 1. : time_diff;
-    /*printf("%5d %8.2f ", N[i], log10((double)N[i]));*/
+    printf("%5d %8.2f ", N[i], log10((double)N[i]));
     printf("%10.6f ", time_diff/CLOCKS_PER_SEC);
-    /*printf("%10.6f",  2*N[i]*N[i]*N[i]/(time_diff/CLOCKS_PER_SEC)/10e+9);*/
+    printf("%10.6f",  2*N[i]*N[i]*N[i]/(time_diff/CLOCKS_PER_SEC)/10e+9);
     printf("\n");
     free_matrix(MM);
     free_matrix(M);

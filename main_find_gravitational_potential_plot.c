@@ -15,12 +15,19 @@ void free_matrix(double**);
 int main()
 {
   int m = 0, N = 96;
-  double ** result;
+  clock_t start_time, end_time;
+  double ** result, time_diff;
   printf("  x     y          Result      \n");
   printf("----- ----- -------------------\n");
 
-  
+  start_time = clock();
   result = calculate_gravitational_potential(N);
+  end_time = clock();
+  time_diff = (double) (end_time - start_time);
+  time_diff = (time_diff == 0) ? 1. : time_diff;
+  printf("Total time taken = %15.6f\n", time_diff/CLOCKS_PER_SEC);
+  printf("Number of points = %d\n", N*N);
+  printf("Time taken per point = %15.6f\n", time_diff/CLOCKS_PER_SEC/(double)N/(double)N);
   for (m = 1; m < N; m++)
   {
     printf("%5d %5d %20.8f\n", m, N/2, result[m][N/2]);  	
