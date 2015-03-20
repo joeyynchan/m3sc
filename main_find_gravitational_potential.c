@@ -63,7 +63,7 @@ double** calculate_gravitational_potential(int N)
         ** psi_mn;
 
   int j, k;
-  M = create_smooth_sigma_matrix(N);
+  M = create_sigma_matrix(N);
   Sn = MakeSN(N);
   sigma_jn = mymatmul(Sn, M, N-1, N-1, N-1);
   free_matrix(M);

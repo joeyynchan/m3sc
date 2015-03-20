@@ -14,29 +14,44 @@ void free_matrix(double**);
 
 int main()
 {
-  int m = 0, N = 96;
+  int m, n, N = 4096;
   clock_t start_time, end_time;
   double ** result, time_diff;
-  printf("  x     y          Result      \n");
-  printf("----- ----- -------------------\n");
+  //printf("  x     y          Result      \n");
+  //printf("----- ----- -------------------\n");
 
   start_time = clock();
   result = calculate_gravitational_potential(N);
   end_time = clock();
   time_diff = (double) (end_time - start_time);
   time_diff = (time_diff == 0) ? 1. : time_diff;
-  printf("Total time taken = %15.6f\n", time_diff/CLOCKS_PER_SEC);
-  printf("Number of points = %d\n", N*N);
-  printf("Time taken per point = %15.6f\n", time_diff/CLOCKS_PER_SEC/(double)N/(double)N);
+  /*
   for (m = 1; m < N; m++)
   {
-    printf("%5d %5d %20.8f\n", m, N/2, result[m][N/2]);  	
+    //printf("%5d %5d ", m, N/2);
+    printf("%20.8f\n", result[m][N/2]);  	
   }
-
+  printf("\n\n\n\n\n\n");
   for (m = 1; m < N; m++)
   {
-    printf("%5d %5d %20.8f\n", N/2, m, result[N/2][m]);   
+    //printf("%5d %5d ", N/2, m);
+    printf("%20.8f\n", result[N/2][m]);   
   }
+  */
+  printf("%10s ", "");
+  for (m = 1; m < N; m++)
+    printf("%10.6f ", m/(double) N);
+  printf("\n");
+  
+  for (m = 1; m < N; m++)
+  {
+    printf("%10.6f ", m/(double)N);
+    for (n = 1; n < N; n++)
+	  printf("%10.6f ", result[m][n]);
+	printf("\n");
+  }
+	
+  
 
   return 0;
 }
@@ -51,7 +66,7 @@ double** calculate_gravitational_potential(int N)
         ** psi_mn;
 
   int j, k;
-  M = create_smooth_sigma_matrix(N);
+  M = create_sigma_matrix(N);
   Sn = MakeSN(N);
   sigma_jn = mymatmul(Sn, M, N-1, N-1, N-1);
   free_matrix(M);
