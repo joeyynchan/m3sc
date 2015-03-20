@@ -24,26 +24,35 @@ double ***to_psi_ijk(double***, int);
 
 int main()
 {
-  int m, N = 64;
+  /* Chan, Joey, JMCSC, ync12 */
+  int m, n, N = 256;
   double *** result;
   printf("  x     y     z          Result      \n");
   printf("----- ----- ----- -------------------\n");
 
   
   result = calculate_gravitational_potential(N);
+  /*
+  for (m = 1; m < N; m++)
+    printf("%20.8f\n", m/(double)N); 	
+  for (m = 1; m < N; m++)
+    printf("%5d %5d %5d %20.8f\n", m, N/2, N/2, result[m][N/2][N/2]);	
+  for (m = 1; m < N; m++)
+    printf("%5d %5d %5d %20.8f\n", N/2, m, N/2, result[N/2][m][N/2]); 
+  for (m = 1; m < N; m++)
+    printf("%5d %5d %5d %20.8f\n", N/2, N/2, m, result[N/2][N/2][m]);
+  */
+  printf("%10s ", "");
+  for (m = 1; m < N; m++)
+    printf("%10.6f ", m/(double) N);
+  printf("\n");
+  
   for (m = 1; m < N; m++)
   {
-    printf("%5d %5d %5d %20.8f\n", m, N/2, N/2, result[m][N/2][N/2]);  	
-  }
-
-  for (m = 1; m < N; m++)
-  {
-    printf("%5d %5d %5d %20.8f\n", N/2, m, N/2, result[N/2][m][N/2]);   
-  }
-
-  for (m = 1; m < N; m++)
-  {
-    printf("%5d %5d %5d %20.8f\n", N/2, N/2, m, result[N/2][N/2][m]);   
+    printf("%10.6f ", m/(double)N);
+    for (n = 1; n < N; n++)
+	  printf("%10.6f ", result[m][n][N/2]);
+	printf("\n");
   }
 
   return 0;
@@ -51,6 +60,7 @@ int main()
 
 double*** calculate_gravitational_potential(int N)
 {
+  /* Chan, Joey, JMCSC, ync12 */
   double*** sigma_lmn,
         *** sigma_imn,
         *** sigma_ijn,
@@ -61,10 +71,6 @@ double*** calculate_gravitational_potential(int N)
         *** psi_lmn;
 
   double** Sn = MakeSN(N);
-
-  double result = 0;
-  int i, j, k;
-
 
   sigma_lmn = create_smooth_sigma_cube(N);
 
@@ -79,12 +85,6 @@ double*** calculate_gravitational_potential(int N)
 
   psi_ijk   = to_psi_ijk(sigma_ijk, N);
   free_cube(sigma_ijk, N);
-
-/*  for (i = 1; i < N; i++) 
-    for (j = 1; j < N; j++)
-      for (k = 1; k < N; k++)
-        result += psi_ijk[i][j][k] *sin(i*PI*x)*sin(j*PI*y)*sin(k*PI*z);
-  free_cube(psi_ijk, N);*/
 
   psi_ijn = to_sigma_ijk(psi_ijk, Sn, N);
   free_cube(psi_ijk, N);

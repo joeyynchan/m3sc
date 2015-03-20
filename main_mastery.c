@@ -26,6 +26,7 @@ double ***to_psi_ijk(double***, int);
 
 int main()
 {
+  /* Chan, Joey, JMCSC, ync12 */
   int m = 0, N;
   int should_stop = 0;
   clock_t start, end;
@@ -34,7 +35,7 @@ int main()
   printf("    N            Result         Time taken \n");
   printf("--------- -------------------- ------------\n");
 
-  for (N = 32; N <= 32; N+= 32)
+  for (N = 32; N <= 96; N+= 32)
   {
     start = clock();
     result = calculate_gravitational_potential(N);
@@ -44,7 +45,7 @@ int main()
     free_cube(result, N);
   }
 
-  while (should_stop)
+  while (!should_stop)
   {
   	int i;
     for (i = 4; i <= 6; i++)
@@ -69,6 +70,7 @@ int main()
 
 double*** calculate_gravitational_potential(int N)
 {
+  /* Chan, Joey, JMCSC, ync12 */
   double*** sigma_lmn,
         *** sigma_imn,
         *** sigma_ijn,
@@ -79,10 +81,6 @@ double*** calculate_gravitational_potential(int N)
         *** psi_lmn;
 
   double** Sn = MakeSN(N);
-
-  double result = 0;
-  int i, j, k;
-
 
   sigma_lmn = create_smooth_sigma_cube(N);
 
@@ -98,13 +96,6 @@ double*** calculate_gravitational_potential(int N)
   psi_ijk   = to_psi_ijk(sigma_ijk, N);
   free_cube(sigma_ijk, N);
 
-  for (i = 1; i < N; i++) 
-    for (j = 1; j < N; j++)
-      for (k = 1; k < N; k++)
-        result += psi_ijk[i][j][k] *sin(i*PI*1)*sin(j*PI*1)*sin(k*PI*1);
-  //printf("Result = %20.10f\n", result);
-        
-
   psi_ijn = to_sigma_ijk(psi_ijk, Sn, N);
   free_cube(psi_ijk, N);
 
@@ -112,10 +103,10 @@ double*** calculate_gravitational_potential(int N)
   free_cube(psi_ijn, N);
 
   psi_lmn = to_sigma_imn(psi_imn, Sn, N);
-  //print_cube(psi_lmn, N);
   free_cube(psi_imn, N);
 
   free_matrix(Sn);
+  
   return psi_lmn;
 }
 

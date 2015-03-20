@@ -17,6 +17,7 @@ void free_matrix(double**);
 
 int main()
 {
+  /* Chan, Joey, JMCSC, ync12 */
   int N[105] = {8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,
                28,29,30,31,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62,
                64,68,72,76,80,84,88,92,96,100,104,108,112,116,120,124,128,136,144,152,
@@ -26,7 +27,7 @@ int main()
   int i;
   clock_t start_time, end_time;
   double time_diff = 0;
-  printf("  N      I J K      I K J      J I K       J K I      K I J     K J I      Final  \n");
+  printf("  N      I J K      I K J      J I K       J K I      K I J     K J I    mymatmul  \n");
   printf("----- ---------- ---------- ---------- ---------- ---------- ---------- ----------\n");
   for (i = 0; i < 105; i++)
   {
@@ -92,9 +93,6 @@ int main()
     printf("%10.6f\n", time_diff/ CLOCKS_PER_SEC);
     free_matrix(MM);
     free_matrix(M);
-
-
-
   }
 
   return 0;

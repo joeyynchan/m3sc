@@ -18,7 +18,7 @@ void free_matrix(double**);
 
 int main()
 {
-
+  /* Chan, Joey, JMCSC, ync12 */
   double _B[12] = {1.,  2., 3., 4.,  5., 6., 7.,  8., 9., 10.,  11., 12.};
   double _C[12] = {1., -2., 3., 4., -5., 6., 7., -8., 9., 10., -11., 12.};
   double _expected_BC[9] = {70., -80., 90., 158., -184., 210., 246., -288., 330.};
@@ -88,6 +88,7 @@ int main()
 
 int compare_matrix(double** expected, double** actual, int row, int col)
 {
+  /* Chan, Joey, JMCSC, ync12 */
   int i, j;
   for (i = 1; i <= row; i++)
     for (j = 1; j <= col; j++)

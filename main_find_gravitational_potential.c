@@ -5,20 +5,22 @@
 
 #define PI 3.14159265359
 
+void free_matrix(double**);
+void print_matrix(double**, int, int);
+
+double **MakeSN(int);
 double **create_sigma_matrix(int);
 double **create_smooth_sigma_matrix(int);
-void print_matrix(double**, int, int);
-double **MakeSN(int);
-double **mymatmul(double** m1, double** m2, int row1, int col1, int col2);
 double **calculate_gravitational_potential(int);
-void free_matrix(double**);
+double **mymatmul(double** m1, double** m2, int row1, int col1, int col2);
 
 int main()
 {
+  /* Chan, Joey, JMCSC, ync12 */
   int m = 0, N;
   int should_stop = 0;
   clock_t start, end;
-  double **result, time_taken;
+  double **result, time_taken, time_diff;
   printf("    N            Result         Time taken \n");
   printf("--------- -------------------- ------------\n");
 
@@ -27,7 +29,9 @@ int main()
     start = clock();
     result = calculate_gravitational_potential(N);
     end = clock();
-    time_taken = (double) (end - start) / CLOCKS_PER_SEC;
+    time_diff = (double) (end_time - start_time);
+    time_diff = (time_diff == 0) ? 1. : time_diff;
+    time_taken = (double) time_diff/CLOCKS_PER_SEC;
     printf("%9d %20.8f %12.6f\n", N, result[N/2][N/2], time_taken);  	
   }
 
@@ -39,8 +43,9 @@ int main()
       N = i*(int)pow(2, 5+m);
       start = clock();
       result = calculate_gravitational_potential(N);
-      end = clock();
-      time_taken = (double) (end - start) / CLOCKS_PER_SEC;
+      time_diff = (double) (end_time - start_time);
+      time_diff = (time_diff == 0) ? 1. : time_diff;
+      time_taken = (double) time_diff/CLOCKS_PER_SEC;
       printf("%9d %20.8f %12.6f\n", N, result[N/2][N/2], time_taken);
       if (time_taken > 600)
       {
@@ -55,6 +60,7 @@ int main()
 
 double** calculate_gravitational_potential(int N)
 {
+  /* Chan, Joey, JMCSC, ync12 */
   double** M,
         ** Sn,
         ** sigma_jn,
@@ -64,6 +70,7 @@ double** calculate_gravitational_potential(int N)
 
   int j, k;
   M = create_sigma_matrix(N);
+  /*M = create_smooth_sigma_matrix(N);*/
   Sn = MakeSN(N);
   sigma_jn = mymatmul(Sn, M, N-1, N-1, N-1);
   free_matrix(M);

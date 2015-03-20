@@ -10,7 +10,7 @@ void free_matrix(double**);
 
 int main()
 {
-
+  /* Chan, Joey, JMCSC, ync12 */
   int m = 0;
   int should_stop = 0;
   clock_t start, end;
@@ -45,6 +45,7 @@ int main()
 
 int check_symmetric_matrix_correctness(double** MM, int N)
 {
+  /* Chan, Joey, JMCSC, ync12 */
   int i, j;
   int result = 1;
   for (i = 1; i < N; i++)

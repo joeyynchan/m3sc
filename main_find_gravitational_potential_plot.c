@@ -14,7 +14,8 @@ void free_matrix(double**);
 
 int main()
 {
-  int m, n, N = 4096;
+  /* Chan, Joey, JMCSC, ync12 */
+  int m, n, N = 192;
   clock_t start_time, end_time;
   double ** result, time_diff;
   //printf("  x     y          Result      \n");
@@ -25,7 +26,14 @@ int main()
   end_time = clock();
   time_diff = (double) (end_time - start_time);
   time_diff = (time_diff == 0) ? 1. : time_diff;
+  
   /*
+  for (m = 1; m < N; m++)
+  {
+    //printf("%5d %5d ", m, N/2);
+    printf("%20.8f\n", m/(double)N);  	
+  }
+  printf("\n\n\n\n\n\n");
   for (m = 1; m < N; m++)
   {
     //printf("%5d %5d ", m, N/2);
@@ -36,8 +44,10 @@ int main()
   {
     //printf("%5d %5d ", N/2, m);
     printf("%20.8f\n", result[N/2][m]);   
-  }
-  */
+  }*/
+  
+  
+  
   printf("%10s ", "");
   for (m = 1; m < N; m++)
     printf("%10.6f ", m/(double) N);
@@ -58,6 +68,7 @@ int main()
 
 double** calculate_gravitational_potential(int N)
 {
+  /* Chan, Joey, JMCSC, ync12 */
   double** M,
         ** Sn,
         ** sigma_jn,
@@ -66,7 +77,7 @@ double** calculate_gravitational_potential(int N)
         ** psi_mn;
 
   int j, k;
-  M = create_sigma_matrix(N);
+  M = create_smooth_sigma_matrix(N);
   Sn = MakeSN(N);
   sigma_jn = mymatmul(Sn, M, N-1, N-1, N-1);
   free_matrix(M);

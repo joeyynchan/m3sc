@@ -7,11 +7,11 @@
 #define PI                3.14159265359
 
 /* Matrix Construction and Destruction*/
-double** create_matrix(int, int);
-double**create_random_matrix(int, int);
-double** create_matrix_with_entries(int, int, double*);
+double **create_matrix(int, int);
 void free_matrix(double**);
 void print_matrix(double**, int, int);
+double **create_random_matrix(int, int);
+double **create_matrix_with_entries(int, int, double*);
 
 /* Matrix Multiplication with different loop order*/
 double **mymatmul(double**, double**, int, int, int);
@@ -37,6 +37,7 @@ double **MakeSN(int);
  ****************************/
 double** create_matrix(int row, int col)
 {
+  /* Chan, Joey, JMCSC, ync12 */
   int n;
   double** m = (double**) calloc(row+1, sizeof(double*));
   m[0] = (double*) calloc(row*col+1, sizeof(double));
@@ -48,6 +49,7 @@ double** create_matrix(int row, int col)
 
 double** create_random_matrix(int row, int col)
 {
+  /* Chan, Joey, JMCSC, ync12 */
   int i, j;
   double** m = create_matrix(row, col);
   for (i = 1; i <= row; i++)
@@ -59,6 +61,7 @@ double** create_random_matrix(int row, int col)
 
 double** create_matrix_with_entries(int row, int col, double* e)
 {
+  /* Chan, Joey, JMCSC, ync12 */
   int n, i, j, k = 0;
   double** m = (double**) calloc(row+1, sizeof(double*));
   m[0] = (double*) calloc(row*col+1, sizeof(double));
@@ -73,6 +76,7 @@ double** create_matrix_with_entries(int row, int col, double* e)
 
 void free_matrix(double** matrix)
 {
+  /* Chan, Joey, JMCSC, ync12 */
   free(matrix[0]);
   free(matrix);
 }
@@ -80,6 +84,7 @@ void free_matrix(double** matrix)
 
 void print_matrix(double** m, int row, int col)
 {
+  /* Chan, Joey, JMCSC, ync12 */
   int i, j;
   for (i = 1; i <= row; i++)
   {
@@ -94,6 +99,7 @@ void print_matrix(double** m, int row, int col)
 
 void print_matrix2(double** m, int row, int col)
 {
+  /* Chan, Joey, JMCSC, ync12 */
   int i, j;
   for (i = 1; i <= row; i++)
     for (j = 1; j <= col; j++)
@@ -108,8 +114,9 @@ void print_matrix2(double** m, int row, int col)
 
 double **mymatmul(double** m1, double** m2, int row1, int col1, int col2)
 {
-  double** m = create_matrix(row1, col2);
+  /* Chan, Joey, JMCSC, ync12 */
   int i, j, k;
+  double** m = create_matrix(row1, col2);
 
   #pragma omp parallel for
   for (i = 1; i <= row1; i++)
@@ -129,8 +136,9 @@ double **mymatmul(double** m1, double** m2, int row1, int col1, int col2)
 
 double **mymatmul_ijk(double** m1, double** m2, int row1, int col1, int col2)
 {
-  double** m = create_matrix(row1, col2);
+  /* Chan, Joey, JMCSC, ync12 */
   int i, j, k;
+  double** m = create_matrix(row1, col2);
   #pragma omp parallel for
   for (i = 1; i <= row1; i++)
     for (j = 1; j <= col2; j++)
@@ -141,8 +149,9 @@ double **mymatmul_ijk(double** m1, double** m2, int row1, int col1, int col2)
 
 double **mymatmul_ikj(double** m1, double** m2, int row1, int col1, int col2)
 {
-  double** m = create_matrix(row1, col2);
+  /* Chan, Joey, JMCSC, ync12 */
   int i, j, k;
+  double** m = create_matrix(row1, col2);
   #pragma omp parallel for
   for (i = 1; i <= row1; i++)
     for (k = 1; k <= col1; k++)
@@ -153,8 +162,9 @@ double **mymatmul_ikj(double** m1, double** m2, int row1, int col1, int col2)
 
 double **mymatmul_jik(double** m1, double** m2, int row1, int col1, int col2)
 {
-  double** m = create_matrix(row1, col2);
+  /* Chan, Joey, JMCSC, ync12 */
   int i, j, k;
+  double** m = create_matrix(row1, col2);
   #pragma omp parallel for
   for (j = 1; j <= col2; j++)
     for (i = 1; i <= row1; i++)
@@ -165,8 +175,9 @@ double **mymatmul_jik(double** m1, double** m2, int row1, int col1, int col2)
 
 double **mymatmul_jki(double** m1, double** m2, int row1, int col1, int col2)
 {
-  double** m = create_matrix(row1, col2);
+  /* Chan, Joey, JMCSC, ync12 */
   int i, j, k;
+  double** m = create_matrix(row1, col2);
   #pragma omp parallel for
   for (j = 1; j <= col2; j++)
     for (k = 1; k <= col1; k++)
@@ -177,8 +188,9 @@ double **mymatmul_jki(double** m1, double** m2, int row1, int col1, int col2)
 
 double **mymatmul_kij(double** m1, double** m2, int row1, int col1, int col2)
 {
-  double** m = create_matrix(row1, col2);
+  /* Chan, Joey, JMCSC, ync12 */
   int i, j, k;
+  double** m = create_matrix(row1, col2);
   #pragma omp parallel for
   for (k = 1; k <= col1; k++)
     for (i = 1; i <= row1; i++)
@@ -189,8 +201,9 @@ double **mymatmul_kij(double** m1, double** m2, int row1, int col1, int col2)
 
 double **mymatmul_kji(double** m1, double** m2, int row1, int col1, int col2)
 {
-  double** m = create_matrix(row1, col2);
+  /* Chan, Joey, JMCSC, ync12 */
   int i, j, k;
+  double** m = create_matrix(row1, col2);
   #pragma omp parallel for
   for (k = 1; k <= col1; k++)
     for (j = 1; j <= col2; j++)
@@ -207,6 +220,7 @@ double **mymatmul_kji(double** m1, double** m2, int row1, int col1, int col2)
 
 double **MakeSN(int N)
 {
+  /* Chan, Joey, JMCSC, ync12 */
   int i, j;
   double** M = create_matrix(N-1, N-1);
   for (i = 1; i < N; i++)
@@ -222,6 +236,7 @@ double **MakeSN(int N)
 
 double **create_sigma_matrix(int N)
 {
+  /* Chan, Joey, JMCSC, ync12 */
   int i, j;
   double** M = create_matrix(N, N);
 
@@ -242,6 +257,7 @@ double **create_sigma_matrix(int N)
 
 double **create_smooth_sigma_matrix(int N)
 {
+  /* Chan, Joey, JMCSC, ync12 */
   int i, j;
   int lower_i1 = N*3/8,
       upper_i1 = N/2,
@@ -291,16 +307,17 @@ double **create_smooth_sigma_matrix(int N)
 
 double*** create_cube(int N)
 {
+  /* Chan, Joey, JMCSC, ync12 */
   int i;
   double*** m = (double***) calloc(N+1, sizeof(double**));
   for (i = 1; i <=N; i++)
     m[i] = create_matrix(N, N);
-
   return m;
 }
 
 void free_cube(double*** m, int N)
 {
+  /* Chan, Joey, JMCSC, ync12 */
   int i;
   for (i = 1; i <=N; i++)
     free_matrix(m[i]);
@@ -309,11 +326,11 @@ void free_cube(double*** m, int N)
 
 void print_cube(double*** m, int N)
 {
+  /* Chan, Joey, JMCSC, ync12 */
    int i, j, k;
    for (i = 1; i <= N; i++)
      for (j = 1; j <= N; j++)
        for (k = 1; k <= N; k++)
-        if (fabs(m[i][j][k]) > 1e-5)
         printf("M[%5d][%5d][%5d] = %10.5f\n", i, j, k, m[i][j][k]);
 }
 
@@ -325,8 +342,9 @@ void print_cube(double*** m, int N)
 
 double*** create_sigma_cube(int N)
 {
-  double*** cube = create_cube(N);
+  /* Chan, Joey, JMCSC, ync12 */
   int i, j, k;
+  double*** cube = create_cube(N);
 
   for (i = N*3/8; i <= N/2; i++)
     for (j = N*7/16; j <= N*9/16; j++)
@@ -343,8 +361,9 @@ double*** create_sigma_cube(int N)
 
 double*** create_smooth_sigma_cube(int N)
 {
-  double*** cube = create_cube(N);
+  /* Chan, Joey, JMCSC, ync12 */
   int i, j, k;
+  double*** cube = create_cube(N);
 
   double lower_i1 = N*3/8,   lower_i2 = N*7/16,
          lower_j1 = N*7/16,  lower_j2 = N*15/32,
@@ -410,8 +429,9 @@ double*** create_smooth_sigma_cube(int N)
 
 double*** to_sigma_imn(double*** c, double** Sn, int N)
 {
-  double*** c_new = create_cube(N);
+  /* Chan, Joey, JMCSC, ync12 */
   int i, l, m, n;
+  double*** c_new = create_cube(N);
   
   #pragma omp parallel for
   for (i = 1; i < N; i++)
@@ -424,8 +444,9 @@ double*** to_sigma_imn(double*** c, double** Sn, int N)
 
 double*** to_sigma_ijn(double*** c, double** Sn, int N)
 {
-  double*** c_new = create_cube(N);
+  /* Chan, Joey, JMCSC, ync12 */
   int i, j, m, n;
+  double*** c_new = create_cube(N);
   
   #pragma omp parallel for
   for (i = 1; i < N; i++)
@@ -436,11 +457,11 @@ double*** to_sigma_ijn(double*** c, double** Sn, int N)
   return c_new;
 }
 
-
 double*** to_sigma_ijk(double*** c, double** Sn, int N)
 {
-  double*** c_new = create_cube(N);
+  /* Chan, Joey, JMCSC, ync12 */
   int i, j, k, n;
+  double*** c_new = create_cube(N);
   
   #pragma omp parallel for
   for (i = 1; i < N; i++)
@@ -453,8 +474,9 @@ double*** to_sigma_ijk(double*** c, double** Sn, int N)
 
 double*** to_psi_ijk(double*** c, int N)
 {
-  double*** c_new = create_cube(N);
+  /* Chan, Joey, JMCSC, ync12 */
   int i, j, k;
+  double*** c_new = create_cube(N);
   
   #pragma omp parallel for
   for (i = 1; i < N; i++)
