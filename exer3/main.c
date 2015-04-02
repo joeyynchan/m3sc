@@ -23,7 +23,7 @@ complex double **matmul(complex double** m1,
 int main()
 {
   /* Chan, Joey, JMCSC, ync12 */	
-  int i, j, N = 4, skip = 1;
+  int i, j, N = 8, skip = 1;
   printInfo();
 
   complex double *Wp = MakeWpowers(N);
@@ -31,7 +31,12 @@ int main()
   complex double *x  = (complex double*) calloc(  N, sizeof(complex double));
   complex double *y  = (complex double*) calloc(  N, sizeof(complex double));
   for (i = 0; i < N; i++)
-  	y[i] = i+1 + 0*I;
+  	y[i] =  1.*i+1. + 0.*I;
+
+  //y[0] = 1. + 0*I;
+  //y[1] = 2. + 0*I;
+  //y[2] = 3. + 0*I;
+  //y[3] = 4. + 0*I;
 
   FastDFS(x, y, w, Wp, N, skip);
   for (i = 0; i < N; i++)
