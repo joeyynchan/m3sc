@@ -18,7 +18,7 @@ complex double **matmul(complex double** m1,
 	                    int col1,
 	                    int col2);
 
-
+void execute_LZ(int N);
 void execute_traditional(int N);
 
 
@@ -26,28 +26,35 @@ void execute_traditional(int N);
 int main()
 {
   /* Chan, Joey, JMCSC, ync12 */	
-  int i, j, N = 16, skip = 1;
+  int N = 4;
+  execute_LZ(N);
+  /* Traditional */
+  execute_traditional(N);
+}
+
+void execute_LZ(int N)
+{
+  int i, j, skip = 1;
   printInfo();
 
   /* LZ algorithm */
   complex double *Wp = MakeWpowers(N);
-  complex double *w  = (complex double*) calloc(2*N, sizeof(complex double));
-  complex double *x  = (complex double*) calloc(  N, sizeof(complex double));
-  complex double *y  = (complex double*) calloc(  N, sizeof(complex double));
+  complex double *mem = (complex double*) calloc(3*N , sizeof(complex double));
+  complex double *w  = &mem[0];
+  complex double *x  = &mem[N];
+  complex double *y  = &mem[2*N];
   for (i = 0; i < N; i++)
   	y[i] =  1.*i+1. + 0.*I;
 
   FastDFS(x, y, w, Wp, N, skip);
   for (i = 0; i < N; i++)
-  	printf("x[%d] = %10.8f + %10.8fi\n", i, creal(x[i]), cimag(x[i]));
+  	printf("x[%d] = %10.6f + %10.6fi\n", i, creal(x[i]), cimag(x[i]));
 
-  free(w);
+  //for (i = 0; i < 3*N; i++)
+  // 	printf("w[%2d] = %10.6f + %10.6fi\n", i, creal(w[i]), cimag(w[i]));
+
+  free(mem);
   free(Wp);
-  free(x);
-  free(y);
-
-  /* Traditional */
-  execute_traditional(N);
 }
 
 void execute_traditional(int N)
