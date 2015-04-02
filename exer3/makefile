@@ -1,10 +1,11 @@
 GCC=gcc
-SOURCE=MakeWpowers.c
+SOURCE=MakeWpowers.c FastDFS.c MatMul.c
+FLAG=-O3 -march=native -mfpmath=sse -funroll-loops
 
 all:
 
 main:
-	$(GCC) main.c $(SOURCE) -o main.out -lm
+	$(GCC) $(FLAG) main.c $(SOURCE) -o main.out -lm
 
 
 .PHONY:

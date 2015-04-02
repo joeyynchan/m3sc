@@ -2,7 +2,7 @@
 #include <complex.h>
 #include <math.h>
 
-#define PI 3.1425
+#define PI 3.14159265359
 
 /* Function Declaration */
 complex double* MakeWpowers(int N);
