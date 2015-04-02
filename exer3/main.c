@@ -26,10 +26,11 @@ void execute_traditional(int N);
 int main()
 {
   /* Chan, Joey, JMCSC, ync12 */	
-  int N = 4;
+  int N = 12;
   execute_LZ(N);
   /* Traditional */
   execute_traditional(N);
+  return 0;
 }
 
 void execute_LZ(int N)
@@ -44,7 +45,7 @@ void execute_LZ(int N)
   complex double *x  = &mem[N];
   complex double *y  = &mem[2*N];
   for (i = 0; i < N; i++)
-  	y[i] =  1.*i+1. + 0.*I;
+  	y[i] =  i+1. + 0.*I;
 
   FastDFS(x, y, w, Wp, N, skip);
   for (i = 0; i < N; i++)
@@ -82,7 +83,6 @@ void execute_traditional(int N)
   free_matrix(x);
   free_matrix(y);
   free_matrix(Cn);
-
 }
 
 

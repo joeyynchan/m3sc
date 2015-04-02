@@ -20,8 +20,12 @@ void FastDFS(complex double* x,
   	{
       int i, j;
       for (i = 0; i < N; i++)
+      {
+      	complex double temp = 0. + I*0.;
         for (j = 0; j < N; j++)
-          x[i] = Wp[skip*i*j%N]*y[j*skip];
+          temp += Wp[skip*(j*i%N)]*y[j*skip];
+        x[i] = temp;
+      }
   	}
   } 
   else                  /* N even */
@@ -35,6 +39,13 @@ void FastDFS(complex double* x,
     /* Divide the problems into two sub problems */
     FastDFS(xe, y     , we, Wp, N/2, 2*skip);      /* First half: even part */
     FastDFS(xo, y+skip, wo, Wp, N/2, 2*skip);      /* Second half: odd part */
+
+    for (i = 0; i < N/2; i++)
+      printf("xe[%d] = %10.6f + %10.6fi\n", i, creal(xe[i]), cimag(xe[i]));
+
+    for (i = 0; i < N/2; i++)
+      printf("xo[%d] = %10.6f + %10.6fi\n", i, creal(xo[i]), cimag(xo[i]));
+    printf("\n\n\n");
     
     /* Compute the final result from the two sub result */
     for (j = 0; j < N/2; j++)     /* First half */
