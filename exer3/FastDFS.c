@@ -36,19 +36,12 @@ void FastDFS(complex double* x,
     FastDFS(xe, y     , we, Wp, N/2, 2*skip);      /* First half: even part */
     FastDFS(xo, y+skip, wo, Wp, N/2, 2*skip);  /* Second half: odd part */
     
-    printf("N = %2d\nskip = %2d\n", N, skip);
-    for (i = 0; i < N/2; i++)
-      printf("xe[%2d] = %10.6f + %10.6fi\n", i, creal(xe[i]), cimag(xe[i]));
-    for (i = 0; i < N/2; i++)
-      printf("xo[%2d] = %10.6f + %10.6fi\n", i, creal(xo[i]), cimag(xo[i]));
-
-    
     /* Compute the final result from the two sub result */
     for (j = 0; j < N/2; j++)     /* First half */
-      x[j] = xe[j] + Wp[(skip*(N-j))%N] * xo[j];
+      x[j] = xe[j] + Wp[skip*j] * xo[j];
 
     for (j = 0; j < N/2; j++)     /* Second half */
-      x[j+N/2] = xe[j] + Wp[skip*(N/2-j)] * xo[j];
+      x[j+N/2] = xe[j] + Wp[skip*(N/2+j)] * xo[j];
 
   }
 }
