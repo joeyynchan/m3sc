@@ -34,7 +34,7 @@ void FastDFS(complex double* x,
 
     /* Divide the problems into two sub problems */
     FastDFS(xe, y     , we, Wp, N/2, 2*skip);      /* First half: even part */
-    FastDFS(xo, y+skip, wo, Wp, N/2, 2*skip);  /* Second half: odd part */
+    FastDFS(xo, y+skip, wo, Wp, N/2, 2*skip);      /* Second half: odd part */
     
     /* Compute the final result from the two sub result */
     for (j = 0; j < N/2; j++)     /* First half */
