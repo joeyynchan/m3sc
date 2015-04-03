@@ -9,7 +9,6 @@
 void printInfo();
 complex double* MakeWpowers(int N);
 void FastDFS(complex double* x, complex double* y, complex double* w, complex double* Wp, int N, int skip);
-void FastDFT(complex double* x, complex double* y, complex double* w, complex double* Wp, int N, int skip);
 
 complex double** create_matrix(int row, int col);
 void free_matrix(complex double** matrix);
@@ -20,7 +19,6 @@ complex double **matmul(complex double** m1,
 	                    int col2);
 
 void fdfs(int N);
-void fdft(int N);
 void execute_traditional(int N);
 
 
@@ -40,8 +38,8 @@ int main()
 
 void fdfs(int N)
 {
+  /* Chan, Joey, JMCSC, ync12 */
   int i;
-  /* LZ algorithm */
   complex double *Wp = MakeWpowers(N);
   complex double *mem = (complex double*) calloc(2*N , sizeof(complex double));
   complex double *y  = (complex double*) calloc(N , sizeof(complex double));
@@ -56,34 +54,6 @@ void fdfs(int N)
   printf("==================\n");
   for (i = 0; i < N; i++)
   	printf("x[%d] = %12.6f + %12.6fi\n", i, creal(x[i]), cimag(x[i]));
-
-  /*
-  for (i = 0; i < 3*N; i++)
-   	printf("w[%2d] = %10.6f + %10.6fi\n", i, creal(w[i]), cimag(w[i]));
-  */
-
-  free(mem);
-  free(Wp);
-}
-
-void fdft(int N)
-{
-  int i;
-  /* LZ algorithm */
-  complex double *Wp = MakeWpowers(N);
-  complex double *mem = (complex double*) calloc(2*N , sizeof(complex double));
-  complex double *x  = (complex double*) calloc(N , sizeof(complex double));
-  complex double *w  = &mem[0];
-  complex double *y  = &mem[N];
-  for (i = 0; i < N; i++)
-  	x[i] =  i+1. + 0.*I;
-
-  FastDFT(x, y, w, Wp, N, 1);
-
-  printf("\nFastDFT (N = %d) :\n", N);
-  printf("==================\n");
-  for (i = 0; i < N; i++)
-  	printf("y[%d] = %12.6f + %12.6fi\n", i, creal(y[i]), cimag(y[i]));
 
   free(mem);
   free(Wp);
@@ -116,7 +86,6 @@ void execute_traditional(int N)
   free_matrix(y);
   free_matrix(Cn);
 }
-
 
 void printInfo()
 {

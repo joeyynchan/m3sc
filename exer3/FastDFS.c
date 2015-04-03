@@ -7,7 +7,7 @@ void FastDFS(complex double* x, complex double* y, complex double* w, complex do
 
 void FastDFS(complex double* x,
              complex double* y,
-             complex double* w,
+             complex double* w, /* Intermediate Result of size N */
              complex double* Wp,
              int N,
              int skip)
@@ -30,7 +30,7 @@ void FastDFS(complex double* x,
   } 
   else                  /* N even */
   { 
-    int i, j;
+    int j;
     complex double* xe = w;
     complex double* xo = w + N/2;
     complex double* we = w + N/2;
@@ -39,13 +39,6 @@ void FastDFS(complex double* x,
     /* Divide the problems into two sub problems */
     FastDFS(xe, y     , we, Wp, N/2, 2*skip);      /* First half: even part */
     FastDFS(xo, y+skip, wo, Wp, N/2, 2*skip);      /* Second half: odd part */
-
-    for (i = 0; i < N/2; i++)
-      printf("xe[%d] = %10.6f + %10.6fi\n", i, creal(xe[i]), cimag(xe[i]));
-
-    for (i = 0; i < N/2; i++)
-      printf("xo[%d] = %10.6f + %10.6fi\n", i, creal(xo[i]), cimag(xo[i]));
-    printf("\n\n\n");
     
     /* Compute the final result from the two sub result */
     for (j = 0; j < N/2; j++)     /* First half */

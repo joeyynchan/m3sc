@@ -7,7 +7,6 @@
 /* Function Declaration */
 complex double* MakeWpowers(int N);
 
-
 /* Function Implementation */
 complex double* MakeWpowers(int N)
 {
