@@ -29,7 +29,7 @@ int main()
   int N;
   printInfo();	
 
-  N = 8;
+  N = 3;
   fdfs(N);
   execute_traditional(N);
 

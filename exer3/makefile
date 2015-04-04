@@ -20,8 +20,11 @@ main_count_operation:
 main_fdfs_speed:
 	$(GCC) $(FLAG) main_fdfs_speed.c $(SOURCE) -o main.out
 
-mainv2:
-	$(GCC) $(FLAG) main.c $(SOURCEv2) -o main.out
+main_compare_fdfs_and_traditional_v2:
+	$(GCC) $(FLAG) main_compare_fdfs_and_traditional.c $(SOURCEv2) -o main.out
+
+main_fdfs_speed_v2:
+	$(GCC) $(FLAG) main_fdfs_speed.c $(SOURCEv2) -o main.out
 
 .PHONY:
 

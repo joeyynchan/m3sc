@@ -42,8 +42,16 @@ void FastDFT(complex double* x,  /* Input vector */
     /* Compute the final result from the two sub result */
     for (j = 0; j < N/2; j++)
     {
-      y[j] = ye[j] + Wp[skip*((N-j)%N)] * yo[j];
-      y[j+N/2] = ye[j] + Wp[skip*(N/2-j)] * yo[j];
+      if (j == 0)
+      {
+        y[0]   = ye[0] + yo[0];
+        y[N/2] = ye[0] - yo[0];
+      }
+      else
+      {
+        y[j]     = ye[j] + Wp[skip*((N-j)%N)] * yo[j];
+        y[j+N/2] = ye[j] + Wp[skip*(N/2-j)]   * yo[j];
+      }
     }
 
   }

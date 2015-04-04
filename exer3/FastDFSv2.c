@@ -14,19 +14,22 @@ void FastDFS(complex double* x,
 {
   if (N % 2 != 0)       /* N odd */
   {
-  	if (N == 1)           /* Case N = 1, x := y */
-  	  x[0] = y[0];
-  	else                  /* Case N != 1 */
-  	{
+    if (N == 1)           /* Case N = 1, x := y */
+      x[0] = y[0];
+    else                  /* Case N != 1 */
+    {
       int i, j;
       for (i = 0; i < N; i++)
       {
-      	complex double temp = 0. + I*0.;
+        complex double temp = 0. + I*0.;
         for (j = 0; j < N; j++)
-          temp += Wp[skip*(j*i%N)]*y[j*skip];
+          if (i == 0 || j == 0)
+            temp += y[j*skip];
+          else
+            temp += Wp[skip*(j*i%N)]*y[j*skip];
         x[i] = temp;
       }
-  	}
+    }
   } 
   else                  /* N even */
   { 
@@ -43,8 +46,16 @@ void FastDFS(complex double* x,
     /* Compute the final result from the two sub result */
     for (j = 0; j < N/2; j++)
     { 
-      x[j] = xe[j] + Wp[skip*j] * xo[j];
-      x[j+N/2] = xe[j] + Wp[skip*(N/2+j)] * xo[j];
+      if (j == 0)
+      {
+        x[0]   = xe[0] + xo[0];
+        x[N/2] = xe[0] - xo[0];
+      }
+      else
+      {
+        x[j] = xe[j] + Wp[skip*j] * xo[j];
+        x[j+N/2] = xe[j] + Wp[skip*(N/2+j)] * xo[j];
+      }
     }
 
   }
