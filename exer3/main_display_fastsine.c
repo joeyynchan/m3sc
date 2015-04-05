@@ -18,66 +18,71 @@ int main()
 {
   /* Chan, Joey, JMCSC, ync12 */
   int N = 2;
-
-  int i;
-  double time_diff1 = 0;
-  double time_diff2 = 0;
-  clock_t start_time, end_time;
-  double** y1;
-  double*  y2 = (double *)malloc((N-1)*sizeof(double));
-  double** x1 = create_matrix(N-1, 1);
-  double*  x2 = (double *)malloc((N-1)*sizeof(double));
-  double** Sn = MakeSN(N);
-
   printInfo();
-  
-  /* Vector S construction */
-  for (i = 1; i < N; i++)
+  printf(" log2(N)     MatMul      FastSINE    Same Result \n");
+  printf("--------- ------------ ------------ -------------\n");
+  while (1)
   {
-    x1[i][1] = i;
-    x2[i-1]  = i;
+    int i;
+    double time_diff1 = 0;
+    double time_diff2 = 0;
+    clock_t start_time, end_time;
+    double** y1;
+    double*  y2 = (double *)malloc((N-1)*sizeof(double));
+    double** x1 = create_matrix(N-1, 1);
+    double*  x2 = (double *)malloc((N-1)*sizeof(double));
+    double** Sn = MakeSN(N);
+
+    for (i = 1; i < N; i++)
+    {
+      x1[i][1] = i;
+      x2[i-1]  = i;
+    }
+    printf("%9d ", N);
+
+    start_time = clock();
+    y1 = mymatmul(Sn, x1, N-1, N-1, 1);
+    end_time = clock();
+    time_diff1 = (double) (end_time - start_time);
+    time_diff1 = (time_diff1 == 0) ? 1. : time_diff1;
+    printf("%12.6f ", time_diff1/CLOCKS_PER_SEC);
+
+    start_time = clock();
+    FastSINE(x2, y2, N);
+    end_time = clock();
+    time_diff2 = (double) (end_time - start_time);
+    time_diff2 = (time_diff2 == 0) ? 1. : time_diff2;
+    printf("%12.6f ", time_diff2/CLOCKS_PER_SEC);
+
+    printf("%7s\n", check_result(y1, y2, N) == 1 ? "Yes" : "No");
+    /*
+    for (i = 1; i < N; i++)
+      printf("y1[%d] = %12.6f\n", i, 2*y1[i][1]);
+
+    printf("\n\n");
+    for (i = 0; i < N-1; i++)
+  	  printf("y2[%d] = %12.6f\n", i, y2[i]);
+    */
+
+    free_matrix(x1);
+    free_matrix(y1);
+    free_matrix(Sn);
+    free(x2);
+    free(y2);
+
+    if (time_diff1/CLOCKS_PER_SEC > 100 || time_diff2/CLOCKS_PER_SEC > 100)
+      break;
+    else
+      N *= 2;
+
   }
-
-  /* Time Direct Matrix Multiplication Method */
-  start_time = clock();
-  y1 = mymatmul(Sn, x1, N-1, N-1, 1);
-  end_time = clock();
-  time_diff1 = (double) (end_time - start_time);
-  time_diff1 = (time_diff1 == 0) ? 1. : time_diff1;
-
-  /* Time Fast Since Method */
-  start_time = clock();
-  FastSINE(x2, y2, N);
-  end_time = clock();
-  time_diff2 = (double) (end_time - start_time);
-  time_diff2 = (time_diff2 == 0) ? 1. : time_diff2;
-
-  /* Output Result */
-  printf("N = %d\n", N);
-  printf("Time taken for Matrix Multiplication (y1) = %12.6fs\n", time_diff1/CLOCKS_PER_SEC);
-  printf("Time taken for Fast Sine Transform   (y2) = %12.6fs\n", time_diff2/CLOCKS_PER_SEC);
-  printf("   i      2*y1[i]        y2[i]     %% Error \n");
-  printf("------- ------------ ------------ ----------\n");
-  for (i = 0; i < N-1; i++)
-  {
-  	printf("%7d ", i);
-    printf("%12.6f ", 2*y1[i+1][1]);
-    printf("%12.6f", y2[i]);
-  	printf("%10.5f\n", (y2[i]-2*y1[i+1][1])/y2[i]);
-  }
-
-  /* Memory Desctruction */
-  free_matrix(x1);
-  free_matrix(y1);
-  free_matrix(Sn);
-  free(x2);
-  free(y2);
 
   return 0;
 }
 
 int check_result(double** y1, double* y2, int N)
 {
+  /* Chan, Joey, JMCSC, ync12 */
   int i;
   int result = 1;
   for (i = 0; i < N-1; i++)

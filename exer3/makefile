@@ -1,7 +1,8 @@
 GCC=gcc
-SOURCE=MakeWpowers.c FastDFS.c FastDFT.c MatMul.c
-SOURCEv2=MakeWpowers.c FastDFSv2.c FastDFTv2.c MatMul.c
-FLAG=-ansi -pedantic -Wall -O3 -march=native -mfpmath=sse -funroll-loops
+SOURCE=MakeWpowers.c FastDFS.c FastDFT.c MatMul.c FastSINE.c
+SOURCEv2=MakeWpowers.c FastDFSv2.c FastDFTv2.c MatMul.c FastSINE.c
+SOURCEv3=MakeWpowers.c FastDFSv2.c FastDFTv2.c FastSINE.c
+FLAG=-g -ansi -pedantic -Wall -O3 -march=native -mfpmath=sse -funroll-loops
 
 all:
 
@@ -25,6 +26,12 @@ main_compare_fdfs_and_traditional_v2:
 
 main_fdfs_speed_v2:
 	$(GCC) $(FLAG) main_fdfs_speed.c $(SOURCEv2) -o main.out
+
+main_check_fastsine_correctness:
+	$(GCC) $(FLAG) main_check_fastsine_correctness.c $(SOURCEv3) -o main.out
+
+main_display_fastsine:
+	$(GCC) $(FLAG) main_display_fastsine.c $(SOURCEv3) -o main.out
 
 .PHONY:
 
