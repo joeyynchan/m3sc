@@ -44,7 +44,6 @@ int main()
     printf("%9d %20.8f %12.6f\n", N, result[N/2][N/2][N/2], time_taken);
     free_cube(result, N);
   }
-
   while (!should_stop)
   {
   	int i;
@@ -71,6 +70,7 @@ int main()
 double*** calculate_gravitational_potential(int N)
 {
   /* Chan, Joey, JMCSC, ync12 */
+  int i;
   double*** sigma_lmn,
         *** sigma_imn,
         *** sigma_ijn,
@@ -104,6 +104,9 @@ double*** calculate_gravitational_potential(int N)
 
   psi_lmn = to_sigma_imn(psi_imn, Sn, N);
   free_cube(psi_imn, N);
+
+  
+
 
   free_matrix(Sn);
   

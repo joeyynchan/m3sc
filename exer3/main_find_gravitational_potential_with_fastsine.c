@@ -15,6 +15,7 @@ double** calculate_gravitational_potential(int N);
 
 int main()
 {
+  /* Chan, Joey, JMCSC, ync12 */
   int m = 0, N;
   int should_stop = 0;
   clock_t start, end;

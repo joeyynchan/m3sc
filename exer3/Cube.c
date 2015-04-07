@@ -1,19 +1,17 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include <omp.h>
 
 #define PI                3.14159265359
 
 /* Function Declarations */
+double **create_matrix(int, int);
+void free_matrix(double**);
+
 double*** create_cube(int N);
 void free_cube(double*** m, int N);
 void print_cube(double*** m, int N);
 double*** create_smooth_sigma_cube(int N);
-double*** to_sigma_imn(double*** c, double** Sn, int N);
-double*** to_sigma_ijn(double*** c, double** Sn, int N);
-double*** to_sigma_ijk(double*** c, double** Sn, int N);
-double*** to_psi_ijk(double*** c, int N);
 
 double*** create_cube(int N)
 {
@@ -41,7 +39,8 @@ void print_cube(double*** m, int N)
    for (i = 1; i <= N; i++)
      for (j = 1; j <= N; j++)
        for (k = 1; k <= N; k++)
-        printf("M[%5d][%5d][%5d] = %10.5f\n", i, j, k, m[i][j][k]);
+         if (fabs(m[i][j][k]) > 1e-5)
+           printf("M[%5d][%5d][%5d] = %10.5f\n", i, j, k, m[i][j][k]);
 }
 
 double*** create_smooth_sigma_cube(int N)
@@ -110,63 +109,4 @@ double*** create_smooth_sigma_cube(int N)
           cube[i][j][k] += 10000.;
 
   return cube;
-}
-
-double*** to_sigma_imn(double*** c, double** Sn, int N)
-{
-  /* Chan, Joey, JMCSC, ync12 */
-  int i, l, m, n;
-  double*** c_new = create_cube(N);
-  
-  #pragma omp parallel for
-  for (i = 1; i < N; i++)
-    for (l = 1; l < N; l++)
-      for (m = 1; m < N; m++)
-        for (n = 1; n < N; n++)
-          c_new[i][m][n] += c[l][m][n] * Sn[i][l];
-  return c_new;
-}
-
-double*** to_sigma_ijn(double*** c, double** Sn, int N)
-{
-  /* Chan, Joey, JMCSC, ync12 */
-  int i, j, m, n;
-  double*** c_new = create_cube(N);
-  
-  #pragma omp parallel for
-  for (i = 1; i < N; i++)
-    for (j = 1; j < N; j++)
-      for (m = 1; m < N; m++)
-        for (n = 1; n < N; n++)
-          c_new[i][j][n] += c[i][m][n] * Sn[j][m];
-  return c_new;
-}
-
-double*** to_sigma_ijk(double*** c, double** Sn, int N)
-{
-  /* Chan, Joey, JMCSC, ync12 */
-  int i, j, k, n;
-  double*** c_new = create_cube(N);
-  
-  #pragma omp parallel for
-  for (i = 1; i < N; i++)
-    for (n = 1; n < N; n++)
-      for (j = 1; j < N; j++)
-        for (k = 1; k < N; k++)
-          c_new[i][j][k] += c[i][j][n] * Sn[n][k];
-  return c_new;
-}
-
-double*** to_psi_ijk(double*** c, int N)
-{
-  /* Chan, Joey, JMCSC, ync12 */
-  int i, j, k;
-  double*** c_new = create_cube(N);
-  
-  #pragma omp parallel for
-  for (i = 1; i < N; i++)
-    for (j = 1; j < N; j++)
-      for (k = 1; k < N; k++)
-        c_new[i][j][k] = c[i][j][k] * 8./(N*N*N) / ((i*i+j*j+k*k)*PI*PI);
-  return c_new;
 }

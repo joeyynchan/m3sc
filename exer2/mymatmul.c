@@ -315,7 +315,8 @@ void print_cube(double*** m, int N)
    for (i = 1; i <= N; i++)
      for (j = 1; j <= N; j++)
        for (k = 1; k <= N; k++)
-        printf("M[%5d][%5d][%5d] = %10.5f\n", i, j, k, m[i][j][k]);
+         if (fabs(m[i][j][k]) > 1e-5)
+           printf("M[%5d][%5d][%5d] = %10.5f\n", i, j, k, m[i][j][k]);
 }
 
 

@@ -3,8 +3,10 @@ BASIC_SOURCE=MakeWpowers.c FastSINE.c info.c
 FAST1=FastDFS.c FastDFT.c
 FAST2=FastDFSv2.c FastDFTv2.c
 FASTSINE2=FastSINEv2.c
+FASTSINE3=FastSINEv3.c
 MATMUL=Matmul.c
 MATMULC=MatmulC.c
+CUBE=Cube.c
 OUTPUT=main.out
 CFLAGS=-g -ansi -pedantic -Wall -O3 -march=native -mfpmath=sse -funroll-loops
 
@@ -38,6 +40,9 @@ main_display_fastsine: $(BASIC_SOURCE) $(FAST2) $(MATMUL)
 	$(GCC) $(CFLAGS) $@.c $^ -o $(OUTPUT)
 
 main_find_gravitational_potential_with_fastsine: $(BASIC_SOURCE) $(FAST2) $(MATMUL) $(FASTSINE2)
+	$(GCC) $(CFLAGS) $@.c $^ -o $(OUTPUT)
+
+main_mastery: $(BASIC_SOURCE) $(FAST2) $(MATMUL) $(FASTSINE3) $(CUBE)
 	$(GCC) $(CFLAGS) $@.c $^ -o $(OUTPUT)
 
 .PHONY:
