@@ -60,15 +60,18 @@ double fdfs(int N)
   complex double *w  = &mem[0];
   complex double *x  = &mem[N];
 
+  /* Dummy Vector Construction */
   for (i = 0; i < N; i++)
   	y[i] =  i+1. + 0.*I;
 
+  /* Time FDFS */
   start_time = clock();
   FastDFS(x, y, w, Wp, N, 1);
   end_time = clock();
   time_diff = (double) (end_time - start_time);
   time_diff = (time_diff == 0) ? 1. : time_diff;
 
+  /* Allocated Memory Destruction */
   free(mem);
   free(Wp);
 
@@ -85,21 +88,23 @@ double execute_traditional(int N)
   complex double** x;
   double theta = 2.*PI/N;
   
+  /* Dummy Matrix Construction */
   int i, j;
   for (i = 1; i <= N; i++)
   	y[i][1] = i + 0*I;
 
-  
   for (i = 1; i <= N; i++)
   	for (j = 1; j <= N; j++)
   	  Cn[i][j] = cos(theta*(i-1)*(j-1)) + I*sin(theta*(i-1)*(j-1));
 
+  /* Time Direct Matrix Multiplication Method */
   start_time = clock();
   x = matmul(Cn, y, N, N, 1);
   end_time = clock();
   time_diff = (double) (end_time - start_time);
   time_diff = (time_diff == 0) ? 1. : time_diff;
 
+  /* Allocated Memory Destruction */
   free_matrix(x);
   free_matrix(y);
   free_matrix(Cn);

@@ -5,18 +5,16 @@
 
 #define PI 3.14159265359
 
+double **create_matrix(int, int);
 void free_matrix(double**);
 void print_matrix(double**, int, int);
-
-double **MakeSN(int);
-double **create_sigma_matrix(int);
 double **create_smooth_sigma_matrix(int);
-double **calculate_gravitational_potential(int);
-double **mymatmul(double** m1, double** m2, int row1, int col1, int col2);
+void FastSINE1(double** S, double** T, int N);
+void FastSINE2(double** S, double** T, int N);
+double** calculate_gravitational_potential(int N);
 
 int main()
 {
-  /* Chan, Joey, JMCSC, ync12 */
   int m = 0, N;
   int should_stop = 0;
   clock_t start, end;
@@ -24,17 +22,17 @@ int main()
   printf("    N            Result         Time taken \n");
   printf("--------- -------------------- ------------\n");
 
-  for (N = 32; N <= 96; N+= 32)
+  for (N = 32; N <= 32; N+= 32)
   {
     start = clock();
     result = calculate_gravitational_potential(N);
     end = clock();
-    time_diff = (double) (end_time - start_time);
+    time_diff = (double) (end - start);
     time_diff = (time_diff == 0) ? 1. : time_diff;
     time_taken = (double) time_diff/CLOCKS_PER_SEC;
     printf("%9d %20.8f %12.6f\n", N, result[N/2][N/2], time_taken);  	
   }
-
+  /*
   while (!should_stop)
   {
   	int i;
@@ -43,7 +41,8 @@ int main()
       N = i*(int)pow(2, 5+m);
       start = clock();
       result = calculate_gravitational_potential(N);
-      time_diff = (double) (end_time - start_time);
+      end = clock();
+      time_diff = (double) (end- start);
       time_diff = (time_diff == 0) ? 1. : time_diff;
       time_taken = (double) time_diff/CLOCKS_PER_SEC;
       printf("%9d %20.8f %12.6f\n", N, result[N/2][N/2], time_taken);
@@ -55,39 +54,32 @@ int main()
     }
     m++;
   }
+  */
   return 0;
 }
 
 double** calculate_gravitational_potential(int N)
 {
   /* Chan, Joey, JMCSC, ync12 */
-  double** M,
-        ** Sn,
-        ** sigma_jn,
-        ** sigma_jk,
-        ** psi_jn,
-        ** psi_mn;
+  int i, j, k;
+  double** x1 = create_smooth_sigma_matrix(N);
+  double** x2 = create_matrix(N-1, N-1);
 
-  int j, k;
-  M = create_sigma_matrix(N);
-  /*M = create_smooth_sigma_matrix(N);*/
-  Sn = MakeSN(N);
-  sigma_jn = mymatmul(Sn, M, N-1, N-1, N-1);
-  free_matrix(M);
-  sigma_jk = mymatmul(sigma_jn, Sn, N-1, N-1, N-1);
-  free_matrix(sigma_jn);
+  FastSINE1(x1, x2, N);
+  FastSINE2(x2, x1, N);
 
   for (j = 1; j < N; j++)
     for (k = 1; k < N; k++)
-      sigma_jk[j][k] *= (4./(N*N)) * (1/((j*j+k*k)*PI*PI));
+      x1[j][k] *= (4./(N*N)) * (1/((j*j+k*k)*PI*PI));
 
+  FastSINE2(x1, x2, N);
+  FastSINE1(x2, x1, N);
+  
+  i = 31;
+  for (j = 1; j < N; j++)
+  	printf("M[%2d][%2d] = %12.6f\n", i, j, x1[i][j]);
 
-  psi_jn = mymatmul(sigma_jk, Sn, N-1, N-1, N-1);
-  free_matrix(sigma_jk);
-  psi_mn = mymatmul(Sn, psi_jn, N-1, N-1, N-1);
-  free_matrix(psi_jn);
-  free_matrix(Sn);
-
-  return psi_mn;
+  
+  free_matrix(x2);
+  return x1;
 }
-

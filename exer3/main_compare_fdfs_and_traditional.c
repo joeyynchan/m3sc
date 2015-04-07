@@ -61,6 +61,7 @@ void fdfs(int N)
 
 void execute_traditional(int N)
 {
+  /* Chan, Joey, JMCSC, ync12 */
   complex double** y  = create_matrix(N, 1);
   complex double** Cn = create_matrix(N, N);
   complex double** x;

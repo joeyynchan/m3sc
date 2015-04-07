@@ -13,10 +13,10 @@ void FastDFS(complex double* x, complex double* y, complex double* w, complex do
 complex double** create_matrix(int row, int col);
 void free_matrix(complex double** matrix);
 complex double **matmul(complex double** m1,
-	                    complex double** m2,
-	                    int row1,
-	                    int col1,
-	                    int col2);
+	                      complex double** m2,
+	                      int row1,
+	                      int col1,
+	                      int col2);
 
 void fdfs(int N);
 void execute_traditional(int N);
@@ -61,6 +61,7 @@ void fdfs(int N)
 
 void execute_traditional(int N)
 {
+  /* Chan, Joey, JMCSC, ync12 */
   complex double** y  = create_matrix(N, 1);
   complex double** Cn = create_matrix(N, N);
   complex double** x;

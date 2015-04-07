@@ -22,14 +22,14 @@ void FastSINE(double* rx, double* ry,int N)
   x[N] = 0 + 0*I;
   for (i = 1; i < N; i++)
   {
-  	x[i]   =  0 + rx[i-1]*I;
-  	x[M-i] =  0 - rx[i-1]*I;
+  	x[i]   =  0 + rx[i]*I;
+  	x[M-i] =  0 - rx[i]*I;
   }
 
   FastDFT(x, y, w, Wp, M, 1);
 
-  for (i = 0; i < N; i++)
-  	ry[i] = creal(y[i+1]);
+  for (i = 1; i < N; i++)
+  	ry[i] = creal(y[i])/2.;
 
   free(x);
   free(mem);

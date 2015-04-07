@@ -35,16 +35,21 @@ void fdft(int N)
   complex double *x  = (complex double*) calloc(N , sizeof(complex double));
   complex double *w  = &mem[0];
   complex double *y  = &mem[N];
+
+  /* Dummy Vector Construction */
   for (i = 0; i < N; i++)
   	x[i] =  i+1. + 0.*I;
 
+  /* Execute FDFT */
   FastDFT(x, y, w, Wp, N, 1);
 
+  /* Output Result */
   printf("\nFastDFT (N = %d) :\n", N);
   printf("==================\n");
   for (i = 0; i < N; i++)
   	printf("y[%d] = %12.6f + %12.6fi\n", i, creal(y[i]), cimag(y[i]));
 
+  /* Allocated Memory Destruction */
   free(mem);
   free(Wp);
 }
