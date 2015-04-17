@@ -30,6 +30,9 @@ main_fdfs_speed: $(BASIC_SOURCE) $(FAST1) $(MATMULC)
 main_compare_fdfs_and_traditional_v2: $(BASIC_SOURCE) $(FAST2) $(MATMULC)
 	$(GCC) $(CFLAGS) $@.c $^ -o $(OUTPUT)
 
+main_compare_fdfs_and_traditional_v3: $(BASIC_SOURCE) $(FAST2) $(MATMULC)
+	$(GCC) $(CFLAGS) $@.c $^ -o $(OUTPUT)
+
 main_fdfs_speed_v2: $(BASIC_SOURCE) $(FAST2) $(MATMULC)
 	$(GCC) $(CFLAGS) $@.c $^ -o $(OUTPUT)
 
