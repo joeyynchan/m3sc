@@ -24,8 +24,8 @@ int main()
   int N, skip;
   printInfo();	
 
-  N = 3;
-  skip = 2;
+  N = 4;
+  skip = 1;
   fdfs(N, skip);
   execute_traditional(N);
 
@@ -37,9 +37,9 @@ void fdfs(int N, int skip)
   /* Chan, Joey, JMCSC, ync12 */
   int i;
   complex double *Wp = MakeWpowers(N);
-  complex double *w  = (complex double*) calloc(2*N, sizeof(complex double));
-  complex double *y  = (complex double*) calloc(N*skip , sizeof(complex double));
-  complex double *x  = (complex double*) calloc(N*skip , sizeof(complex double));
+  complex double *w  = (complex double*) malloc(2*N    * sizeof(complex double));
+  complex double *y  = (complex double*) malloc(N*skip * sizeof(complex double));
+  complex double *x  = (complex double*) malloc(N*skip * sizeof(complex double));
   for (i = 0; i < N; i++)
   	y[skip*i] =  i+1. + 0.*I;
 

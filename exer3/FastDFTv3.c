@@ -1,7 +1,8 @@
 #include <stdlib.h>
 #include <complex.h>
 
-void FastTransform(complex double* x, complex double* y, complex double* w, complex double* Wp, int N, int skipY, int skipX, int reverse);
+void FastDFT(complex double* y, complex double* x, complex double* w, complex double* Wp, int N, int skip);
+
 
 void FastDFT(complex double* x,  /* Input vector */
              complex double* y,  /* Final result */
@@ -11,7 +12,11 @@ void FastDFT(complex double* x,  /* Input vector */
              int skip)
 {
   int i;
-  FastTransform(w+N, x, w, Wp, N, skip, 1, 1);
+  complex double* Wp2 = (complex double*) malloc(N*sizeof(complex double));
   for (i = 0; i < N; i++)
-    y[i*skip] = w[N+i];
+    Wp2[i] = Wp[(N-i)%N];
+  FastDFS(y, x, w, Wp2, N, skip);
+  free(Wp2);
+  for (i = 0; i < N; i++)
+    y[i] /= N;
 }
