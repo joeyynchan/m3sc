@@ -17,10 +17,10 @@ void fdft(int N);
 int main()
 {
   /* Chan, Joey, JMCSC, ync12 */
-  int N;
+  int N = 4;
   printInfo();	
 
-  for (N = 1; N <= 10; N++)
+  //for (N = 1; N <= 10; N++)
     fdft(N);
 
   return 0;
@@ -52,17 +52,4 @@ void fdft(int N)
   /* Allocated Memory Destruction */
   free(mem);
   free(Wp);
-}
-
-void printInfo()
-{
-  /* Chan, Joey, JMCSC, ync12 */
-  printf("\n");
-  printf("%15s: %s\n", "Name", "Joey");
-  printf("%15s: %s\n", "CID", "00730306");
-  printf("%15s: %s\n", "LIBRARY NO", "0246734100");
-  printf("%15s: %s\n", "Email Address", "ync12@ic.ac.uk");
-  printf("%15s: %s\n", "Course Code", "JMCSC");
-  printf("%15s: %s, %s \n", "Compile Time", __TIME__, __DATE__);
-  printf("-------------------------------------------------\n");
 }

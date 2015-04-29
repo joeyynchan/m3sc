@@ -37,10 +37,10 @@ int main()
   printf(" log2(N)   FastFDS      Trad.    Ratio \n");
   printf("--------- ---------- ---------- -------\n");
   N = 2;
-  for (i = 2; i < 20; i++)
+  for (i = 2; i <= 25; i++)
   {
     r1 = fdfs(N);
-    r2 = execute_traditional(N);
+    //r2 = execute_traditional(N);
     printf("%9d %10.6f %10.6f %7.2f\n", i, r1, r2, r2/r1);
     N *= 2;
   }
@@ -110,17 +110,4 @@ double execute_traditional(int N)
   free_matrix(Cn);
 
   return time_diff/CLOCKS_PER_SEC;
-}
-
-void printInfo()
-{
-  /* Chan, Joey, JMCSC, ync12 */
-  printf("\n");
-  printf("%15s: %s\n", "Name", "Joey");
-  printf("%15s: %s\n", "CID", "00730306");
-  printf("%15s: %s\n", "LIBRARY NO", "0246734100");
-  printf("%15s: %s\n", "Email Address", "ync12@ic.ac.uk");
-  printf("%15s: %s\n", "Course Code", "JMCSC");
-  printf("%15s: %s, %s \n", "Compile Time", __TIME__, __DATE__);
-  printf("-------------------------------------------------\n");
 }

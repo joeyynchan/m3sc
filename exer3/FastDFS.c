@@ -37,7 +37,8 @@ void FastTransform(complex double* x, /* Output result */
       {
       	complex double temp = 0. + I*0.;
         for (j = 0; j < N; j++)
-          temp += Wp[skipX*(j*i%N)]*y[j*skipY];
+          temp += Wp[abs(skipX)*(j*i%N)]*y[j*skipY];
+          //temp += Wp[skip*((N-j*i%N)%N)]*x[j*skip];
         x[i] = temp;
       }
   	}
@@ -51,14 +52,16 @@ void FastTransform(complex double* x, /* Output result */
     complex double* wo  = w + N;
 
     /* Divide the problems into two sub problems */
-    FastTransform(xe, y     , we, Wp, N/2, 2*skipY, 2*skipX);      /* First half: even part */
+    FastTransform(xe, y      , we, Wp, N/2, 2*skipY, 2*skipX);      /* First half: even part */
     FastTransform(xo, y+skipY, wo, Wp, N/2, 2*skipY, 2*skipX);      /* Second half: odd part */
     
     /* Compute the final result from the two sub result */
     for (j = 0; j < N/2; j++)
     { 
-      x[j] = xe[j] + Wp[skipX*j] * xo[j];
-      x[j+N/2] = xe[j] + Wp[skipX*(N/2+j)] * xo[j];
+      x[j] = xe[j] + Wp[abs(skipX)*(skipX > 0 ? j : ((N-j)%N))] * xo[j];
+      //y[j] = ye[j] + Wp[skip*((N-j)%N)] * yo[j];
+      x[j+N/2] = xe[j] + Wp[abs(skipX)*(skipX > 0 ? (N/2+j) : (N/2-j))] * xo[j];
+      //y[j+N/2] = ye[j] + Wp[skip*(N/2-j)] * yo[j];
     }
 
   }

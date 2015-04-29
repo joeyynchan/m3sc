@@ -39,10 +39,9 @@ void fdfs(int N)
   /* Chan, Joey, JMCSC, ync12 */
   int i;
   complex double *Wp = MakeWpowers(N);
-  complex double *mem = (complex double*) calloc(2*N , sizeof(complex double));
+  complex double *x  = (complex double*) calloc(N , sizeof(complex double));
   complex double *y  = (complex double*) calloc(N , sizeof(complex double));
-  complex double *w  = &mem[0];
-  complex double *x  = &mem[N];
+  complex double *w = (complex double*) calloc(2*N , sizeof(complex double));
 
   generate_y(y, N);
   FastDFS(x, y, w, Wp, N, 1);
@@ -52,7 +51,9 @@ void fdfs(int N)
   for (i = 0; i < N; i++)
   	printf("x[%d] = %12.6f + %12.6fi\n", i, creal(x[i]), cimag(x[i]));
 
-  free(mem);
+  free(x);
+  free(y);
+  free(w);
   free(Wp);
 }
 
