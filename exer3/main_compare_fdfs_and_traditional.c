@@ -29,7 +29,7 @@ int main()
   int N;
   printInfo();	
 
-  N = 3;
+  N = 4;
   fdfs(N);
   execute_traditional(N);
 
@@ -41,10 +41,9 @@ void fdfs(int N)
   /* Chan, Joey, JMCSC, ync12 */
   int i;
   complex double *Wp = MakeWpowers(N);
-  complex double *mem = (complex double*) calloc(2*N , sizeof(complex double));
+  complex double *w  = (complex double*) calloc(2*N , sizeof(complex double));
   complex double *y  = (complex double*) calloc(N , sizeof(complex double));
-  complex double *w  = &mem[0];
-  complex double *x  = &mem[N];
+  complex double *x  = (complex double*) calloc(N , sizeof(complex double));
   for (i = 0; i < N; i++)
   	y[i] =  i+1. + 0.*I;
 
@@ -55,7 +54,9 @@ void fdfs(int N)
   for (i = 0; i < N; i++)
   	printf("x[%d] = %12.6f + %12.6fi\n", i, creal(x[i]), cimag(x[i]));
 
-  free(mem);
+  free(x);
+  free(y);
+  free(w);
   free(Wp);
 }
 
@@ -86,17 +87,4 @@ void execute_traditional(int N)
   free_matrix(x);
   free_matrix(y);
   free_matrix(Cn);
-}
-
-void printInfo()
-{
-  /* Chan, Joey, JMCSC, ync12 */
-  printf("\n");
-  printf("%15s: %s\n", "Name", "Joey");
-  printf("%15s: %s\n", "CID", "00730306");
-  printf("%15s: %s\n", "LIBRARY NO", "0246734100");
-  printf("%15s: %s\n", "Email Address", "ync12@ic.ac.uk");
-  printf("%15s: %s\n", "Course Code", "JMCSC");
-  printf("%15s: %s, %s \n", "Compile Time", __TIME__, __DATE__);
-  printf("-------------------------------------------------\n");
 }
