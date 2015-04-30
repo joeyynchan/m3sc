@@ -22,14 +22,15 @@ void FastTransform(complex double* x, /* Output result */
   {
   	if (N == 1)           /* Case N = 1, x := y */
   	  x[0] = y[0];
-    //else if (N == 3)
-    //{
-    //  x[0] = y[0] + y[1] + y[2]; /* {2,0,0,0} */
-    //  x[1] = COS120*(y[1]+y[2])  /* {1,1,0,0} */
-    //         + SIN120*(cimag(y[2])-cimag(y[1]) + I*(creal(y[1])-creal(y[2]))); /* {1,1,0,0}*/
-    //  x[2] = COS120*(y[1]+y[2])  /* {1,1,0,0} */
-    //         - SIN120*(cimag(y[2])-cimag(y[1]) + I*(creal(y[1])-creal(y[2]))); /* {1,1,0,0}*/
-    //}
+    else if (N == 3)
+    {
+      complex double Re, Im;
+      Re = COS120*((creal(y[  skipY])+creal(y[2*skipY])) + I*(cimag(y[skipY])+cimag(y[2*skipY])));
+      Im = SIN120*((cimag(y[2*skipY])-cimag(y[  skipY])) + I*(creal(y[skipY])-creal(y[2*skipY])));
+      x[0] = y[0] + y[skipY] + y[2*skipY]; 
+      x[reverse? 2 : 1] = y[0] + Re + Im;
+      x[reverse? 1 : 2] = y[0] + Re - Im;
+    }
   	else                  /* Case N != 1 */
   	{
       int i, j;
@@ -37,10 +38,7 @@ void FastTransform(complex double* x, /* Output result */
       {
       	complex double temp = y[0];
         for (j = 1; j < N; j++)
-          if (reverse)
-            temp += Wp[skipX*((N-j*i%N)%N)]*y[j*skipY];
-          else
-            temp += Wp[skipX*(j*i%N)]*y[j*skipY];
+          temp += reverse ? Wp[skipX*((N-j*i%N)%N)]*y[j*skipY] : Wp[skipX*(j*i%N)]*y[j*skipY];
         x[i] = temp;
       }
   	}

@@ -27,6 +27,12 @@ main_speed_FastDFS: $(BASIC_SOURCE) $(FT1) $(MATMULC)
 main_speed_FastDFS2: $(BASIC_SOURCE) $(FT2) $(MATMULC)
 	$(GCC) $(CFLAGS) main_speed_FastDFS.c $^ -o $(OUTPUT)
 
+main_test_FastDFS: $(BASIC_SOURCE) $(FT2) $(MATMULC)
+	$(GCC) $(CFLAGS) $@.c $^ -o $(OUTPUT)
+
+main_test_FastDFS2: $(BASIC_SOURCE) $(FT2) $(MATMULC)
+	$(GCC) $(CFLAGS) main_test_FastDFS.c $^ -o $(OUTPUT)
+
 main_count_FastDFS: $(BASIC_SOURCE) $(FT1) $(MATMULC)
 	$(GCC) $(CFLAGS) $@.c $^ -o $(OUTPUT)
 

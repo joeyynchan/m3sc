@@ -43,9 +43,6 @@ void fdfs(int N, int skip)
   complex double *y  = (complex double*) malloc(N*skip * sizeof(complex double));
   complex double *x  = (complex double*) malloc(N*skip * sizeof(complex double));
 
-  for (i = 0; i < N; i++)
-  	y[skip*i] =  i+1. + 0.*I;
-
   generate_y(y, N, skip);
   FastDFS(x, y, w, Wp, N, skip);
 
