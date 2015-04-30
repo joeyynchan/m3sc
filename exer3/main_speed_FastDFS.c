@@ -40,7 +40,7 @@ int main()
   for (i = 2; i <= 25; i++)
   {
     r1 = fdfs(N);
-    //r2 = execute_traditional(N);
+    r2 = execute_traditional(N);
     printf("%9d %10.6f %10.6f %7.2f\n", i, r1, r2, r2/r1);
     N *= 2;
   }

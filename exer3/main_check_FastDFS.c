@@ -12,31 +12,29 @@ void FastDFS(complex double* x, complex double* y, complex double* w, complex do
 
 complex double** create_matrix(int row, int col);
 void free_matrix(complex double** matrix);
-complex double **matmul(complex double** m1,
-	                      complex double** m2,
-	                      int row1,
-	                      int col1,
-	                      int col2);
+complex double **matmul(complex double** m1, complex double** m2, int row1, int col1, int col2);
 
-void fdfs(int N);
+void fdfs(int N, int skip);
 void execute_traditional(int N);
-
+void generate_y(complex double* y, int N, int skip);
 
 /* Function Implementation */
 int main()
 {
   /* Chan, Joey, JMCSC, ync12 */
-  int N;
+  int N, skip;
   printInfo();	
 
-  N = 12;
-  fdfs(N);
-  execute_traditional(N);
+  printf("Enter N and skip:");
+  scanf("%d %d", &N, &skip);
+
+  fdfs(N, skip);
+  /*execute_traditional(N); */
 
   return 0;
 }
 
-void fdfs(int N)
+void fdfs(int N, int skip)
 {
   /* Chan, Joey, JMCSC, ync12 */
   int i;
@@ -44,15 +42,17 @@ void fdfs(int N)
   complex double *w  = (complex double*) malloc(2*N    * sizeof(complex double));
   complex double *y  = (complex double*) malloc(N*skip * sizeof(complex double));
   complex double *x  = (complex double*) malloc(N*skip * sizeof(complex double));
-  for (i = 0; i < N; i++)
-  	y[i] =  i+1. + 0.*I;
 
-  FastDFS(x, y, w, Wp, N, 1);
+  for (i = 0; i < N; i++)
+  	y[skip*i] =  i+1. + 0.*I;
+
+  generate_y(y, N, skip);
+  FastDFS(x, y, w, Wp, N, skip);
 
   printf("\nFastDFS (N = %d) :\n", N);
   printf("==================\n");
-  for (i = 0; i < N; i++)
-  	printf("x[%d] = %12.6f + %12.6fi\n", i, creal(x[i]), cimag(x[i]));
+  for (i = 0; i < N*skip; i++)
+  	printf("x[%3d] = %12.6f + %12.6fi\n", i, creal(x[i]), cimag(x[i]));
 
   free(x);
   free(y);
@@ -82,9 +82,27 @@ void execute_traditional(int N)
   printf("\nTraditional way (N = %d) :\n", N);
   printf("==================\n");
   for (i = 1; i <= N; i++)
-  	printf("x[%d] = %12.6f + %12.6fi\n", i, creal(x[i][1]), cimag(x[i][1]));
+  	printf("x[%3d] = %12.6f + %12.6fi\n", i, creal(x[i][1]), cimag(x[i][1]));
 
   free_matrix(x);
   free_matrix(y);
   free_matrix(Cn);
+}
+
+void generate_y(complex double* y, int N, int skip)
+{
+  /* Chan, Joey, JMCSC, ync12 */
+  complex double* Wp = MakeWpowers(N);
+
+  int i, j;
+  for (i = 0; i < N*skip; i++)
+    y[i] = 0 + 0*I;
+
+  for (i = 0; i < N; i++)
+  {
+    complex double temp = 0;
+    for (j = 0; j < N; j++)
+        temp += Wp[(N-(i*j%N))%N] * (double)(j+1);
+    y[i*skip] = temp/N;
+  }        
 }

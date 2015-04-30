@@ -2,6 +2,13 @@
 #include <stdio.h>
 #include <complex.h>
 
+#define SIN120  0.86602540378
+#define COS120  -0.5
+#define SIN72   0.95105651629
+#define COS72   0.30901699437
+#define SIN144  0.58778525229
+#define COS144  0.80901699437
+
 void FastTransform(complex double* x, /* Output result */
                    complex double* y, /* Input data */
                    complex double* w, /* Intermediate Result of size N */
@@ -11,10 +18,18 @@ void FastTransform(complex double* x, /* Output result */
                    int skipX,
                    int reverse)
 {
-  if (N % 2 != 0)       /* N odd */
+  if (N % 2 != 0)         /* N odd */
   {
   	if (N == 1)           /* Case N = 1, x := y */
   	  x[0] = y[0];
+    //else if (N == 3)
+    //{
+    //  x[0] = y[0] + y[1] + y[2]; /* {2,0,0,0} */
+    //  x[1] = COS120*(y[1]+y[2])  /* {1,1,0,0} */
+    //         + SIN120*(cimag(y[2])-cimag(y[1]) + I*(creal(y[1])-creal(y[2]))); /* {1,1,0,0}*/
+    //  x[2] = COS120*(y[1]+y[2])  /* {1,1,0,0} */
+    //         - SIN120*(cimag(y[2])-cimag(y[1]) + I*(creal(y[1])-creal(y[2]))); /* {1,1,0,0}*/
+    //}
   	else                  /* Case N != 1 */
   	{
       int i, j;
@@ -33,6 +48,7 @@ void FastTransform(complex double* x, /* Output result */
   else                  /* N even */
   { 
     int j;
+    complex double temp;
     complex double* xe  = w;
     complex double* xo  = w + N/2;
     complex double* we  = w + N/2;
@@ -46,36 +62,13 @@ void FastTransform(complex double* x, /* Output result */
     for (j = 0; j < N/2; j++)
     { 
       if (j == 0)
-      {
-        x[j]     = xe[j] + xo[j];
-        x[j+N/2] = xe[j] - xo[j];
-      }
-      else if (j == N/4 && N >= 8)
-      {
-        if (reverse) /* DFT */
-        {
-          x[j]     = xe[j] + cimag(xo[j]) - I*creal(xo[j]);
-          x[j+N/2] = xe[j] - cimag(xo[j]) + I*creal(xo[j]);
-        }
-        else /* DFS */
-        {
-          x[j]     = xe[j] - cimag(xo[j]) + I*creal(xo[j]);
-          x[j+N/2] = xe[j] + cimag(xo[j]) - I*creal(xo[j]);
-        }
-      }
+        temp = xo[j];
+      else if (j == N/4 && N%4 == 0)
+        temp = reverse ? cimag(xo[j]) - I*creal(xo[j]) : -cimag(xo[j]) + I*creal(xo[j]);
       else
-      {
-        if (reverse) /* DFT */
-        {
-          x[j] = xe[j] + Wp[skipX*((N-j)%N)] * xo[j];
-          x[j+N/2] = xe[j] + Wp[skipX*(N/2-j)] * xo[j];
-        }
-        else /* DFS */
-        {
-          x[j] = xe[j] + Wp[skipX*j] * xo[j];
-          x[j+N/2] = xe[j] + Wp[skipX*(N/2+j)] * xo[j];
-        }
-      }
+        temp = reverse ? Wp[skipX*((N-j)%N)] * xo[j] : Wp[skipX*j] * xo[j];
+      x[j] = xe[j] + temp;
+      x[j+N/2] = xe[j] - temp;
     }
   }
 }

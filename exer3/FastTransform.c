@@ -2,6 +2,13 @@
 #include <stdio.h>
 #include <complex.h>
 
+#define SIN120 = +0.86602540378
+#define COS120 = -0.5
+#define SIN72  = +0.95105651629
+#define COS72  = +0.30901699437
+#define SIN144 = +0.58778525229
+#define COS144 = -0.80901699437
+
 void FastTransform(complex double* x, /* Output result */
                    complex double* y, /* Input data */
                    complex double* w, /* Intermediate Result of size N */

@@ -7,16 +7,14 @@ complex double* MakeWpowers(int N);
 void FastDFT(complex double* y, complex double* x, complex double* w, complex double* Wp, int N, int skip);
 
 /* Function Implementation */
-void FastSINE1(double** S, double** T, int N)
+void FastSINE1(double** S, double** T, complex double* Wp, int N)
 {
   /* Chan, Joey, JMCSC, ync12 */
   int i,j;
   int M = 2*N;
-  complex double *Wp = MakeWpowers(M);
-  complex double *mem = (complex double*) calloc(2*M , sizeof(complex double));
-  complex double *x  = (complex double*) calloc(M , sizeof(complex double));
-  complex double *w  = &mem[0];
-  complex double *y  = &mem[M];
+  complex double *w = (complex double*) malloc(2*M * sizeof(complex double));
+  complex double *x = (complex double*) malloc(  M * sizeof(complex double));
+  complex double *y = (complex double*) malloc(  M * sizeof(complex double));
 
   /* Parallel FastSINE for every 2 columns */
   for (i = 1; i < N-1; i+=2)
@@ -51,21 +49,19 @@ void FastSINE1(double** S, double** T, int N)
      T[j][N-1] = creal(y[j])/2.;
   }
 
+  free(w);
   free(x);
-  free(mem);
-  free(Wp);
+  free(y);
 }
 
-void FastSINE2(double** S, double** T, int N)
+void FastSINE2(double** S, double** T, complex double* Wp, int N)
 {
   /* Chan, Joey, JMCSC, ync12 */
   int i,j;
   int M = 2*N;
-  complex double *Wp = MakeWpowers(M);
-  complex double *mem = (complex double*) calloc(2*M , sizeof(complex double));
-  complex double *x  = (complex double*) calloc(M , sizeof(complex double));
-  complex double *w  = &mem[0];
-  complex double *y  = &mem[M];
+  complex double *w = (complex double*) malloc(2*M * sizeof(complex double));
+  complex double *x = (complex double*) malloc(  M * sizeof(complex double));
+  complex double *y = (complex double*) malloc(  M * sizeof(complex double));
 
   /* Parallel FastSINE for every 2 rows */
   for (i = 1; i < N-1; i+=2)
@@ -100,7 +96,7 @@ void FastSINE2(double** S, double** T, int N)
      T[N-1][j] = creal(y[j])/2.;
   }
 
+  free(w);
   free(x);
-  free(mem);
-  free(Wp);
+  free(y);
 }

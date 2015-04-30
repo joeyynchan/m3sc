@@ -9,6 +9,7 @@
 void printInfo();
 complex double* MakeWpowers(int N);
 
+void FastDFS(complex double* x, complex double* y, complex double* w, complex double* Wp, int N, int skip);
 void FastDFT(complex double* x, complex double* y, complex double* w, complex double* Wp, int N, int skip);
 void fdft(int N, int skip);
 
@@ -17,11 +18,13 @@ void fdft(int N, int skip);
 int main()
 {
   /* Chan, Joey, JMCSC, ync12 */
-  int N = 4, skip = 1;
-  printInfo();	
+  int N, skip;
+  printInfo();  
 
-  //for (N = 1; N <= 10; N++)
-    fdft(N, skip);
+  printf("Enter N and skip:");
+  scanf("%d %d", &N, &skip);
+  
+  fdft(N, skip);
 
   return 0;
 }
@@ -36,16 +39,18 @@ void fdft(int N, int skip)
   complex double *x  = (complex double*) malloc(N*skip * sizeof(complex double));
 
   /* Dummy Vector Construction */
+  for (i = 0; i < N*skip; i++)
+    y[i] = 0 + 0*I;
   for (i = 0; i < N; i++)
-  	x[i] =  i+1. + 0.*I;
+  	y[i*skip] =  i+1. + 0.*I;
 
-  /* Execute FDFT */
-  FastDFT(x, y, w, Wp, N, 1);
+  FastDFS(x, y, w, Wp, N, skip);
+  FastDFT(x, y, w, Wp, N, skip);
 
   /* Output Result */
   printf("\nFastDFT (N = %d) :\n", N);
   printf("==================\n");
-  for (i = 0; i < N; i++)
+  for (i = 0; i < N*skip; i++)
   	printf("y[%d] = %12.6f + %12.6fi\n", i, creal(y[i]), cimag(y[i]));
 
   /* Allocated Memory Destruction */

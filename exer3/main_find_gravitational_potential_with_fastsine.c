@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include <time.h>
+#include <complex.h>
 
 #define PI 3.14159265359
 
@@ -9,8 +10,9 @@ double **create_matrix(int, int);
 void free_matrix(double**);
 void print_matrix(double**, int, int);
 double **create_smooth_sigma_matrix(int);
-void FastSINE1(double** S, double** T, int N);
-void FastSINE2(double** S, double** T, int N);
+complex double* MakeWpowers(int N);
+void FastSINE1(double** S, double** T, complex double* w, int N);
+void FastSINE2(double** S, double** T, complex double* w, int N);
 double** calculate_gravitational_potential(int N);
 
 int main()
@@ -65,17 +67,19 @@ double** calculate_gravitational_potential(int N)
   int j, k;
   double** x1 = create_smooth_sigma_matrix(N);
   double** x2 = create_matrix(N-1, N-1);
+  complex double* Wp = MakeWpowers(2*N);
 
-  FastSINE1(x1, x2, N);
-  FastSINE2(x2, x1, N);
+  FastSINE1(x1, x2, Wp, N);
+  FastSINE2(x2, x1, Wp, N);
 
   for (j = 1; j < N; j++)
     for (k = 1; k < N; k++)
       x1[j][k] *= (4./(N*N)) * (1/((j*j+k*k)*PI*PI));
 
-  FastSINE2(x1, x2, N);
-  FastSINE1(x2, x1, N);
+  FastSINE2(x1, x2, Wp, N);
+  FastSINE1(x2, x1, Wp, N);
   
   free_matrix(x2);
+  free(Wp);
   return x1;
 }

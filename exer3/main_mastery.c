@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include <time.h>
+#include <complex.h>
 
 #define PI 3.14159265359
 
@@ -10,10 +11,11 @@ void free_cube(double***, int);
 void print_cube(double***, int);
 double ***create_smooth_sigma_cube(int);
 
+complex double* MakeWpowers(int N);
 double ***calculate_gravitational_potential(int);
-void FastSINE1(double*** S, double*** T, int N);
-void FastSINE2(double*** S, double*** T, int N);
-void FastSINE3(double*** S, double*** T, int N);
+void FastSINE1(double*** S, double*** T, complex double* Wp, int N);
+void FastSINE2(double*** S, double*** T, complex double* Wp, int N);
+void FastSINE3(double*** S, double*** T, complex double* Wp, int N);
 
 int main()
 {
@@ -64,20 +66,22 @@ double ***calculate_gravitational_potential(int N)
   int i, j, k;
   double*** x1 = create_smooth_sigma_cube(N);
   double*** x2 = create_cube(N-1);
+  complex double* Wp = MakeWpowers(2*N);
 
-  FastSINE1(x1, x2, N);
-  FastSINE2(x2, x1, N);
-  FastSINE3(x1, x2, N);
+  FastSINE1(x1, x2, Wp, N);
+  FastSINE2(x2, x1, Wp, N);
+  FastSINE3(x1, x2, Wp, N);
 
   for (i = 1; i < N; i++)
     for (j = 1; j < N; j++)
       for (k = 1; k < N; k++)
         x2[i][j][k] = x2[i][j][k] * 8./(N*N*N) / ((i*i+j*j+k*k)*PI*PI);
 
-  FastSINE3(x2, x1, N);
-  FastSINE2(x1, x2, N);
-  FastSINE1(x2, x1, N);
+  FastSINE3(x2, x1, Wp, N);
+  FastSINE2(x1, x2, Wp, N);
+  FastSINE1(x2, x1, Wp, N);
 
   free_cube(x2, N-1);
+  free(Wp);
   return x1;
 }
