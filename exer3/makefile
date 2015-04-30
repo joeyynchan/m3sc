@@ -9,7 +9,7 @@ MATMUL=Matmul.c
 MATMULC=MatmulC.c
 CUBE=Cube.c
 OUTPUT=main.out
-CFLAGS=-g -ansi -pedantic -Wall -O3 -march=native -mfpmath=sse -funroll-loops
+CFLAGS=-g -ansi -Wall -O3 -march=native -mfpmath=sse -funroll-loops
 
 all:
 
