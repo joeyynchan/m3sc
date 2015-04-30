@@ -8,8 +8,8 @@
 
 void printInfo();
 complex double* MakeWpowers(int N);
-void generate_y(complex double* y, int N, int skip);
 void FastDFS(complex double* x, complex double* y, complex double* w, complex double* Wp, int N, int skip);
+void FastDFT(complex double* x, complex double* y, complex double* w, complex double* Wp, int N, int skip);
 int check_result(complex double* x, int N, int skip);
 
 int main()
@@ -21,8 +21,9 @@ int main()
   scanf("%d", &skip);
   printf("    N        FastDFS     Expected  \n");
   printf("--------- ------------ ------------ \n");
-  while (N<=12)
+  while (N<=20)
   {
+    int i;
     double time_diff = 0;
     clock_t start_time, end_time;
 
@@ -33,18 +34,23 @@ int main()
     
     printf("%9d ", N);
 
-    generate_y(y, N, skip);
+    for (i = 0; i < N*skip; i++)
+      y[i] = 0 + 0*I;
+    for (i = 0; i < N; i++)
+      y[i*skip] =  i+1. + 0.*I;
+
+    FastDFS(x, y, w, Wp, N, skip);
 
     /* Time FastSine Method */
     start_time = clock();
-    FastDFS(x, y, w, Wp, N, skip);
+    FastDFT(x, y, w, Wp, N, skip);
     end_time = clock();
     time_diff = (double) (end_time - start_time);
     time_diff = (time_diff == 0) ? 1. : time_diff;
     printf("%12.6f ", time_diff/CLOCKS_PER_SEC);
 
     /* Compare and output result */
-    printf("%7s\n", check_result(x, N++, skip) == 1 ? "Yes" : "No");
+    printf("%7s\n", check_result(y, N++, skip) == 1 ? "Yes" : "No");
 
     /* Allocated Memory Destruction */
     free(x);
@@ -59,36 +65,27 @@ int main()
   return 0;
 }
 
-void generate_y(complex double* y, int N, int skip)
-{
-  /* Chan, Joey, JMCSC, ync12 */
-  complex double* Wp = MakeWpowers(N);
-
-  int i, j;
-  for (i = 0; i < N*skip; i++)
-    y[i] = 0 + 0*I;
-
-  for (i = 0; i < N; i++)
-  {
-    complex double temp = 0;
-    for (j = 0; j < N; j++)
-        temp += Wp[(N-(i*j%N))%N] * (double)(j+1);
-    y[i*skip] = temp/N;
-  }        
-}
-
-int check_result(complex double* x, int N, int skip)
+int check_result(complex double* y, int N, int skip)
 {
   /* Chan, Joey, JMCSC, ync12 */
   int i;
   int result = 1;
   for (i = 0; i < N*skip; i++)
     if (i%skip == 0)
-      if (cabs((x[i]-(i/skip+1.))/(i/skip+1.)) > 1e-3)
+    {
+      if (cabs((y[i]/(double)N-(i/skip+1.))/(i/skip+1.)) > 1e-3)
       {
         result = 0;
         break;        
       }
-
+    }
+    else
+    {
+      if (cabs(y[i]) > 1e-3)
+      {
+        result = 0;
+        break;
+      }
+    }
   return result;
 }

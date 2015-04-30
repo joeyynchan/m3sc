@@ -2,6 +2,7 @@ GCC=gcc
 BASIC_SOURCE=MakeWpowers.c FastSINE.c info.c FastDFS.c FastDFT.c
 FT1=FastTransform.c
 FT2=FastTransform_v2.c
+COMPARE_DFS=FastDFS_copy.c FastTransform_v2_copy.c
 FASTSINE2=FastSINE2D.c
 FASTSINE3=FastSINE3D.c
 MATMUL=Matmul.c
@@ -33,26 +34,23 @@ main_test_FastDFS: $(BASIC_SOURCE) $(FT2) $(MATMULC)
 main_test_FastDFS2: $(BASIC_SOURCE) $(FT2) $(MATMULC)
 	$(GCC) $(CFLAGS) main_test_FastDFS.c $^ -o $(OUTPUT)
 
-main_count_FastDFS: $(BASIC_SOURCE) $(FT1) $(MATMULC)
+main_compare_FastDFS: $(BASIC_SOURCE) $(FT2) $(MATMULC) $(COMPARE_DFS)
 	$(GCC) $(CFLAGS) $@.c $^ -o $(OUTPUT)
 
-main_count_FastDFS2: $(BASIC_SOURCE) $(FT1) $(MATMULC)
-	$(GCC) $(CFLAGS) $@.c $^ -o $(OUTPUT)
 
-main_count_FastDFS2_improved: $(BASIC_SOURCE) $(FT1) $(MATMULC)
-	$(GCC) $(CFLAGS) $@.c $^ -o $(OUTPUT)
 
-main_count_FastDFS3: $(BASIC_SOURCE) $(FT1) $(MATMULC)
-	$(GCC) $(CFLAGS) $@.c $^ -o $(OUTPUT)
-
-main_count_FastDFS5: $(BASIC_SOURCE) $(FT1) $(MATMULC)
-	$(GCC) $(CFLAGS) $@.c $^ -o $(OUTPUT)
 
 main_check_FastDFT: $(BASIC_SOURCE) $(FT1) $(MATMULC)
 	$(GCC) $(CFLAGS) $@.c $^ -o $(OUTPUT)
 
 main_check_FastDFT2: $(BASIC_SOURCE) $(FT2) $(MATMULC)
 	$(GCC) $(CFLAGS) main_check_FastDFT.c $^ -o $(OUTPUT)
+
+main_test_FastDFT: $(BASIC_SOURCE) $(FT2) $(MATMULC)
+	$(GCC) $(CFLAGS) $@.c $^ -o $(OUTPUT)
+
+main_test_FastDFT2: $(BASIC_SOURCE) $(FT2) $(MATMULC)
+	$(GCC) $(CFLAGS) main_test_FastDFT.c $^ -o $(OUTPUT)	
 
 main_check_FastSINE: $(BASIC_SOURCE) $(FT2) $(MATMUL)
 	$(GCC) $(CFLAGS) $@.c $^ -o $(OUTPUT)
