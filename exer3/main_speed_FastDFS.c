@@ -51,7 +51,7 @@ int main()
 double fdfs(int N)
 {
   /* Chan, Joey, JMCSC, ync12 */
-  int i;
+  int i, count = 0;
   double time_diff = 0;
   clock_t start_time, end_time;
   complex double *Wp = MakeWpowers(N);
@@ -66,16 +66,19 @@ double fdfs(int N)
 
   /* Time FDFS */
   start_time = clock();
-  FastDFS(x, y, w, Wp, N, 1);
-  end_time = clock();
-  time_diff = (double) (end_time - start_time);
-  time_diff = (time_diff == 0) ? 1. : time_diff;
+  do
+  {
+    FastDFS(x, y, w, Wp, N, 1);
+    end_time = clock();
+    time_diff = (double) (end_time - start_time);
+    count++;
+  } while (time_diff == 0);
 
   /* Allocated Memory Destruction */
   free(mem);
   free(Wp);
 
-  return time_diff/CLOCKS_PER_SEC;
+  return time_diff/(CLOCKS_PER_SEC*count);
 }
 
 double execute_traditional(int N)

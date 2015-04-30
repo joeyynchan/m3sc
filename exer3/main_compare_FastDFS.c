@@ -20,7 +20,7 @@ int main()
   printf("--------- ------------ ------------ ---------\n");
   while (1)
   {
-    int i, count;
+    int i, count1 = 0, count2 = 0;
     double time_diff1 = 0.;
     double time_diff2 = 0.;
     clock_t start_time, end_time;
@@ -36,30 +36,32 @@ int main()
       y[i] = i;
 
     /* Time FastSine Method */
-    count = 0;
     start_time = clock();
     do
     {
       FastDFS(x, y, w, Wp, N, skip);
       end_time = clock();
       time_diff1 = (double) (end_time - start_time);
-      count++;
+      count1++;
     } while (time_diff1 == 0);
-    printf("%12.6f ", time_diff1/(CLOCKS_PER_SEC*count));
+    printf("%12.6f ", time_diff1/(CLOCKS_PER_SEC*count1));
 
     for (i = 0; i < N*skip; i++)
       y[i] = i;
 
     /* Test Improved version */
     start_time = clock();
-    FastDFS2(x, y, w, Wp, N, skip);
-    end_time = clock();
-    time_diff2 = (double) (end_time - start_time);
-    time_diff2 = (time_diff2 == 0) ? 1. : time_diff2;
-    printf("%12.6f ", time_diff2/CLOCKS_PER_SEC);
+    do
+    {
+      FastDFS(x, y, w, Wp, N, skip);
+      end_time = clock();
+      time_diff2 = (double) (end_time - start_time);
+      count2++;
+    } while (time_diff2 == 0);
+    printf("%12.6f ", time_diff2/(CLOCKS_PER_SEC*count2));
 
     /* Compare and output result */
-    printf("%9.2f\n", time_diff1/time_diff2);
+    printf("%9.2f\n", time_diff1*count2/(time_diff2*count1));
 
     /* Allocated Memory Destruction */
     free(x);

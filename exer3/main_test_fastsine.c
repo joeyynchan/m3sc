@@ -23,7 +23,7 @@ int main()
   printf("--------- ------------ ------------ -------------\n");
   while (1)
   {
-    int i;
+    int i, count1 = 0, count2 = 0;
 
     double time_diff1 = 0;
     double time_diff2 = 0;
@@ -49,22 +49,30 @@ int main()
 
     /* Time Direct Matrix Multiplication */
     start_time = clock();
-    y1 = mymatmul(Sn, x1, N-1, N-1, 1);
-    end_time = clock();
-    time_diff1 = (double) (end_time - start_time);
-    time_diff1 = (time_diff1 == 0) ? 1. : time_diff1;
-    printf("%12.6f ", time_diff1/CLOCKS_PER_SEC);
+    do
+    {
+      y1 = mymatmul(Sn, x1, N-1, N-1, 1);
+      end_time = clock();
+      time_diff1 = (double) (end_time - start_time);
+      count1++;
+    } while (time_diff1 == 0);
+    printf("%12.4e ", time_diff1/(CLOCKS_PER_SEC*count1));
+
 
     /* Time FastSine Method */
     start_time = clock();
-    FastSINE(x2, y2, N);
-    end_time = clock();
-    time_diff2 = (double) (end_time - start_time);
-    time_diff2 = (time_diff2 == 0) ? 1. : time_diff2;
-    printf("%12.6f ", time_diff2/CLOCKS_PER_SEC);
+    do
+    {
+      FastSINE(x2, y2, N);
+      end_time = clock();
+      time_diff2 = (double) (end_time - start_time);
+      count2++;
+    } while (time_diff2 == 0);
+    printf("%12.4e ", time_diff2/(CLOCKS_PER_SEC*count2));
 
     /* Compare and output result */
-    printf("%7s\n", check_result(y1, y2, N) == 1 ? "Yes" : "No");
+    printf("%7s ", check_result(y1, y2, N) == 1 ? "Yes" : "No");
+    printf("%10.6f\n", (time_diff1*count2)/(time_diff2*count1));
 
     /* Allocated Memory Destruction */
     free_matrix(x1);

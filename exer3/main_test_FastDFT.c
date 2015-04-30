@@ -23,7 +23,7 @@ int main()
   printf("--------- ------------ ------------ \n");
   while (N<=20)
   {
-    int i;
+    int i, count = 0;
     double time_diff = 0;
     clock_t start_time, end_time;
 
@@ -43,11 +43,14 @@ int main()
 
     /* Time FastSine Method */
     start_time = clock();
-    FastDFT(x, y, w, Wp, N, skip);
-    end_time = clock();
-    time_diff = (double) (end_time - start_time);
-    time_diff = (time_diff == 0) ? 1. : time_diff;
-    printf("%12.6f ", time_diff/CLOCKS_PER_SEC);
+    do
+    {
+      FastDFT(x, y, w, Wp, N, skip);
+      end_time = clock();
+      time_diff = (double) (end_time - start_time);
+      count++;
+    } while (time_diff == 0);
+    printf("%12.4e ", time_diff/(CLOCKS_PER_SEC*count));
 
     /* Compare and output result */
     printf("%7s\n", check_result(y, N++, skip) == 1 ? "Yes" : "No");

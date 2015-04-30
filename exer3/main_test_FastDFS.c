@@ -15,13 +15,13 @@ int check_result(complex double* x, int N, int skip);
 int main()
 {
   /* Chan, Joey, JMCSC, ync12 */
-  int skip, N = 1;
+  int skip, count = 0, N = 1;
   printInfo();
   printf("Enter skip:");
   scanf("%d", &skip);
   printf("    N        FastDFS     Expected  \n");
   printf("--------- ------------ ------------ \n");
-  while (N<=12)
+  while (N<=20)
   {
     double time_diff = 0;
     clock_t start_time, end_time;
@@ -37,11 +37,14 @@ int main()
 
     /* Time FastSine Method */
     start_time = clock();
-    FastDFS(x, y, w, Wp, N, skip);
-    end_time = clock();
-    time_diff = (double) (end_time - start_time);
-    time_diff = (time_diff == 0) ? 1. : time_diff;
-    printf("%12.6f ", time_diff/CLOCKS_PER_SEC);
+    do
+    {
+      FastDFS(x, y, w, Wp, N, skip);
+      end_time = clock();
+      time_diff = (double) (end_time - start_time);
+      count++;
+    } while (time_diff == 0);
+    printf("%12.4e ", time_diff/(CLOCKS_PER_SEC*count));
 
     /* Compare and output result */
     printf("%7s\n", check_result(x, N++, skip) == 1 ? "Yes" : "No");
