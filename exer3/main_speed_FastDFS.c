@@ -37,7 +37,7 @@ int main()
   printf(" log2(N)   FastFDS      Trad.    Ratio \n");
   printf("--------- ---------- ---------- -------\n");
   N = 2;
-  for (i = 2; i <= 25; i++)
+  for (i = 2; i <= 10; i++)
   {
     r1 = fdfs(N);
     r2 = execute_traditional(N);
@@ -55,10 +55,9 @@ double fdfs(int N)
   double time_diff = 0;
   clock_t start_time, end_time;
   complex double *Wp = MakeWpowers(N);
-  complex double *mem = (complex double*) calloc(2*N , sizeof(complex double));
-  complex double *y  = (complex double*) calloc(N , sizeof(complex double));
-  complex double *w  = &mem[0];
-  complex double *x  = &mem[N];
+  complex double *w  = (complex double*) malloc(2*N * sizeof(complex double));
+  complex double *x  = (complex double*) malloc(N   * sizeof(complex double));
+  complex double *y  = (complex double*) malloc(N   * sizeof(complex double));
 
   /* Dummy Vector Construction */
   for (i = 0; i < N; i++)
@@ -75,7 +74,9 @@ double fdfs(int N)
   } while (time_diff == 0);
 
   /* Allocated Memory Destruction */
-  free(mem);
+  free(w);
+  free(x);
+  free(y);
   free(Wp);
 
   return time_diff/(CLOCKS_PER_SEC*count);
