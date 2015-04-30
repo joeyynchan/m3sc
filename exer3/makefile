@@ -13,7 +13,7 @@ CFLAGS=-g -ansi -pedantic -Wall -O3 -march=native -mfpmath=sse -funroll-loops
 
 all:
 
-main: $(BASIC_SOURCE) $(FAST1) $(MATMULC)
+main: $(BASIC_SOURCE) $(FT2) $(MATMULC)
 	$(GCC) $(CFLAGS) $@.c $^ -o $(OUTPUT)
 
 main_check_FastDFS: $(BASIC_SOURCE) $(FT1) $(MATMULC)

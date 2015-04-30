@@ -7,7 +7,7 @@
 #define SIN72   0.95105651629
 #define COS72   0.30901699437
 #define SIN144  0.58778525229
-#define COS144  0.80901699437
+#define COS144  -0.80901699437
 
 void FastTransform(complex double* x, /* Output result */
                    complex double* y, /* Input data */
@@ -25,11 +25,38 @@ void FastTransform(complex double* x, /* Output result */
     else if (N == 3)
     {
       complex double Re, Im;
-      Re = COS120*((creal(y[  skipY])+creal(y[2*skipY])) + I*(cimag(y[skipY])+cimag(y[2*skipY])));
-      Im = SIN120*((cimag(y[2*skipY])-cimag(y[  skipY])) + I*(creal(y[skipY])-creal(y[2*skipY])));
+      Re = COS120 * ((creal(y[  skipY])+creal(y[2*skipY])) + I*(cimag(y[skipY])+cimag(y[2*skipY])));
+      Im = SIN120 * ((cimag(y[2*skipY])-cimag(y[  skipY])) + I*(creal(y[skipY])-creal(y[2*skipY])));
       x[0] = y[0] + y[skipY] + y[2*skipY]; 
       x[reverse? 2 : 1] = y[0] + Re + Im;
       x[reverse? 1 : 2] = y[0] + Re - Im;
+    }
+    else if (N==5)
+    {
+      complex double u, v, p, q;
+      complex double uCOS72, uCOS144,
+                     vSIN72, vSIN144,
+                     pCOS72, pCOS144,
+                     qSIN72, qSIN144;
+      u = ((creal(y[  skipY])+creal(y[4*skipY])) + I*(cimag(y[  skipY])+cimag(y[4*skipY])));
+      v = ((cimag(y[4*skipY])-cimag(y[  skipY])) + I*(creal(y[  skipY])-creal(y[4*skipY])));
+      p = ((creal(y[2*skipY])+creal(y[3*skipY])) + I*(cimag(y[2*skipY])+cimag(y[3*skipY])));
+      q = ((cimag(y[3*skipY])-cimag(y[2*skipY])) + I*(creal(y[2*skipY])-creal(y[3*skipY])));
+
+      uCOS72  = u * COS72;
+      uCOS144 = u * COS144;
+      vSIN72  = v * SIN72;
+      vSIN144 = v * SIN144;
+      pCOS72  = p * COS72;
+      pCOS144 = p * COS144;
+      qSIN72  = q * SIN72;
+      qSIN144 = q * SIN144;
+
+      x[0] = y[0] + y[skipY] + y[2*skipY] + y[3*skipY] + y[4*skipY];
+      x[reverse? 4 : 1] = y[0] + uCOS72  + vSIN72  + pCOS144 + qSIN144;
+      x[reverse? 3 : 2] = y[0] + uCOS144 + vSIN144 + pCOS72  - qSIN72;
+      x[reverse? 2 : 3] = y[0] + uCOS144 - vSIN144 + pCOS72  + qSIN72;
+      x[reverse? 1 : 4] = y[0] + uCOS72  - vSIN72  + pCOS144 - qSIN144;
     }
   	else                  /* Case N != 1 */
   	{
@@ -41,7 +68,7 @@ void FastTransform(complex double* x, /* Output result */
           temp += reverse ? Wp[skipX*((N-j*i%N)%N)]*y[j*skipY] : Wp[skipX*(j*i%N)]*y[j*skipY];
         x[i] = temp;
       }
-  	}
+    }
   } 
   else                  /* N even */
   { 

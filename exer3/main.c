@@ -31,7 +31,7 @@ int main()
   int N;
   printInfo();	
 
-  N = 8;
+  N = 5;
   fdfs(N);
   execute_traditional(N);
 
@@ -115,18 +115,4 @@ void execute_traditional(int N)
   free_matrix(x);
   free_matrix(y);
   free_matrix(Cn);
-}
-
-
-void printInfo()
-{
-  /* Chan, Joey, JMCSC, ync12 */
-  printf("\n");
-  printf("%15s: %s\n", "Name", "Joey");
-  printf("%15s: %s\n", "CID", "00730306");
-  printf("%15s: %s\n", "LIBRARY NO", "0246734100");
-  printf("%15s: %s\n", "Email Address", "ync12@ic.ac.uk");
-  printf("%15s: %s\n", "Course Code", "JMCSC");
-  printf("%15s: %s, %s \n", "Compile Time", __TIME__, __DATE__);
-  printf("-------------------------------------------------\n");
 }
