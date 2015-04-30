@@ -84,6 +84,7 @@ double fdfs(int N)
 double execute_traditional(int N)
 {
   /* Chan, Joey, JMCSC, ync12 */
+  int i, j, count = 0;
   double time_diff = 0;
   clock_t start_time, end_time;
   complex double** y  = create_matrix(N, 1);
@@ -92,7 +93,6 @@ double execute_traditional(int N)
   double theta = 2.*PI/N;
   
   /* Dummy Matrix Construction */
-  int i, j;
   for (i = 1; i <= N; i++)
   	y[i][1] = i + 0*I;
 
@@ -102,15 +102,18 @@ double execute_traditional(int N)
 
   /* Time Direct Matrix Multiplication Method */
   start_time = clock();
-  x = matmul(Cn, y, N, N, 1);
-  end_time = clock();
-  time_diff = (double) (end_time - start_time);
-  time_diff = (time_diff == 0) ? 1. : time_diff;
+  do
+  {
+    x = matmul(Cn, y, N, N, 1);
+    end_time = clock();
+    time_diff = (double) (end_time - start_time);
+    count++;
+  } while (time_diff == 0);
 
   /* Allocated Memory Destruction */
   free_matrix(x);
   free_matrix(y);
   free_matrix(Cn);
 
-  return time_diff/CLOCKS_PER_SEC;
+  return time_diff/(CLOCKS_PER_SEC*count);
 }

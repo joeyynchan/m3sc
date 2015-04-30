@@ -77,7 +77,8 @@ void generate_y(complex double* y, int N, int skip)
     for (j = 0; j < N; j++)
         temp += Wp[(N-(i*j%N))%N] * (double)(j+1);
     y[i*skip] = temp/N;
-  }        
+  }
+  free(Wp);
 }
 
 int check_result(complex double* x, int N, int skip)
