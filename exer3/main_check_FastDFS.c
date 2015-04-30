@@ -10,10 +10,6 @@ void printInfo();
 complex double* MakeWpowers(int N);
 void FastDFS(complex double* x, complex double* y, complex double* w, complex double* Wp, int N, int skip);
 
-complex double** create_matrix(int row, int col);
-void free_matrix(complex double** matrix);
-complex double **matmul(complex double** m1, complex double** m2, int row1, int col1, int col2);
-
 void fdfs(int N, int skip);
 void execute_traditional(int N);
 void generate_y(complex double* y, int N, int skip);
@@ -45,6 +41,7 @@ void fdfs(int N, int skip)
 
   generate_y(y, N, skip);
   FastDFS(x, y, w, Wp, N, skip);
+  execute_traditional(N);
 
   printf("\nFastDFS (N = %d) :\n", N);
   printf("==================\n");
@@ -60,30 +57,32 @@ void fdfs(int N, int skip)
 void execute_traditional(int N)
 {
   /* Chan, Joey, JMCSC, ync12 */
-  complex double** y  = create_matrix(N, 1);
-  complex double** Cn = create_matrix(N, N);
-  complex double** x;
-  double theta = 2.*PI/N;
-  
   int i, j;
-  for (i = 1; i <= N; i++)
-  	y[i][1] = i + 0*I;
+  complex double* x  = (complex double*) malloc (N*sizeof(complex double));
+  complex double* y  = (complex double*) malloc (N*sizeof(complex double));
+  complex double* Cn = MakeWpowers(N);
+  
+  /* Dummy Matrix Construction */
+  for (i = 0; i < N; i++)
+    y[i] = i+1. + 0*I;
 
   
-  for (i = 1; i <= N; i++)
-  	for (j = 1; j <= N; j++)
-  	  Cn[i][j] = cos(theta*(i-1)*(j-1)) + I*sin(theta*(i-1)*(j-1));
-
-  x = matmul(Cn, y, N, N, 1);
+  for (i = 0; i < N; i++)
+  {
+    complex double temp = 0. + I*0.;
+    for (j = 0; j < N; j++)
+      temp += Cn[j*i%N]*y[j];
+    x[i] = temp;
+  }
 
   printf("\nTraditional way (N = %d) :\n", N);
   printf("==================\n");
-  for (i = 1; i <= N; i++)
-  	printf("x[%3d] = %12.6f + %12.6fi\n", i, creal(x[i][1]), cimag(x[i][1]));
+  for (i = 0; i < N; i++)
+  	printf("x[%3d] = %12.6f + %12.6fi\n", i, creal(x[i]), cimag(x[i]));
 
-  free_matrix(x);
-  free_matrix(y);
-  free_matrix(Cn);
+  free(x);
+  free(y);
+  free(Cn);
 }
 
 void generate_y(complex double* y, int N, int skip)

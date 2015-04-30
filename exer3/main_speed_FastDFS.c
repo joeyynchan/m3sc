@@ -88,33 +88,36 @@ double execute_traditional(int N)
   int i, j, count = 0;
   double time_diff = 0;
   clock_t start_time, end_time;
-  complex double** y  = create_matrix(N, 1);
-  complex double** Cn = create_matrix(N, N);
-  complex double** x;
-  double theta = 2.*PI/N;
+  complex double* x  = (complex double*) malloc (N*sizeof(complex double));
+  complex double* y  = (complex double*) malloc (N*sizeof(complex double));
+  complex double* Cn = MakeWpowers(N);
   
   /* Dummy Matrix Construction */
-  for (i = 1; i <= N; i++)
-  	y[i][1] = i + 0*I;
+  for (i = 0; i < N; i++)
+  	y[i] = i+1. + 0*I;
 
-  for (i = 1; i <= N; i++)
-  	for (j = 1; j <= N; j++)
-  	  Cn[i][j] = cos(theta*(i-1)*(j-1)) + I*sin(theta*(i-1)*(j-1));
 
   /* Time Direct Matrix Multiplication Method */
   start_time = clock();
   do
   {
-    x = matmul(Cn, y, N, N, 1);
+    for (i = 0; i < N; i++)
+    {
+      complex double temp = 0. + I*0.;
+      for (j = 0; j < N; j++)
+        temp += Cn[j*i%N]*y[j];
+      x[i] = temp;
+    }
+
     end_time = clock();
     time_diff = (double) (end_time - start_time);
     count++;
   } while (time_diff == 0);
 
   /* Allocated Memory Destruction */
-  free_matrix(x);
-  free_matrix(y);
-  free_matrix(Cn);
+  free(x);
+  free(y);
+  free(Cn);
 
   return time_diff/(CLOCKS_PER_SEC*count);
 }
