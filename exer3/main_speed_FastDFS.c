@@ -34,14 +34,14 @@ int main()
   double r1, r2;
   printInfo();	
 
-  printf(" log2(N)   FastFDS      Trad.    Ratio \n");
-  printf("--------- ---------- ---------- -------\n");
+  printf(" log2(N)     FastFDS        Trad.     Ratio \n");
+  printf("--------- ------------ ------------ ---------\n");
   N = 2;
   for (i = 2; i <= 10; i++)
   {
     r1 = fdfs(N);
     r2 = execute_traditional(N);
-    printf("%9d %10.6f %10.6f %7.2f\n", i, r1, r2, r2/r1);
+    printf("%9d %12.4e %12.4e %9.2f\n", i, r1, r2, r2/r1);
     N *= 2;
   }
 
