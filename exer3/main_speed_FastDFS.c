@@ -10,6 +10,7 @@
 
 /* MakeWpowers.c */
 complex double* MakeWpowers(int N);
+int bmod(int i, int j, int N);
 void FastDFS(complex double* x, complex double* y, complex double* w, complex double* Wp, int N, int skip);
 
 /* MatMul.c */
@@ -37,7 +38,7 @@ int main()
   printf(" log2(N)     FastFDS        Trad.     Ratio \n");
   printf("--------- ------------ ------------ ---------\n");
   N = 2;
-  for (i = 2; i <= 10; i++)
+  for (i = 2; i <= 20; i++)
   {
     r1 = fdfs(N);
     r2 = execute_traditional(N);
@@ -105,7 +106,10 @@ double execute_traditional(int N)
     {
       complex double temp = 0. + I*0.;
       for (j = 0; j < N; j++)
+      {
+        int index = bmod(i, j, N);
         temp += Cn[j*i%N]*y[j];
+      }
       x[i] = temp;
     }
 
@@ -121,3 +125,14 @@ double execute_traditional(int N)
 
   return time_diff/(CLOCKS_PER_SEC*count);
 }
+
+int bmod(int i, int j, int N)
+{
+  if (j == 1)
+    return i%N;
+  else if (j%2 == 0)
+    return bmod(2*bmod (i, j/2, N), 1, N);
+  else 
+    return bmod(2*i*bmod(i, j/2, N), 1, N);
+}
+
