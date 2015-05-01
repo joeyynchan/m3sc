@@ -25,8 +25,11 @@ int main()
   printf("--------- ------------ ------------ ------------- -----------\n");
 
   for (N = 32; N <= 96; N+= 32)
+  {
     test(N);
-
+	printf("HI\n");
+  }
+  /*
   while (go)
   {
     int i;
@@ -38,7 +41,7 @@ int main()
         break;
     }
     m++;
-  }
+  }*/
 
   return 0;
 }
@@ -97,7 +100,7 @@ int test(int N)
   printf("%11.6f\n", (time_diff1*count2)/(time_diff2*count1));
 
   /* Allocated Memory Destruction */
-  free_matrix(x1);
+  /*free_matrix(x1);*/
   free_matrix(y1);
   free_matrix(Sn);
   free(x2);
