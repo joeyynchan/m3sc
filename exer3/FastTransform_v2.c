@@ -65,8 +65,8 @@ void FastTransform(complex double* x, /* Output result */
       {
       	complex double temp = y[0];
         for (j = 1; j < N; j++)
-          //temp += reverse? creal(Wp[skipX*(j*i%N)])*y[j*skipY] + cimag(Wp[skipX*(j*i%N)])*(cimag(y[j*skipY])-I*creal((y[j*skipY]))) :
-          //               creal(Wp[skipX*(j*i%N)])*y[j*skipY] - cimag(Wp[skipX*(j*i%N)])*(cimag(y[j*skipY])-I*creal((y[j*skipY]))) ;
+          /*temp += reverse? creal(Wp[skipX*(j*i%N)])*y[j*skipY] + cimag(Wp[skipX*(j*i%N)])*(cimag(y[j*skipY])-I*creal((y[j*skipY]))) :
+                         creal(Wp[skipX*(j*i%N)])*y[j*skipY] - cimag(Wp[skipX*(j*i%N)])*(cimag(y[j*skipY])-I*creal((y[j*skipY]))) ;*/
           temp += reverse ? Wp[skipX*((N-j*i%N)%N)]*y[j*skipY] : Wp[skipX*(j*i%N)]*y[j*skipY];
         x[i] = temp;
       }
@@ -98,8 +98,8 @@ void FastTransform(complex double* x, /* Output result */
         if (j == N/4 && N%4 == 0)
           temp = reverse ? cimag(xo[j]) - I*creal(xo[j]) : -cimag(xo[j]) + I*creal(xo[j]);
         else
-          //temp = reverse? creal(Wp[skipX*j])*xo[j] + cimag(Wp[skipX*j])*(cimag(xo[j])-I*creal((xo[j]))) :
-          //                creal(Wp[skipX*j])*xo[j] - cimag(Wp[skipX*j])*(cimag(xo[j])-I*creal((xo[j]))) ;
+          /*temp = reverse? creal(Wp[skipX*j])*xo[j] + cimag(Wp[skipX*j])*(cimag(xo[j])-I*creal((xo[j]))) :
+                          creal(Wp[skipX*j])*xo[j] - cimag(Wp[skipX*j])*(cimag(xo[j])-I*creal((xo[j]))) ;*/
           temp = reverse ? Wp[skipX*((N-j)%N)] * xo[j] : Wp[skipX*j] * xo[j];
         x[j] = xe[j] + temp;
         x[j+N/2] = xe[j] - temp;

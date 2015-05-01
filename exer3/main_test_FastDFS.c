@@ -70,7 +70,8 @@ void generate_y(complex double* y, int N, int skip)
   int i, j;
   for (i = 0; i < N*skip; i++)
     y[i] = 0 + 0*I;
-
+	
+  #pragma omp parallel for
   for (i = 0; i < N; i++)
   {
     complex double temp = 0;
