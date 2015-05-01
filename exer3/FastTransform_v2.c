@@ -65,6 +65,8 @@ void FastTransform(complex double* x, /* Output result */
       {
       	complex double temp = y[0];
         for (j = 1; j < N; j++)
+          //temp += reverse? creal(Wp[skipX*(j*i%N)])*y[j*skipY] + cimag(Wp[skipX*(j*i%N)])*(cimag(y[j*skipY])-I*creal((y[j*skipY]))) :
+          //               creal(Wp[skipX*(j*i%N)])*y[j*skipY] - cimag(Wp[skipX*(j*i%N)])*(cimag(y[j*skipY])-I*creal((y[j*skipY]))) ;
           temp += reverse ? Wp[skipX*((N-j*i%N)%N)]*y[j*skipY] : Wp[skipX*(j*i%N)]*y[j*skipY];
         x[i] = temp;
       }
@@ -87,13 +89,41 @@ void FastTransform(complex double* x, /* Output result */
     for (j = 0; j < N/2; j++)
     { 
       if (j == 0)
-        temp = xo[j];
-      else if (j == N/4 && N%4 == 0)
-        temp = reverse ? cimag(xo[j]) - I*creal(xo[j]) : -cimag(xo[j]) + I*creal(xo[j]);
+      {
+        x[j] = xe[j] + xo[j];
+        x[j+N/2] = xe[j] - xo[j];
+      }
       else
-        temp = reverse ? Wp[skipX*((N-j)%N)] * xo[j] : Wp[skipX*j] * xo[j];
-      x[j] = xe[j] + temp;
-      x[j+N/2] = xe[j] - temp;
+      {
+        if (j == N/4 && N%4 == 0)
+          temp = reverse ? cimag(xo[j]) - I*creal(xo[j]) : -cimag(xo[j]) + I*creal(xo[j]);
+        else
+          //temp = reverse? creal(Wp[skipX*j])*xo[j] + cimag(Wp[skipX*j])*(cimag(xo[j])-I*creal((xo[j]))) :
+          //                creal(Wp[skipX*j])*xo[j] - cimag(Wp[skipX*j])*(cimag(xo[j])-I*creal((xo[j]))) ;
+          temp = reverse ? Wp[skipX*((N-j)%N)] * xo[j] : Wp[skipX*j] * xo[j];
+        x[j] = xe[j] + temp;
+        x[j+N/2] = xe[j] - temp;
+      }
+      /*{
+        if (reverse)
+        {
+          if (j == N/4 && N%4 == 0)
+            temp = cimag(xo[j]) - I*creal(xo[j]);
+          else
+            temp = Wp[skipX*((N-j)%N)] * xo[j];
+          x[j] = xe[j] + temp;
+          x[j+N/2] = xe[j] - temp;
+        }
+        else
+        {
+          if (j == N/4 && N%4 == 0)
+            temp = -cimag(xo[j]) + I*creal(xo[j]);
+          else
+            temp = Wp[skipX*j] * xo[j];
+          x[j] = xe[j] + temp;
+          x[j+N/2] = xe[j] - temp;
+        }
+      }*/
     }
   }
 }

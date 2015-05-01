@@ -61,8 +61,6 @@ int main()
     free(w);
     free(Wp);
 
-    /* Stop Execution if time taken is larger than threshold value, ie 100s */
-
   }
 
   return 0;

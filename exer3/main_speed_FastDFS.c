@@ -107,11 +107,12 @@ double execute_traditional(int N)
       complex double temp = 0. + I*0.;
       for (j = 0; j < N; j++)
       {
-        int index = bmod(i, j, N);
-        temp += Cn[j*i%N]*y[j];
+        int index = i*j%N > 0 ? i*j%N : i*j%N+N;
+        temp += Cn[index]*y[j];
       }
       x[i] = temp;
     }
+    x[N-1]++;
 
     end_time = clock();
     time_diff = (double) (end_time - start_time);
