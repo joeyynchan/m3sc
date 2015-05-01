@@ -54,9 +54,9 @@ int test(int N)
 
 
   double** y1;
-  double*  y2 = (double *)malloc((N-1)*sizeof(double));
+  double*  y2 = (double *)malloc(N*sizeof(double));
   double** x1 = create_matrix(N-1, 1);
-  double*  x2 = (double *)malloc((N-1)*sizeof(double));
+  double*  x2 = (double *)malloc(N*sizeof(double));
   double** Sn = MakeSN(N);
 
   /* Dummy Vector and Matrix Constructino */
