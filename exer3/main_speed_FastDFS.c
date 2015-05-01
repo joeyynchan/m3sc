@@ -45,7 +45,7 @@ int main()
     r2 = execute_traditional(N);
     count1 = 8*N*i;
     count2 = 2*N*N;
-    printf("%9d %12.4e %12f %12.4e %12f %9.2f %12.2f\n", i, r1, count1/r1/10e6, r2, count2/r2/10e6, r2/r1, (count2/r2)/(count1/r1));
+    printf("%9d %12.4e %12f %12.4e %12f %9.2f %12.2f\n", i, r1, (8*N*i)/(r1*10e6), r2, (2/(r2*10e6))*N*N, r2/r1, (8*N*i/r1/10e6)/((2/(r2*10e6))*N*N));
     N *= 2;
   }
 
