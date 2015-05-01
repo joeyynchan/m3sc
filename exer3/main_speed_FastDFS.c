@@ -33,16 +33,19 @@ int main()
   /* Chan, Joey, JMCSC, ync12 */
   int i, N;
   double r1, r2;
+  int count1, count2;
   printInfo();	
 
-  printf(" log2(N)     FastFDS        Trad.     Ratio \n");
-  printf("--------- ------------ ------------ ---------\n");
+  printf(" log2(N)     FastFDS     MegaFlop        Trad.     MegaFlop      Ratio   Flop Ratio\n");
+  printf("--------- ------------ ------------ ------------ ------------ --------- ------------ \n");
   N = 2;
-  for (i = 2; i <= 20; i++)
+  for (i = 1; i <= 20; i++)
   {
     r1 = fdfs(N);
     r2 = execute_traditional(N);
-    printf("%9d %12.4e %12.4e %9.2f\n", i, r1, r2, r2/r1);
+    count1 = 8*N*i;
+    count2 = 2*N*N;
+    printf("%9d %12.4e %12f %12.4e %12f %9.2f %12.2f\n", i, r1, count1/r1/10e6, r2, count2/r2/10e6, r2/r1, (count2/r2)/(count1/r1));
     N *= 2;
   }
 
